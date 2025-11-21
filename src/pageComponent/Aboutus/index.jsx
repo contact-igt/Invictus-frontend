@@ -51,7 +51,7 @@ const AboutPageComponent = ({ onContactClick }) => {
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
             Who We Are
           </p>
-          <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
+          <h1 className="font-display font-bold text-[10vw] md:text-[10vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
             Built On
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
@@ -93,10 +93,10 @@ const AboutPageComponent = ({ onContactClick }) => {
       {/* Values Grid (Non-Negotiables) */}
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto">
-          <h2 className="font-display text-4xl text-white font-bold mb-16 text-center">
+          <h2 className="font-display text-4xl text-white font-bold text-center mb-5">
             Our Non-Negotiables
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 ">
             {values.map((val, idx) => (
               <div
                 key={idx}
@@ -138,7 +138,7 @@ const AboutPageComponent = ({ onContactClick }) => {
             </div>
           </div>
           <div className="bg-[#1A1A1A]/30 p-8 md:p-12 border border-[#333]">
-            <h3 className="font-display text-2xl text-white font-bold mb-6 uppercase">
+            <h3 className="font-display text-2xl text-white font-bold mb-6 uppercase mb-4 ">
               We partner with founders who:
             </h3>
             <ul className="space-y-4 font-body text-[#BBB]">
@@ -166,7 +166,7 @@ const AboutPageComponent = ({ onContactClick }) => {
       <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#1A1A1A]/20">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-4">
+            <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-5">
               The Invictus Way
             </h2>
             <p className="font-body text-[#888]">
@@ -200,7 +200,7 @@ const AboutPageComponent = ({ onContactClick }) => {
       {/* Our Story (Detailed) */}
       <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-4xl text-white font-bold mb-8">
+          <h2 className="font-display text-4xl text-white font-bold mb-5">
             Our Story
           </h2>
           <div className="font-body text-[#BBB] text-lg leading-relaxed space-y-6 text-left md:text-center">
@@ -240,7 +240,7 @@ const AboutPageComponent = ({ onContactClick }) => {
       {/* What Makes Us Different */}
       <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#1A1A1A]/30">
         <div className="max-w-[1600px] mx-auto">
-          <h2 className="font-display text-4xl text-white font-bold mb-12 text-center uppercase">
+          <h2 className="font-display text-4xl text-white font-bold mb-5 text-center uppercase">
             What Makes Us Different?
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -273,11 +273,11 @@ const AboutPageComponent = ({ onContactClick }) => {
       {/* Final CTA */}
       <section className="py-32 border-t border-[#333] text-center px-6">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
+          <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-4 leading-tight">
             If You’re Serious About{" "}
             <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
           </h2>
-          <p className="font-body text-[#888] text-xl mb-12">
+          <p className="font-body text-[#888] text-xl mb-5">
             We’re not the cheapest team. We’re not the loudest team.{" "}
             <br className="hidden md:block" />
             <span className="text-white">

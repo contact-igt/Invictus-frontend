@@ -9,7 +9,7 @@ const Navbar = ({ isMenuOpen, toggleMenu, handleNavClick, currentView }) => {
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
           <a href="#" onClick={(e) => handleNavClick(e, 'home', 'hero')} className="flex items-center gap-3 group">
             {/* <img src="Logo Invictus.png" alt="Invictus" className="h-10 w-auto object-contain" />  */}
-            <span className="font-display font-bold text-xl tracking-tighter uppercase text-white group-hover:text-[#2AB182] transition-colors hidden sm:block">
+            <span className="font-display font-bold text-xl tracking-tighter uppercase text-white group-hover:text-[#2AB182] transition-colors ">
               Invictus<span className="text-[10px] align-top ml-0.5 text-[#2AB182]">©</span>
             </span>
           </a>
