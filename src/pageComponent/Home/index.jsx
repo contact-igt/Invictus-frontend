@@ -7,14 +7,13 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import ContactForm from "@/common/ContactForm";
 
 const HomePageComponent = ({
   activeStep,
   stepRefs,
   activeFaq,
   toggleFaq,
-  handleFormSubmit,
-  formStatus,
   scrollToContact,
 }) => {
   const processSteps = [
@@ -489,82 +488,7 @@ const HomePageComponent = ({
           </div>
         </div>
 
-        <div className="p-8 md:p-20 flex flex-col justify-center bg-[#0E0E0E]/80 backdrop-blur-sm">
-          {formStatus === "success" ? (
-            <div className="text-center animate-fade-in">
-              <CheckCircle className="mx-auto text-[#2AB182] w-16 h-16 mb-6" />
-              <h3 className="font-display text-3xl uppercase text-white mb-2">
-                Received
-              </h3>
-              <p className="font-body text-[#888]">
-                We'll analyze your business and get back to you shortly.
-              </p>
-              <button
-                onClick={() => setFormStatus("idle")}
-                className="mt-8 text-[#2AB182] font-bold underline underline-offset-4"
-              >
-                Submit another
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleFormSubmit} className="space-y-8">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                  Name
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                  Email
-                </label>
-                <input
-                  required
-                  type="email"
-                  className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
-                  placeholder="Email Address"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                    Budget
-                  </label>
-                  <select className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white appearance-none rounded-none cursor-pointer">
-                    <option className="bg-[#1A1A1A]">&lt; $5k</option>
-                    <option className="bg-[#1A1A1A]">$5k - $20k</option>
-                    <option className="bg-[#1A1A1A]">$20k+</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                    Industry
-                  </label>
-                  <select className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white appearance-none rounded-none cursor-pointer">
-                    <option className="bg-[#1A1A1A]">Healthcare</option>
-                    <option className="bg-[#1A1A1A]">EdTech</option>
-                    <option className="bg-[#1A1A1A]">E-commerce</option>
-                    <option className="bg-[#1A1A1A]">Automobile</option>
-                  </select>
-                </div>
-              </div>
-              <button
-                type="submit"
-                disabled={formStatus === "submitting"}
-                className="w-full bg-white text-black font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] transition-all duration-300 disabled:opacity-50"
-              >
-                {formStatus === "submitting"
-                  ? "Sending..."
-                  : "Submit Application"}
-              </button>
-            </form>
-          )}
-        </div>
+          <ContactForm />
       </section>
     </div>
   );
