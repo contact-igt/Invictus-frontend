@@ -51,7 +51,7 @@ const AboutPageComponent = ({ onContactClick }) => {
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
             Who We Are
           </p>
-          <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
+          <h1 className="font-display font-bold text-[10vw] md:text-[10vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
             Built On
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">

@@ -96,7 +96,7 @@ const HomePageComponent = ({
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-8 w-full border-t border-[#333] pt-8">
+          <div className="md:flex flex-col md:flex-row justify-between items-end md:items-center gap-8 w-full border-t border-[#333] pt-8">
             <p className="font-body max-w-md text-[#888] text-sm md:text-lg leading-relaxed">
               We don't sell clicks or impressions. We sell qualified leads,
               appointments, and measurable revenue.
@@ -104,7 +104,7 @@ const HomePageComponent = ({
 
             <button
               onClick={scrollToContact}
-              className="group flex items-center gap-4 bg-[#2AB182] text-black px-8 py-4 rounded-none font-bold text-sm uppercase tracking-wider hover:bg-white transition-colors duration-300 font-body"
+              className=" group flex justify-center items-center gap-4 bg-[#2AB182] text-black px-8 py-4 rounded-none font-bold text-sm uppercase tracking-wider hover:bg-white transition-colors duration-300 font-body "
             >
               Start Project
               <ArrowRight
@@ -141,7 +141,7 @@ const HomePageComponent = ({
       {/* Philosophy Section */}
       <section className="border-b border-[#333] relative z-10">
         <div className="max-w-[1600px] mx-auto grid md:grid-cols-2">
-          <div className="p-8 md:p-20 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-between min-h-[400px] backdrop-blur-sm">
+          <div className="py-15 p-8 md:p-20 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-between min-h-md-[400px] min-h-[250px] backdrop-blur-sm">
             <span className="font-body text-xs text-[#888] uppercase tracking-widest mb-4">
               (01) — Philosophy
             </span>
