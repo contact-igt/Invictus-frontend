@@ -34,7 +34,17 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #2AB182;
 }
+select option {
+  background-color: #1A1A1A;
+  color: white;
+}
 
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: white !important;
+  color: black !important;
+}
 /* Hollow Text Effect */
 .stroke-text {
   -webkit-text-stroke: 1px #666;

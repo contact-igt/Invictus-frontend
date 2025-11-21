@@ -7,14 +7,14 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import ContactForm from "@/common/ContactForm";
+import CountUp from "react-countup";
 
 const HomePageComponent = ({
   activeStep,
   stepRefs,
   activeFaq,
   toggleFaq,
-  handleFormSubmit,
-  formStatus,
   scrollToContact,
 }) => {
   const processSteps = [
@@ -242,7 +242,7 @@ const HomePageComponent = ({
           ].map((industry, index) => (
             <div
               key={index}
-              className="p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-between group hover:bg-[#2AB182] hover:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm"
+              className="p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-between group hover:bg-[#2AB182] hover:text-black focus:bg-[#2AB182] focus:text-black active:bg-[#2AB182] active:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm"
             >
               <span className="font-body text-sm uppercase tracking-widest opacity-50">
                 Niche 0{index + 1}
@@ -263,7 +263,9 @@ const HomePageComponent = ({
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center text-center justify-center gap-12 md:gap-18">
           <div>
             <h1 className="font-display text-6xl md:text-9xl font-bold text-[#2AB182] mb-2">
-              3x
+              <span>
+                <CountUp start={0} end={3} duration={5} /> X
+              </span>
             </h1>
             <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Avg. Client ROAS
@@ -271,7 +273,10 @@ const HomePageComponent = ({
           </div>
           <div>
             <h1 className="font-display text-6xl md:text-9xl font-bold text-white mb-2">
-              -40%
+              <span>
+                {" "}
+                <CountUp start={0} end={-40} duration={5} /> %
+              </span>
             </h1>
             <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Cost Per Lead
@@ -489,82 +494,7 @@ const HomePageComponent = ({
           </div>
         </div>
 
-        <div className="p-8 md:p-20 flex flex-col justify-center bg-[#0E0E0E]/80 backdrop-blur-sm">
-          {formStatus === "success" ? (
-            <div className="text-center animate-fade-in">
-              <CheckCircle className="mx-auto text-[#2AB182] w-16 h-16 mb-6" />
-              <h3 className="font-display text-3xl uppercase text-white mb-2">
-                Received
-              </h3>
-              <p className="font-body text-[#888]">
-                We'll analyze your business and get back to you shortly.
-              </p>
-              <button
-                onClick={() => setFormStatus("idle")}
-                className="mt-8 text-[#2AB182] font-bold underline underline-offset-4"
-              >
-                Submit another
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleFormSubmit} className="space-y-8">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                  Name
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                  Email
-                </label>
-                <input
-                  required
-                  type="email"
-                  className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
-                  placeholder="Email Address"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                    Budget
-                  </label>
-                  <select className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white appearance-none rounded-none cursor-pointer">
-                    <option className="bg-[#1A1A1A]">&lt; $5k</option>
-                    <option className="bg-[#1A1A1A]">$5k - $20k</option>
-                    <option className="bg-[#1A1A1A]">$20k+</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">
-                    Industry
-                  </label>
-                  <select className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white appearance-none rounded-none cursor-pointer">
-                    <option className="bg-[#1A1A1A]">Healthcare</option>
-                    <option className="bg-[#1A1A1A]">EdTech</option>
-                    <option className="bg-[#1A1A1A]">E-commerce</option>
-                    <option className="bg-[#1A1A1A]">Automobile</option>
-                  </select>
-                </div>
-              </div>
-              <button
-                type="submit"
-                disabled={formStatus === "submitting"}
-                className="w-full bg-white text-black font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] transition-all duration-300 disabled:opacity-50"
-              >
-                {formStatus === "submitting"
-                  ? "Sending..."
-                  : "Submit Application"}
-              </button>
-            </form>
-          )}
-        </div>
+        <ContactForm />
       </section>
     </div>
   );

@@ -9,7 +9,6 @@ import React, { useState, useEffect, useRef } from "react";
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
-  const [formStatus, setFormStatus] = useState("idle");
   const [activeStep, setActiveStep] = useState(0);
   const [currentView, setCurrentView] = useState("home"); // 'home' | 'about'
   const stepRefs = useRef([]);
@@ -44,13 +43,13 @@ const Home = () => {
     }
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setFormStatus("submitting");
-    setTimeout(() => {
-      setFormStatus("success");
-    }, 1500);
-  };
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   setFormStatus("submitting");
+  //   setTimeout(() => {
+  //     setFormStatus("success");
+  //   }, 1500);
+  // };
 
   // Intersection Observer for the Home Page process steps
   useEffect(() => {
@@ -104,8 +103,6 @@ const Home = () => {
           stepRefs={stepRefs}
           activeFaq={activeFaq}
           toggleFaq={toggleFaq}
-          handleFormSubmit={handleFormSubmit}
-          formStatus={formStatus}
           scrollToContact={(e) => handleNavClick(e, "home", "contact")}
         />
       ) : (

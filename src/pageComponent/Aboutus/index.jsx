@@ -45,19 +45,18 @@ const AboutPageComponent = ({ onContactClick }) => {
   return (
     <div className="pt-32 min-h-screen">
       {/* Hero */}
-      <section className="px-6 md:px-12 mb-24">
+      <section className="px-6 md:px-12 mb-10 mt-md-12 mt-7">
         <div className="max-w-[1600px] mx-auto">
-          <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
+          <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm md:text-lg uppercase font-semibold flex items-center gap-3">
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
             Who We Are
           </p>
-          <h1 className="font-display font-bold text-[10vw] md:text-[10vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
-            Built On
-            <br />
+          <p className="font-display font-bold text-[8vw] md:text-[4.89vw] leading-[1.1] tracking-tight text-white uppercase">
+            Built On <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
-              Accountability.
+              Accountability
             </span>
-          </h1>
+          </p>
         </div>
       </section>
 
@@ -166,7 +165,7 @@ const AboutPageComponent = ({ onContactClick }) => {
       <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#1A1A1A]/20">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-5">
+            <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-4">
               The Invictus Way
             </h2>
             <p className="font-body text-[#888]">
@@ -200,7 +199,7 @@ const AboutPageComponent = ({ onContactClick }) => {
       {/* Our Story (Detailed) */}
       <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-4xl text-white font-bold mb-5">
+          <h2 className="font-display text-4xl text-white font-bold mb-4">
             Our Story
           </h2>
           <div className="font-body text-[#BBB] text-lg leading-relaxed space-y-6 text-left md:text-center">
@@ -277,7 +276,7 @@ const AboutPageComponent = ({ onContactClick }) => {
             If You’re Serious About{" "}
             <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
           </h2>
-          <p className="font-body text-[#888] text-xl mb-5">
+          <p className="font-body text-[#888] text-xl mb-4">
             We’re not the cheapest team. We’re not the loudest team.{" "}
             <br className="hidden md:block" />
             <span className="text-white">
