@@ -77,15 +77,15 @@ const HomePageComponent = ({
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex flex-col justify-end pb-12 px-6 md:px-12 pt-32 relative border-b border-[#333]"
+        className="flex flex-col justify-end pb-12 px-6 md:px-12 pt-20 relative border-b border-[#333]"
       >
         <div className="max-w-[1600px] w-full mx-auto relative z-10">
           <div className="mb-12">
-            <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
+            <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm md:text-lg uppercase font-semibold flex items-center gap-3">
               <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
               Performance Marketing Agency
             </p>
-            <h1 className="font-display font-bold text-[12vw] md:text-[8vw] leading-[0.85] tracking-tight text-white uppercase">
+            <p className="font-display font-bold text-[8vw] md:text-[4.89vw] leading-[1.1] tracking-tight text-white uppercase">
               Marketing
               <br />
               That Pays
@@ -93,7 +93,7 @@ const HomePageComponent = ({
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
                 You Back.
               </span>
-            </h1>
+            </p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-8 w-full border-t border-[#333] pt-8">
@@ -156,7 +156,7 @@ const HomePageComponent = ({
               accountability, and clear numbers. If it doesn't drive revenue, we
               don't do it.
             </p>
-            <ul className="space-y-6 font-display text-lg md:text-xl">
+            <ul className="space-y-6 !pl-0 font-display text-lg md:text-xl">
               {[
                 "Quality leads, not random enquiries",
                 "Full-funnel tracking (Impression → Sale)",
@@ -179,7 +179,7 @@ const HomePageComponent = ({
 
       {/* Services Section */}
       <section id="services" className="border-b border-[#333] relative z-10">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-20">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-19 py-20">
           <span className="font-body text-xs text-[#888] uppercase tracking-widest mb-12 block">
             (02) — Capabilities
           </span>
@@ -260,20 +260,20 @@ const HomePageComponent = ({
 
       {/* Stats Section */}
       <section className="border-b border-[#333] py-20 px-6 md:px-12 bg-[#1A1A1A]/80 backdrop-blur-sm relative z-10">
-        <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center text-center justify-center gap-12 md:gap-18">
           <div>
-            <h2 className="font-display text-6xl md:text-9xl font-bold text-[#2AB182] mb-2">
+            <h1 className="font-display text-6xl md:text-9xl font-bold text-[#2AB182] mb-2">
               3x
-            </h2>
-            <p className="font-body text-[#888] uppercase tracking-widest text-sm">
+            </h1>
+            <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Avg. Client ROAS
             </p>
           </div>
           <div>
-            <h2 className="font-display text-6xl md:text-9xl font-bold text-white mb-2">
+            <h1 className="font-display text-6xl md:text-9xl font-bold text-white mb-2">
               -40%
-            </h2>
-            <p className="font-body text-[#888] uppercase tracking-widest text-sm">
+            </h1>
+            <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Cost Per Lead
             </p>
           </div>
@@ -397,7 +397,7 @@ const HomePageComponent = ({
       {/* FAQ Section */}
       <section className="py-20 border-b border-[#333] px-6 md:px-12 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl font-bold uppercase mb-12 text-white text-center">
+          <h2 className="font-display text-4xl font-bold uppercase !mb-15 text-white text-center">
             FAQ
           </h2>
           <div className="space-y-6">
@@ -469,11 +469,11 @@ const HomePageComponent = ({
       >
         <div className="p-8 md:p-20 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-center relative overflow-hidden backdrop-blur-sm">
           <div className="relative z-10">
-            <h2 className="font-display text-5xl md:text-7xl font-bold uppercase leading-tight mb-8 text-white">
+            <p className="font-display text-5xl md:text-7xl font-bold uppercase leading-tight mb-8 text-white">
               Let's
               <br />
               <span className="text-[#2AB182]">Scale.</span>
-            </h2>
+            </p>
             <div className="space-y-6 font-body text-[#888] text-sm md:text-base">
               <div className="flex items-center gap-4 hover:text-white transition-colors">
                 <Mail className="text-[#2AB182]" size={20} />
