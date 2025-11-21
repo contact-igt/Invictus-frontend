@@ -8,6 +8,7 @@ import {
   Minus,
 } from "lucide-react";
 import ContactForm from "@/common/ContactForm";
+import CountUp from "react-countup";
 
 const HomePageComponent = ({
   activeStep,
@@ -241,7 +242,7 @@ const HomePageComponent = ({
           ].map((industry, index) => (
             <div
               key={index}
-              className="p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-between group hover:bg-[#2AB182] hover:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm"
+              className="p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-between group hover:bg-[#2AB182] hover:text-black focus:bg-[#2AB182] focus:text-black active:bg-[#2AB182] active:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm"
             >
               <span className="font-body text-sm uppercase tracking-widest opacity-50">
                 Niche 0{index + 1}
@@ -262,7 +263,9 @@ const HomePageComponent = ({
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center text-center justify-center gap-12 md:gap-18">
           <div>
             <h1 className="font-display text-6xl md:text-9xl font-bold text-[#2AB182] mb-2">
-              3x
+              <span>
+                <CountUp start={0} end={3} duration={5} /> X
+              </span>
             </h1>
             <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Avg. Client ROAS
@@ -270,7 +273,10 @@ const HomePageComponent = ({
           </div>
           <div>
             <h1 className="font-display text-6xl md:text-9xl font-bold text-white mb-2">
-              -40%
+              <span>
+                {" "}
+                <CountUp start={0} end={-40} duration={5} /> %
+              </span>
             </h1>
             <p className="font-body text-[#888] uppercase tracking-widest text-md">
               Cost Per Lead
@@ -488,7 +494,7 @@ const HomePageComponent = ({
           </div>
         </div>
 
-          <ContactForm />
+        <ContactForm />
       </section>
     </div>
   );
