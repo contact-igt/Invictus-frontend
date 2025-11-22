@@ -30,9 +30,8 @@ const clientIndustries = [
 ];
 
 const clientList = [
-    "Apollo Hospitals", "SRM University", "Vellore Institute of Technology", "Casagrand", "Urban Company",
-    "Lenskart", "Mamaearth", "Boat", "Zomato", "Swiggy",
-    "Uber", "Ola", "Flipkart", "Amazon", "Myntra"
+    "Pixel Eye Hospital", "Antardrashti Netralaya", "Naitrika Eye Care", "Dr. Senthil Ophthall", "Dr. Ramanan", "Wellinit (USA)", "HealthPilot.ai", 
+    "NextLevel.in", "Dr. Muruganath", "VLS Law Academy", "KR Institute", "Triumph Vetrivel Motors", "RR Construction", "Wild Funk", "Phone & Co", "Sri Krish Mirra Builders"
 ];
 
 const ClientsIndustriesPage = ({ onContactClick }) => {
@@ -97,9 +96,9 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
             <section className="py-20 px-6 md:px-12 border-b border-[#333] bg-[#0E0E0E]">
                 <div className="max-w-[1600px] mx-auto">
                     <h2 className="font-display text-4xl font-bold uppercase mb-12 text-white text-center">Highlighted Clients</h2>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 max-w-5xl mx-auto">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 max-w-5xl mx-auto ">
                         {clientList.map((client, index) => (
-                            <div key={index} className="p-4 border border-[#333] text-center bg-[#1A1A1A]/50 hover:border-[#2AB182] transition-colors duration-300">
+                            <div key={index} className="p-4 mt-4 border border-[#333] text-center bg-[#1A1A1A]/50 hover:border-[#2AB182] transition-colors duration-300">
                                 <p className="font-body text-sm font-medium text-white">{client}</p>
                             </div>
                         ))}
