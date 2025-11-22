@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed w-full z-50 mix-blend-normal bg-[#0E0E0E]/80 backdrop-blur-md border-b border-[#333]">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
             <span className="font-display font-bold text-xl tracking-tighter uppercase text-white group-hover:text-[#2AB182] transition-colors">
               INVICTUS<span className="text-[10px] align-top ml-0.5 text-[#2AB182]">©</span>
