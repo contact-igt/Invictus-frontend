@@ -89,7 +89,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
 
             <button
               onClick={() => router.push('/contact')}
-              className="group flex items-center gap-4 bg-[#2AB182] text-black px-8 py-4 rounded-none font-bold text-sm uppercase tracking-wider hover:bg-white transition-colors duration-300 font-body"
+              className="group flex items-center gap-4 bg-[#2AB182] text-black px-8 py-4 rounded-none font-bold text-sm uppercase tracking-wider hover:bg-white active:bg-white transition-colors duration-300 font-body"
             >
               Start Project
               <ArrowRight className="group-hover:-rotate-45 transition-transform duration-300" size={20} />
@@ -134,8 +134,8 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 "Full-funnel tracking (Impression → Sale)",
                 "Transparent dashboards"
               ].map((item, index) => (
-                <li key={index} className="flex items-center gap-4 text-white group">
-                  <CheckCircle className="text-[#2AB182] min-w-6 min-h-6 w-6 h-6" />
+                <li key={index} className="flex items-start lg:items-center gap-4 text-white group">
+                  <CheckCircle className="text-[#2AB182] min-w-6 min-h-6 w-6 h-6 mt-1 lg:mt-0" />
                   <span className="group-hover:translate-x-2 transition-transform duration-300">{item}</span>
                 </li>
               ))}
@@ -145,7 +145,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* Services Callout - Points to the new ServicesPage */}
-      <section className="py-20 border-b border-[#333] px-6 md:px-12 relative z-10">
+      <section className="py-16 md:py-24 border-b border-[#333] px-6 md:px-12 relative z-10">
         <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row justify-between items-center text-center gap-8">
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase text-white leading-tight">
             Our Core <span className="text-[#2AB182]">Capabilities</span>
@@ -155,7 +155,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           </p>
           <button
             onClick={() => handleNavClick('/services')}
-            className="group flex items-center gap-3 border border-[#2AB182] text-[#2AB182] px-6 py-3 font-body text-sm uppercase tracking-wider hover:bg-[#2AB182] hover:text-black transition-all duration-300"
+            className="group flex items-center gap-3 border border-[#2AB182] text-[#2AB182] px-6 py-3 font-body text-sm uppercase tracking-wider hover:bg-[#2AB182] hover:text-black active:bg-[#2AB182] active:text-black transition-all duration-300"
           >
             View Detailed Services
             <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={18} />
@@ -179,7 +179,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             {["Healthcare", "EdTech", "E-commerce", "Automobile"].map((name, index) => (
               <div
                 key={index}
-                className={`p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-center items-center group hover:bg-[#2AB182] hover:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm`}
+                className={`p-8 border-b md:border-b-0 border-r border-[#333] last:border-r-0 flex flex-col justify-center items-center group hover:bg-[#2AB182] hover:text-black active:bg-[#2AB182] active:text-black transition-colors duration-500 bg-[#0E0E0E]/80 backdrop-blur-sm`}
               >
                 <h3 className="font-display text-2xl font-bold uppercase mb-4">{name}</h3>
               </div>
@@ -188,7 +188,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           <div className="p-8 text-center border-t border-[#333]">
             <button
               onClick={() => handleNavClick('/clients')}
-              className="group flex items-center justify-center mx-auto gap-3 border border-[#333] text-white px-6 py-3 font-body text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300"
+              className="group flex items-center justify-center mx-auto gap-3 border border-[#333] text-white px-6 py-3 font-body text-sm uppercase tracking-wider hover:bg-white hover:text-black active:bg-white active:text-black transition-all duration-300"
             >
               View All Case Studies & Clients
               <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={18} />
@@ -198,7 +198,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* Stats Section */}
-      <section className="border-b border-[#333] py-20 px-6 md:px-12 bg-[#1A1A1A]/80 backdrop-blur-sm relative z-10">
+      <section className="border-b border-[#333] py-16 md:py-24 px-6 md:px-12 bg-[#1A1A1A]/80 backdrop-blur-sm relative z-10">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-30">
           <div>
             <h2 className="font-display text-6xl md:text-7xl lg:text-9xl font-bold text-[#2AB182] mb-2">
@@ -218,7 +218,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* SECTION 5 — Process Steps (Methodology) */}
-      <section id="process" className="py-24 border-b border-[#333] relative z-10 bg-[#0E0E0E]">
+      <section id="process" className="py-16 md:py-24 border-b border-[#333] relative z-10 bg-[#0E0E0E]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12">
           <div className="text-center mb-20">
             <span className="text-[#2AB182] font-body text-sm tracking-[0.2em] uppercase font-bold mb-4 block">OUR METHODOLOGY</span>
@@ -303,7 +303,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 border-b border-[#333] px-6 md:px-12 relative z-10">
+      <section className="py-16 md:py-24 border-b border-[#333] px-6 md:px-12 relative z-10">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-display text-4xl font-bold uppercase mb-14 text-white text-center">FAQ</h2>
           <div className="space-y-6">
@@ -336,7 +336,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* SECTION 6 — Contact CTA (Directs to standalone Contact Page) */}
-      <section id="contact-cta" className="py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
+      <section id="contact-cta" className="py-16 md:py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
             If You’re Serious About <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
@@ -347,7 +347,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           </p>
           <button
             onClick={() => router.push('/contact')}
-            className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white transition-all duration-300"
+            className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white active:bg-white transition-all duration-300"
           >
             Book a Discovery Call
             <ArrowRight className="group-hover:-rotate-45 transition-transform duration-300" size={20} />

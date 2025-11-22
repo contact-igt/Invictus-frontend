@@ -133,7 +133,7 @@ const ContactForm = () => {
                     <button
                         type="submit"
                         disabled={formStatus === 'submitting'}
-                        className="w-full bg-white text-black font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] transition-all duration-300 disabled:opacity-50"
+                        className="w-full bg-white text-black font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] active:bg-[#2AB182] transition-all duration-300 disabled:opacity-50"
                     >
                         {formStatus === 'submitting' ? 'Sending...' : 'Submit Application'}
                     </button>

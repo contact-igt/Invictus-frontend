@@ -1,7 +1,7 @@
 import { CheckCircle } from 'lucide-react';
 
 const LocationCard = ({ title, services, industries, description, isHQ = false }) => (
-    <div className="p-8 md:p-12 border-b lg:border-r border-[#333] last:border-r-0 last:border-b-0 hover:bg-[#0E0E0E] transition-colors duration-300">
+    <div className="p-8 md:p-12 border-b lg:border-r border-[#333] last:border-r-0 last:border-b-0 hover:bg-[#0E0E0E] active:bg-[#0E0E0E] transition-colors duration-300">
         <h3 className="font-display text-3xl font-bold mb-4 text-white">
             {title}
             {isHQ && <span className="text-[#2AB182] text-sm align-top ml-2">(HQ)</span>}
