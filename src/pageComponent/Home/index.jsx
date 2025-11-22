@@ -69,11 +69,10 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
   return (
     <div className="pt-20">
       {/* SECTION 1 — Hero Section (Performance-Driven Growth) */}
-      <section id="hero" className="min-h-screen flex flex-col justify-end pb-12 px-6 md:px-12 pt-32 relative border-b border-[#333]">
+      <section id="hero" className="min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex flex-col justify-end pb-12 px-6 md:px-12 pt-18 relative border-b border-[#333]">
         <div className="max-w-[1600px] w-full mx-auto relative z-10">
           <div className="mb-12">
-            <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
-              <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
+            <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3"><span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
               Performance-Driven Growth for Serious Brands
             </p>
             <h1 className="font-display font-bold text-[12vw] md:text-[8vw] leading-[0.85] tracking-tight text-white uppercase">
@@ -83,7 +82,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             </h1>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-8 w-full border-t border-[#333] pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 w-full border-t border-[#333] pt-8">
             <p className="font-body max-w-md text-[#888] text-sm md:text-lg leading-relaxed">
               We don’t sell clicks or impressions. We build scalable growth systems powered by ads, data, and AI.
             </p>
@@ -118,7 +117,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       {/* Philosophy Section (Anti-Agency) */}
       <section className="border-b border-[#333] relative z-10">
         <div className="max-w-[1600px] mx-auto grid md:grid-cols-2">
-          <div className="p-8 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-between min-h-[400px] backdrop-blur-sm">
+          <div className="p-8 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-between min-h-[280px] md:min-h-[400px] backdrop-blur-sm">
             <span className="font-body text-xs text-[#888] uppercase tracking-widest mb-4">(01) — Philosophy</span>
             <h2 className="font-display text-4xl md:text-5xl font-bold uppercase leading-tight text-white">
               Not an Agency.<br />
@@ -136,7 +135,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 "Transparent dashboards"
               ].map((item, index) => (
                 <li key={index} className="flex items-center gap-4 text-white group">
-                  <CheckCircle className="text-[#2AB182] w-6 h-6" />
+                  <CheckCircle className="text-[#2AB182] min-w-6 min-h-6 w-6 h-6" />
                   <span className="group-hover:translate-x-2 transition-transform duration-300">{item}</span>
                 </li>
               ))}
@@ -147,7 +146,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
 
       {/* Services Callout - Points to the new ServicesPage */}
       <section className="py-20 border-b border-[#333] px-6 md:px-12 relative z-10">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row justify-between items-center text-center gap-8">
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase text-white leading-tight">
             Our Core <span className="text-[#2AB182]">Capabilities</span>
           </h2>
@@ -200,16 +199,18 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
 
       {/* Stats Section */}
       <section className="border-b border-[#333] py-20 px-6 md:px-12 bg-[#1A1A1A]/80 backdrop-blur-sm relative z-10">
-        <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-30">
           <div>
             <h2 className="font-display text-6xl md:text-7xl lg:text-9xl font-bold text-[#2AB182] mb-2">
-              <CountUp end={3} duration={2} suffix="x" />
+              <CountUp end={3} duration={2} suffix="x" enableScrollSpy={true}
+                scrollSpyOnce={true} />
             </h2>
             <p className="font-body text-[#888] uppercase tracking-widest text-sm">Avg. Client ROAS</p>
           </div>
           <div>
             <h2 className="font-display text-6xl md:text-7xl lg:text-9xl font-bold text-white mb-2">
-              <CountUp end={40} duration={2} prefix="-" suffix="%" />
+              <CountUp end={40} duration={2} prefix="-" suffix="%" enableScrollSpy={true}
+                scrollSpyOnce={true} />
             </h2>
             <p className="font-body text-[#888] uppercase tracking-widest text-sm">Cost Per Lead Reduction</p>
           </div>
@@ -304,7 +305,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       {/* FAQ Section */}
       <section className="py-20 border-b border-[#333] px-6 md:px-12 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl font-bold uppercase mb-12 text-white text-center">FAQ</h2>
+          <h2 className="font-display text-4xl font-bold uppercase mb-14 text-white text-center">FAQ</h2>
           <div className="space-y-6">
             {[
               { q: "Do you work on performance-based pricing?", a: "We primarily work on a retainer + performance structure. Pure performance deals are evaluated on a case-by-case basis depending on your margins and historical data." },
