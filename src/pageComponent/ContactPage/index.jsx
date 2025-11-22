@@ -15,7 +15,7 @@ const ContactPage = () => {
                         <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
                         Let’s Talk Performance.
                     </p>
-                    <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
+                    <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
                         Ready To <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Scale?</span>
                     </h1>
@@ -39,25 +39,25 @@ const ContactPage = () => {
                 {/* Direct Contact Info & Location */}
                 <div className="lg:col-span-1 p-8 md:p-16 flex flex-col justify-between bg-[#1A1A1A]/50 border-t lg:border-t-0 border-[#333]">
                     <div className="space-y-12">
-                        <div>
+                        <div className="py-8">
                             <h3 className="font-display text-2xl font-bold mb-4 text-white uppercase">
                                 Direct Contact Info
                             </h3>
                             <div className="space-y-4 font-body text-[#888]">
                                 <ContactDetail icon={Mail} title="Email" details={["contact@invictusglobaltech.com"]} />
                                 <ContactDetail icon={Phone} title="Phone" details={["+91-6369757054", "+91-7530070101"]} />
-                                <div className="flex gap-4 mt-4">
-                                    <a href="mailto:contact@invictusglobaltech.com" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-white transition-colors">
+                                <div className="flex gap-4 mt-8">
+                                    <a href="mailto:contact@invictusglobaltech.com" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-white active:bg-white transition-colors">
                                         Email Us
                                     </a>
-                                    <a href="tel:+91-6369757054" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-white transition-colors">
+                                    <a href="tel:+91-6369757054" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-white active:bg-white transition-colors">
                                         Call Us
                                     </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div>
+                        <div className="py-8">
                             <h3 className="font-display text-2xl font-bold mb-4 text-white uppercase">
                                 Our Office – Chennai (HQ)
                             </h3>
@@ -68,7 +68,7 @@ const ContactPage = () => {
                         </div>
                     </div>
 
-                    <div className="mt-12">
+                    <div className="mt-6">
                         <div className="aspect-video w-full border border-[#333]">
                             <iframe
                                 src={chennaiMapUrl}

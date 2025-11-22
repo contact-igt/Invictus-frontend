@@ -51,7 +51,7 @@ const AboutPage = ({ onContactClick }) => {
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
             Who We Are
           </p>
-          <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
+          <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-12">
             Built On<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Accountability.</span>
           </h1>
@@ -59,7 +59,7 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* Intro / Origin Story */}
-      <section className="border-y border-[#333] bg-[#1A1A1A]/30 backdrop-blur-sm py-20 px-6 md:px-12">
+      <section className="border-y border-[#333] bg-[#1A1A1A]/30 backdrop-blur-sm py-16 md:py-24 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-16">
           <div>
             <h2 className="font-display text-4xl md:text-5xl text-white font-bold leading-tight">
@@ -82,12 +82,12 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* Values Grid (Non-Negotiables) */}
-      <section className="py-24 px-6 md:px-12">
+      <section className="py-16 md:py-24 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto">
           <h2 className="font-display text-4xl text-white font-bold mb-16 text-center">Our Non-Negotiables</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((val, idx) => (
-              <div key={idx} className="p-8 border border-[#333] rounded-lg bg-[#0E0E0E] hover:border-[#2AB182] transition-colors duration-300 group">
+              <div key={idx} className="p-8 border border-[#333] rounded-lg bg-[#0E0E0E] hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-300 group">
                 <div className="mb-6 p-4 bg-[#1A1A1A] rounded-full w-fit group-hover:bg-[#2AB182]/10 transition-colors">{val.icon}</div>
                 <h3 className="font-display text-xl text-white font-bold mb-4">{val.title}</h3>
                 <p className="font-body text-[#888] text-sm leading-relaxed">{val.desc}</p>
@@ -98,7 +98,7 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* Who We Work With */}
-      <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
+      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
         <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="font-display text-4xl md:text-6xl text-white font-bold leading-tight mb-8">
@@ -134,7 +134,7 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* The Invictus Way */}
-      <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#1A1A1A]/20">
+      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[#333] bg-[#1A1A1A]/20">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-4">The Invictus Way</h2>
@@ -143,7 +143,7 @@ const AboutPage = ({ onContactClick }) => {
 
           <div className="grid lg:grid-cols-3 gap-8">
             {pillars.map((pillar, idx) => (
-              <div key={idx} className="p-8 border border-[#333] rounded-lg bg-[#0E0E0E] hover:border-[#2AB182] transition-colors duration-500 group">
+              <div key={idx} className="p-8 border border-[#333] rounded-lg bg-[#0E0E0E] hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-500 group">
                 <h3 className="font-display text-2xl text-[#2AB182] font-bold mb-6">{pillar.title}</h3>
                 <p className="font-body text-[#BBB] leading-relaxed mb-4">{pillar.desc}</p>
                 {pillar.extra && (
@@ -158,7 +158,7 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* Our Story (Detailed) */}
-      <section className="py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
+      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[#333] bg-[#0E0E0E]">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-4xl text-white font-bold mb-8">Our Story</h2>
           <div className="font-body text-[#BBB] text-lg leading-relaxed space-y-6 text-left md:text-center">
@@ -186,7 +186,7 @@ const AboutPage = ({ onContactClick }) => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
+      <section className="py-16 md:py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
             If You’re Serious About <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
@@ -197,7 +197,7 @@ const AboutPage = ({ onContactClick }) => {
           </p>
           <button
             onClick={onContactClick}
-            className="bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white transition-all duration-300"
+            className="bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white active:bg-white transition-all duration-300"
           >
             Book a Discovery Call
           </button>

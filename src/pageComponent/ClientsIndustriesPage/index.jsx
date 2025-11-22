@@ -30,7 +30,7 @@ const clientIndustries = [
 ];
 
 const clientList = [
-    "Pixel Eye Hospital", "Antardrashti Netralaya", "Naitrika Eye Care", "Dr. Senthil Ophthall", "Dr. Ramanan", "Wellinit (USA)", "HealthPilot.ai", 
+    "Pixel Eye Hospital", "Antardrashti Netralaya", "Naitrika Eye Care", "Dr. Senthil Ophthall", "Dr. Ramanan", "Wellinit (USA)", "HealthPilot.ai",
     "NextLevel.in", "Dr. Muruganath", "VLS Law Academy", "KR Institute", "Triumph Vetrivel Motors", "RR Construction", "Wild Funk", "Phone & Co", "Sri Krish Mirra Builders"
 ];
 
@@ -44,7 +44,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                         <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
                         Proven Results, Real Partners
                     </p>
-                    <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
+                    <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
                         Industries We <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Transform.</span>
                     </h1>
@@ -60,7 +60,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                     <h2 className="font-display text-4xl font-bold uppercase p-8 md:p-12 text-white border-b border-[#333]">Core Industries You Serve</h2>
                     <div className="flex flex-col">
                         {clientIndustries.map((industry, index) => (
-                            <div key={index} className="grid lg:grid-cols-3 border-b border-[#333] group hover:bg-[#0E0E0E] transition-colors duration-300">
+                            <div key={index} className="grid lg:grid-cols-3 border-b border-[#333] group hover:bg-[#0E0E0E] active:bg-[#0E0E0E] transition-colors duration-300">
                                 {/* Industry Title and Portfolio */}
                                 <div className="lg:col-span-1 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#333]">
                                     <h3 className="font-display text-2xl font-bold mb-4 text-[#2AB182] group-hover:text-white transition-colors">{industry.name}</h3>
@@ -93,12 +93,12 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
             </section>
 
             {/* Client List (Optional Section) */}
-            <section className="py-20 px-6 md:px-12 border-b border-[#333] bg-[#0E0E0E]">
+            <section className="py-16 md:py-24 px-6 md:px-12 border-b border-[#333] bg-[#0E0E0E]">
                 <div className="max-w-[1600px] mx-auto">
                     <h2 className="font-display text-4xl font-bold uppercase mb-12 text-white text-center">Highlighted Clients</h2>
                     <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 max-w-5xl mx-auto ">
                         {clientList.map((client, index) => (
-                            <div key={index} className="p-4 mt-4 border border-[#333] text-center bg-[#1A1A1A]/50 hover:border-[#2AB182] transition-colors duration-300">
+                            <div key={index} className="p-4 mt-4 border border-[#333] text-center bg-[#1A1A1A]/50 hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-300">
                                 <p className="font-body text-sm font-medium text-white">{client}</p>
                             </div>
                         ))}
@@ -108,7 +108,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
 
 
             {/* Closing CTA */}
-            <section className="py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
+            <section className="py-16 md:py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
                         If You’re in Any of These Industries — <span className="text-[#2AB182]">We Can Scale You.</span>
@@ -118,7 +118,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                     </p>
                     <button
                         onClick={onContactClick}
-                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white transition-all duration-300"
+                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white active:bg-white transition-all duration-300"
                     >
                         Book a Discovery Call
                         <ArrowRight className="group-hover:-rotate-45 transition-transform duration-300" size={20} />

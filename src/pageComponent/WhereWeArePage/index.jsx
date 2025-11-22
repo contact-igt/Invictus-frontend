@@ -12,7 +12,7 @@ const WhereWeArePage = ({ onContactClick }) => {
                         <Globe className="w-4 h-4" />
                         Where We Work. Where Our Clients Are.
                     </p>
-                    <h1 className="font-display font-bold text-[10vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
+                    <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-white uppercase mb-8">
                         Global <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Footprint.</span>
                     </h1>
@@ -56,7 +56,7 @@ const WhereWeArePage = ({ onContactClick }) => {
             </section>
 
             {/* Future Expansion & CTA */}
-            <section className="py-24 px-6 md:px-12 text-center bg-[#0E0E0E]">
+            <section className="py-16 md:py-24 px-6 md:px-12 text-center bg-[#0E0E0E]">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
                         Want to Work With Us <span className="text-[#2AB182]">From Anywhere</span> in the World?
@@ -72,7 +72,7 @@ const WhereWeArePage = ({ onContactClick }) => {
                     </div>
                     <button
                         onClick={onContactClick}
-                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white transition-all duration-300"
+                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-white active:bg-white transition-all duration-300"
                     >
                         Book a Strategy Call
                         <ArrowRight className="group-hover:-rotate-45 transition-transform duration-300" size={20} />
