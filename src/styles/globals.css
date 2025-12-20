@@ -3,6 +3,15 @@
 @theme {
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
+
+  /* Blueray Page Variables */
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-open-sans: 'Open Sans', sans-serif;
+
+  --color-navy-deep: #001B3A;
+  --color-navy-midnight: #022C5E;
+  --color-gold: #FFD700;
 }
 
 a {
@@ -120,14 +129,81 @@ select option:checked {
   animation: spin-slow 6s linear infinite;
 }
 
-/* Hide default cursor on desktop */
-@media (min-width: 768px) {
 
-  body,
-  a,
-  button,
-  input,
-  select {
+/* Hide default cursor on desktop, but allow it on Blueray page by default or specific override if needed */
+/* Note: The user requested a visible mouse arrow on the Blueray page. 
+   Since `cursor: none` is applied globally by media query below, we need a way to override it.
+   Ideally, we should scope the custom cursor to not affect .blueray-page, or simply ensure 
+   the body on that page has `cursor: auto !important`. 
+*/
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Blueray Page Overrides */
+#blueray-body {
+  cursor: auto !important;
+}
+
+#blueray-body * {
+  cursor: auto !important;
+}
+
+#blueray-body a {
+  color: inherit !important;
+  /* Override the global white color for links */
+  text-decoration: none;
+  cursor: pointer !important;
+}
+
+#blueray-body a:hover {
+  /* Allow hover colors to work */
+  color: inherit !important;
+  cursor: pointer !important;
+}
+
+#blueray-body a.text-white {
+  color: #ffffff !important;
+}
+
+/* Re-enable specific hovers in Blueray page */
+#blueray-body .hover\:text-blue-600:hover {
+  color: #2563eb !important;
+}
+
+#blueray-body .hover\:text-gold:hover {
+  color: #FFD700 !important;
+}
+
+#blueray-body .hover\:text-green-400:hover {
+  color: #4ade80 !important;
+}
+
+#blueray-body .hover\:bg-green-700:hover {
+  background-color: #15803d !important;
+}
+
+#blueray-body .hover\:bg-white:hover {
+  background-color: #ffffff !important;
+}
+
+#blueray-body .hover\:text-navy-deep:hover {
+  color: #001B3A !important;
+}
+
+/* Restore cursor hiding for non-Blueray pages */
+/* Used a simpler approach than before to avoid conflicts */
+@media (min-width: 768px) {
+  body:not(:has(#blueray-body)) {
+    cursor: none;
+  }
+
+  body:not(:has(#blueray-body)) a,
+  body:not(:has(#blueray-body)) button,
+  body:not(:has(#blueray-body)) input,
+  body:not(:has(#blueray-body)) select {
     cursor: none;
   }
 }
