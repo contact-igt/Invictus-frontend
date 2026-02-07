@@ -9,10 +9,14 @@
   --font-roboto: 'Roboto', sans-serif;
   --font-open-sans: 'Open Sans', sans-serif;
 
+  --font-sans: var(--font-jakarta), Arial, Helvetica, sans-serif;
+  --font-jakarta: var(--font-jakarta);
+
   --color-navy-deep: #001B3A;
   --color-navy-midnight: #022C5E;
   --color-gold: #FFD700;
 }
+
 
 a {
   text-decoration: none !important;
