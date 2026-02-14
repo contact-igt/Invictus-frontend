@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle, Mail, Phone, MapPin, Home } from 'lucide-react
 import ContactForm from '@/common/ContactForm';
 import ContactDetail from '@/common/ContactDetails';
 
-const chennaiMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.040704935981!2d80.06892431482202!3d12.84064629094151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f70d797226d9%3A0x6001d402973d0!2s75%2C%20Gangai%20Nagar%203rd%20St%2C%20Urapakkam%2C%20Chennai%2C%20Tamil%20Nadu%20603210!5e0!3m2!1sen!2sin!4v1625581234567!5m2!1sen!2sin";
+const chennaiMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.8361988796255!2d80.03545617339073!3d12.789142218855694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f9db37c214d7%3A0xaa963424e598b3de!2sVanginatan%20St%2C%20Maraimalai%20Nagar%2C%20Tamil%20Nadu%20603209!5e0!3m2!1sen!2sin!4v1771054986301!5m2!1sen!2sin";
 
 const ContactPage = () => {
     return (
@@ -63,7 +63,10 @@ const ContactPage = () => {
                             </h3>
                             <div className="flex items-start gap-4 font-body text-sm text-[#888]">
                                 <MapPin className="text-[#2AB182] shrink-0 mt-1" size={20} />
-                                <p>75, Gangai Nagar, 3rd Street, Urapakkam, Chennai, Tamil Nadu 603210.</p>
+                                <p>LIG 13/19, NH3,
+                                    Vanjinathan street,
+                                    Maraimalainagar,
+                                    Chennai - 603209</p>
                             </div>
                         </div>
                     </div>

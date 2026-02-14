@@ -105,7 +105,7 @@ const AboutPage = ({ onContactClick }) => {
               We Work Only With People Who Are <span className="text-[#2AB182]">Serious About Growth.</span>
             </h2>
             <p className="font-body text-[#888] text-lg mb-8">
-              We don't work with everyone—intentionally. If you want an agency that posts random reels and sends “engagement reports,” we’re not for you.
+              We don't work with everyone intentionally. If you want an agency that posts random reels and sends “engagement reports”, we’re not for you.
             </p>
             <div className="p-6 border-l-2 border-[#2AB182] bg-[#1A1A1A]/20">
               <p className="text-white font-bold font-display italic">

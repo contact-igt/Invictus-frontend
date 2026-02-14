@@ -17,17 +17,18 @@ const WhereWeArePage = ({ onContactClick }) => {
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Footprint.</span>
                     </h1>
                     <p className="font-body text-lg md:text-xl text-[#888] max-w-3xl">
-                        Invictus Global Tech works with growth-focused brands across India, Singapore, and the United States. We’re not everywhere — we’re exactly where serious founders need us.
+                        Invictus Global Tech works with growth-focused brands across India, the United States, Singapore, and the United Kingdom. We’re not everywhere — we’re exactly where serious founders need us.
                     </p>
                 </div>
             </section>
 
             {/* Global Presence Details */}
             <section className="border-y border-[#333] relative z-10 bg-[#1A1A1A]/30 backdrop-blur-sm">
-                <div className="max-w-[1600px] mx-auto grid lg:grid-cols-3">
+                <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 xl:grid-cols-2">
                     {/* India */}
                     <LocationCard
-                        title="India (HQ) — Headquarters"
+                        title="India — Headquarters"
+                        description="Our headquarters is based in India, where our core strategy, creative, and performance marketing teams operate to support clients globally."
                         services={[
                             "Performance Marketing", "Social Media Management", "Video Production & Branding",
                             "Web & App Development", "AI + Automation Services"
@@ -35,22 +36,30 @@ const WhereWeArePage = ({ onContactClick }) => {
                         industries="Healthcare, EdTech, Law Institutes, E-commerce, D2C, Automobile, Consultants, Manufacturing, Hospitals, FMCG & more."
                         isHQ={true}
                     />
-                    {/* Singapore */}
-                    <LocationCard
-                        title="Singapore — Clients Served"
-                        description="We work remotely with clients in Healthcare setups, E-commerce brands, Business consulting firms, and Training institutes."
-                        services={[
-                            "Meta & Google Ads Management", "Scaling campaigns", "Automation setups", "Web funnels"
-                        ]}
-                    />
                     {/* USA */}
                     <LocationCard
-                        title="United States — Clients Served"
+                        title="United States"
                         description="We are actively expanding into the US market with the support of our local team."
                         services={[
                             "Websites", "Performance Marketing funnels", "AI-driven automation setups", "Appointment generation pipelines"
                         ]}
                         industries="Healthcare RCM Companies (Wellinit), Doctors & Personal Brands, Consultants, Fitness/Education Brands, E-commerce Stores."
+                    />
+                    {/* Singapore */}
+                    <LocationCard
+                        title="Singapore"
+                        description="We work remotely with clients in Healthcare setups, E-commerce brands, Business consulting firms, and Training institutes."
+                        services={[
+                            "Meta & Google Ads Management", "Scaling campaigns", "Automation setups", "Web funnels"
+                        ]}
+                    />
+                    {/* UK */}
+                    <LocationCard
+                        title="United Kingdom"
+                        description="We are scaling our services into the UK as we continue to expand globally."
+                        services={[
+                            "Websites", "Performance Marketing funnels", "AI-driven automation setups", "Appointment generation pipelines"
+                        ]}
                     />
                 </div>
             </section>
@@ -67,7 +76,7 @@ const WhereWeArePage = ({ onContactClick }) => {
                     <div className="mb-12">
                         <h4 className="font-display text-xl text-[#2AB182] uppercase mb-4">Future Expansion</h4>
                         <div className="flex justify-center flex-wrap gap-x-8 gap-y-2 font-body text-white/80">
-                            <span>UAE</span> / <span>UK</span> / <span>Malaysia</span>
+                            <span>UAE</span> / <span>Malaysia</span>
                         </div>
                     </div>
                     <button
