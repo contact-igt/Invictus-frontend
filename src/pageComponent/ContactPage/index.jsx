@@ -64,8 +64,8 @@ const ContactPage = () => {
                             <div className="flex items-start gap-4 font-body text-sm text-[#888]">
                                 <MapPin className="text-[#2AB182] shrink-0 mt-1" size={20} />
                                 <p>LIG 13/19, NH3,
-                                    Vanjinathan street,
-                                    Maraimalainagar,
+                                    Vanjinathan Street,
+                                    Maraimalai Nagar,
                                     Chennai - 603209</p>
                             </div>
                         </div>
