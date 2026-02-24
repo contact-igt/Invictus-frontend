@@ -13,7 +13,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Montserrat:wght@200;400;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Montserrat:wght@200;400;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Covered+By+Your+Grace&family=Delicious+Handrawn&family=Epilogue:wght@400&display=swap"
           rel="stylesheet"
         />
         <Script
