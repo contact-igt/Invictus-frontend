@@ -72,9 +72,126 @@ const AboutPage = ({ onContactClick }) => {
   ];
 
   return (
-    <div className="pt-32 min-h-screen">
+    <div className="pt-21 min-h-screen">
+      <section className="py-16 md:py-32 lg:py-70 px-6 md:px-12 lg:px-20 border-t border-[#333] bg-[#0E0E0E] grid-bg overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24 max-w-[1600px] mx-auto">
+          {/* Left: Text Section */}
+          <div
+            className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center relative z-10"
+          >
+            <p
+              className="mb-4 uppercase text-center lg:text-left text-[28px] md:text-[36px] lg:text-[44px]"
+              style={{
+                fontFamily: "'Epilogue', sans-serif",
+                fontWeight: 400,
+                lineHeight: "90%",
+                letterSpacing: "-0.05em",
+                color: "white"
+              }}
+            >
+              ABOUT US
+            </p>
+            <div className="leading-[0.8] mb-0 relative text-center lg:text-left">
+              <span
+                className="block italic text-white text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem]"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontWeight: 500,
+                  marginLeft: "0.2rem"
+                }}
+              >
+                our
+              </span>
+              <span
+                className="block text-[#2AB182] font-bold not-italic text-[4.5rem] md:text-[6rem] lg:text-[7.5rem]"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  lineHeight: "0.85",
+                  letterSpacing: "-0.04em"
+                }}
+              >
+                PEOPLE
+              </span>
+              {/* Arrow image below PEOPLE */}
+              <img src="/assets/arrow1.png" alt="arrow" className="w-full max-w-[420px] mx-auto lg:mx-0 mt-2" style={{ height: 'auto', maxHeight: '35px', objectFit: 'contain' }} />
+            </div>
+            <div className="flex text-center mt-2 w-full lg:justify-start" >
+              <span
+                className="font-body text-white text-[1.2rem] md:text-[1.4rem] lg:text-[1.6rem] tracking-widest flex items-baseline justify-center lg:justify-start gap-2 w-full"
+                style={{ fontWeight: 400, letterSpacing: "0.08em" }}
+              >
+                MEET{" "}
+                <span
+                  className="italic text-[1.4rem] md:text-[1.6rem] lg:text-[1.8rem]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  the
+                </span>{" "}
+                TEAM
+              </span>
+            </div>
+          </div>
+
+          {/* Right: Team Collage */}
+          <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px] scale-[0.6] sm:scale-[0.7] md:scale-90 lg:scale-100 mt-20 sm:mt-24 lg:mt-0">
+            {/* Collage of team members, absolute positioning for overlap */}
+            <div className="absolute left-[-20%] top-[-20%]  md:left-[-45%]   md:top-[-15%] lg:left-[-25%] lg:top-[-15%] xl:left-[-15%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="IYYAPPAN" image="/assets/team/iyyappan.png" rotation={0} onClick={() => handleMemberClick(0)} />
+            </div>
+            <div className="absolute  left-[25%] top-[-55%]  md:left-[10%] md:top-[-40%] lg:left-[30%] lg:top-[-40%] xl:left-[30%] xl:top-[-35%] z-20 transform hover:scale-110 transition-transform">
+              <TeamMember name="DR. SENTHIL" image="/assets/team/senthil.png" rotation={2} onClick={() => handleMemberClick(1)} />
+            </div>
+            <div className="absolute left-[80%] top-[-30%]  md:right-[20%] md:top-[-30%] lg:right-[-10%] lg:top-[-25%] xl:right-[-10%] xl:top-[-20%] z-10 transform hover:scale-110 transition-transform">
+              <TeamMember name="THARIQ" image="/assets/team/thariq.png" rotation={3} onClick={() => handleMemberClick(2)} />
+            </div>
+            <div className="absolute left-[-20%] top-[20%]   md:left-[-35%] md:top-[10%] lg:left-[-10%] lg:top-[20%] xl:left-[-10%] xl:top-[30%] z-40 transform hover:scale-110 transition-transform">
+              <TeamMember name="KARAN" image="/assets/team/karan.png" rotation={-3} onClick={() => handleMemberClick(3)} />
+            </div>
+            <div className="absolute left-[30%] bottom-[40%]   md:left-[20%] md:top-[30%] lg:left-[35%] lg:top-[24%] xl:left-[40%] xl:top-[35%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember
+                name="DIKSHITA"
+                image="/assets/team/dikshita.png"
+                rotation={4}
+                onClick={() => handleMemberClick(4)}
+              />
+            </div>
+            <div className="absolute  left-[30%] top-[-10%]  md:left-[25%] md:top-[-15%] lg:left-[30%] lg:top-[-10%] xl:left-[30%] xl:top-[0%] z-20 transform hover:scale-110 transition-transform">
+              <TeamMember name="AALAM" image="/assets/team/alam.png" rotation={-2} onClick={() => handleMemberClick(5)} />
+            </div>
+            <div className="absolute  right-[-20%] top-[10%]  md:right-[-15%] md:top-[10%] lg:right-[-20%] lg:top-[10%] xl:right-[-10%] xl:top-[15%] z-10 transform hover:scale-110 transition-transform">
+              <TeamMember name="SUSHIL" image="/assets/team/sushil.png" rotation={5} onClick={() => handleMemberClick(6)} />
+            </div>
+            <div className="absolute  left-[-20%] bottom-[10%]  md:left-[-35%] md:bottom-[15%] lg:left-[-10%] lg:bottom-[20%] xl:left-[-10%] xl:bottom-[5%] z-50 transform hover:scale-110 transition-transform">
+              <TeamMember name="VEERAVEL" image="/assets/team/veeravel.png" rotation={-6} onClick={() => handleMemberClick(7)} />
+            </div>
+            <div className="absolute   left-[-20%] bottom-[-30%]  md:left-[-15%] md:bottom-[-10%] lg:left-[-15%] lg:bottom-[-20%] xl:left-[-15%] xl:bottom-[-35%] z-40 transform hover:scale-110 transition-transform">
+              <TeamMember name="CREATIVE" image="/assets/team/creative.png" rotation={-3} onClick={() => handleMemberClick(8)} />
+            </div>
+            <div className="absolute  left-[50%] bottom-[-5%]  md:left-[53%] md:bottom-[10%] lg:left-[53%] lg:bottom-[10%] xl:left-[50%] xl:bottom-[0%] -translate-x-1/2 z-[60] transform hover:scale-110 transition-transform">
+              <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={2} onClick={() => handleMemberClick(9)} />
+            </div>
+            <div className="absolute right-[-25%] bottom-[20%]  md:right-[-15%] md:bottom-[30%] lg:right-[-15%] lg:bottom-[30%] xl:right-[-10%] xl:bottom-[10%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="ABHILASH" image="/assets/team/abilash.png" rotation={4} onClick={() => handleMemberClick(10)} />
+            </div>
+            <div className="absolute right-[-25%] bottom-[-20%]  md:right-[-15%] md:bottom-[-10%] lg:right-[-15%] lg:bottom-[-10%] xl:right-[-10%] xl:bottom-[-30%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="TANIA" image="/assets/team/tania.png" rotation={4} onClick={() => handleMemberClick(11)} />
+            </div>
+            <div className="absolute right-[30%] bottom-[-40%]  md:left-[30%] md:bottom-[-25%] lg:left-[30%] lg:bottom-[-25%] xl:left-[30%] xl:bottom-[-35%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="SUMITH" image="/assets/team/sumith.png" rotation={4} onClick={() => handleMemberClick(12)} />
+            </div>
+          </div>
+        </div>
+
+        <TeamModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          teamMembers={teamMembers}
+          initialSlide={selectedMemberIndex !== null ? selectedMemberIndex : 0}
+        />
+      </section>
+
       {/* Hero */}
-      <section className="px-6 md:px-12 mb-24">
+      <section className="px-6 md:px-12 mb-24 pt-21">
         <div className="max-w-[1600px] mx-auto">
           <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
@@ -266,122 +383,7 @@ const AboutPage = ({ onContactClick }) => {
         </div>
       </section>
 
-      <section className="py-16 md:py-32 lg:py-70 px-6 md:px-12 lg:px-20 border-t border-[#333] bg-[#0E0E0E] grid-bg overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24 max-w-[1600px] mx-auto">
-          {/* Left: Text Section */}
-          <div
-            className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center relative z-10"
-          >
-            <p
-              className="mb-4 uppercase text-center lg:text-left text-[28px] md:text-[36px] lg:text-[44px]"
-              style={{
-                fontFamily: "'Epilogue', sans-serif",
-                fontWeight: 400,
-                lineHeight: "90%",
-                letterSpacing: "-0.05em",
-                color: "white"
-              }}
-            >
-              ABOUT US
-            </p>
-            <div className="leading-[0.8] mb-0 relative text-center lg:text-left">
-              <span
-                className="block italic text-white text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem]"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontWeight: 500,
-                  marginLeft: "0.2rem"
-                }}
-              >
-                our
-              </span>
-              <span
-                className="block text-[#2AB182] font-bold not-italic text-[4.5rem] md:text-[6rem] lg:text-[7.5rem]"
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  lineHeight: "0.85",
-                  letterSpacing: "-0.04em"
-                }}
-              >
-                PEOPLE
-              </span>
-              {/* Arrow image below PEOPLE */}
-              <img src="/assets/arrow1.png" alt="arrow" className="w-full max-w-[420px] mx-auto lg:mx-0 mt-2" style={{ height: 'auto', maxHeight: '35px', objectFit: 'contain' }} />
-            </div>
-            <div className="flex text-center mt-2 w-full lg:justify-start" >
-              <span
-                className="font-body text-white text-[1.2rem] md:text-[1.4rem] lg:text-[1.6rem] tracking-widest flex items-baseline justify-center lg:justify-start gap-2 w-full"
-                style={{ fontWeight: 400, letterSpacing: "0.08em" }}
-              >
-                MEET{" "}
-                <span
-                  className="italic text-[1.4rem] md:text-[1.6rem] lg:text-[1.8rem]"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  the
-                </span>{" "}
-                TEAM
-              </span>
-            </div>
-          </div>
 
-          {/* Right: Team Collage */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px] scale-[0.6] sm:scale-[0.7] md:scale-90 lg:scale-100 mt-20 sm:mt-24 lg:mt-0">
-            {/* Collage of team members, absolute positioning for overlap */}
-            <div className="absolute left-[-20%] top-[-20%]  md:left-[-45%]   md:top-[-15%] lg:left-[-25%] lg:top-[-15%] xl:left-[-15%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="IYYAPPAN" image="/assets/team/iyyappan.png" rotation={0} onClick={() => handleMemberClick(0)} />
-            </div>
-            <div className="absolute  left-[25%] top-[-55%]  md:left-[10%] md:top-[-40%] lg:left-[30%] lg:top-[-40%] xl:left-[30%] xl:top-[-35%] z-20 transform hover:scale-110 transition-transform">
-              <TeamMember name="DR. SENTHIL" image="/assets/team/senthil.png" rotation={2} onClick={() => handleMemberClick(1)} />
-            </div>
-            <div className="absolute left-[80%] top-[-30%]  md:right-[20%] md:top-[-30%] lg:right-[-10%] lg:top-[-25%] xl:right-[-10%] xl:top-[-20%] z-10 transform hover:scale-110 transition-transform">
-              <TeamMember name="THARIQ" image="/assets/team/thariq.png" rotation={3} onClick={() => handleMemberClick(2)} />
-            </div>
-            <div className="absolute left-[-20%] top-[20%]   md:left-[-35%] md:top-[10%] lg:left-[-10%] lg:top-[20%] xl:left-[-10%] xl:top-[30%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="KARAN" image="/assets/team/karan.png" rotation={-3} onClick={() => handleMemberClick(3)} />
-            </div>
-            <div className="absolute left-[30%] bottom-[40%]   md:left-[20%] md:top-[30%] lg:left-[35%] lg:top-[24%] xl:left-[40%] xl:top-[35%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember
-                name="DIKSHITA"
-                image="/assets/team/dikshita.png"
-                rotation={4}
-                onClick={() => handleMemberClick(4)}
-              />
-            </div>
-            <div className="absolute  left-[30%] top-[-10%]  md:left-[25%] md:top-[-15%] lg:left-[30%] lg:top-[-10%] xl:left-[30%] xl:top-[0%] z-20 transform hover:scale-110 transition-transform">
-              <TeamMember name="AALAM" image="/assets/team/alam.png" rotation={-2} onClick={() => handleMemberClick(5)} />
-            </div>
-            <div className="absolute  right-[-20%] top-[10%]  md:right-[-15%] md:top-[10%] lg:right-[-20%] lg:top-[10%] xl:right-[-10%] xl:top-[15%] z-10 transform hover:scale-110 transition-transform">
-              <TeamMember name="SUSHIL" image="/assets/team/sushil.png" rotation={5} onClick={() => handleMemberClick(6)} />
-            </div>
-            <div className="absolute  left-[-20%] bottom-[10%]  md:left-[-35%] md:bottom-[15%] lg:left-[-10%] lg:bottom-[20%] xl:left-[-10%] xl:bottom-[5%] z-50 transform hover:scale-110 transition-transform">
-              <TeamMember name="VEERAVEL" image="/assets/team/veeravel.png" rotation={-6} onClick={() => handleMemberClick(7)} />
-            </div>
-            <div className="absolute   left-[-20%] bottom-[-30%]  md:left-[-15%] md:bottom-[-10%] lg:left-[-15%] lg:bottom-[-20%] xl:left-[-15%] xl:bottom-[-35%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="CREATIVE" image="/assets/team/creative.png" rotation={-3} onClick={() => handleMemberClick(8)} />
-            </div>
-            <div className="absolute  left-[50%] bottom-[-5%]  md:left-[53%] md:bottom-[10%] lg:left-[53%] lg:bottom-[10%] xl:left-[50%] xl:bottom-[0%] -translate-x-1/2 z-[60] transform hover:scale-110 transition-transform">
-              <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={2} onClick={() => handleMemberClick(9)} />
-            </div>
-            <div className="absolute right-[-25%] bottom-[20%]  md:right-[-15%] md:bottom-[30%] lg:right-[-15%] lg:bottom-[30%] xl:right-[-10%] xl:bottom-[10%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="ABHILASH" image="/assets/team/abilash.png" rotation={4} onClick={() => handleMemberClick(10)} />
-            </div>
-            <div className="absolute right-[-25%] bottom-[-20%]  md:right-[-15%] md:bottom-[-10%] lg:right-[-15%] lg:bottom-[-10%] xl:right-[-10%] xl:bottom-[-30%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="TANIA" image="/assets/team/tania.png" rotation={4} onClick={() => handleMemberClick(11)} />
-            </div>
-            <div className="absolute right-[30%] bottom-[-40%]  md:left-[30%] md:bottom-[-25%] lg:left-[30%] lg:bottom-[-25%] xl:left-[30%] xl:bottom-[-35%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="SUMITH" image="/assets/team/sumith.png" rotation={4} onClick={() => handleMemberClick(12)} />
-            </div>
-          </div>
-        </div>
-
-        <TeamModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          teamMembers={teamMembers}
-          initialSlide={selectedMemberIndex !== null ? selectedMemberIndex : 0}
-        />
-      </section>
 
       {/* Final CTA */}
       <section className="py-16 md:py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
