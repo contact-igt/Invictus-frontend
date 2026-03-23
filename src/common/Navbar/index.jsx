@@ -65,11 +65,11 @@ const Navbar = () => {
               Contact
             </Link>
             <a
-              href="https://whatsnexus.kingpinventures.in/"
+              href="https://whatsnexus.invictusglobaltech.com/"
               target='_blank'
-              className="relative px-6 py-3 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-white font-semibold rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(42,177,130,0.5)] group"
+              className="relative px-6 py-3 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-black font-semibold rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(42,177,130,0.5)] group"
             >
-              <span className="relative z-10">WhatsNexus</span>
+              <span className="relative z-10 text-black">WhatsNexus</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#22956d] to-[#1f8560] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           </div>
@@ -88,7 +88,7 @@ const Navbar = () => {
           <Link href="/global" className="hover:text-[#2AB182]">Where We Are</Link>
           <Link href="/about" className="hover:text-[#2AB182]">About</Link>
           <Link href="/contact" className="hover:text-[#2AB182]">Contact</Link>
-          <Link href="https://whatsnexus.kingpinventures.in/" className="text-[#2AB182] hover:text-white transition-colors">WhatsNexus</Link>
+          <Link href="https://whatsnexus.invictusglobaltech.com/" className="text-[#2AB182] hover:text-white transition-colors">WhatsNexus</Link>
         </div>
       </div>
     </>
