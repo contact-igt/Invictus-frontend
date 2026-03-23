@@ -42,7 +42,7 @@ const WhatsNexus = () => {
 
                     <div className="flex flex-col md:flex-row gap-6 animate-slideUp delay-200">
                         <a
-                            href="https://whatsnexus.invictusglobaltech.com/"
+                            href="https://whatsnexus.kingpinventures.in/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-white font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.4)] hover:scale-105"
@@ -205,7 +205,7 @@ const WhatsNexus = () => {
                 <div className="text-center pb-12">
                     <h2 className="text-3xl font-bold mb-6">Ready to Automate Your Success?</h2>
                     <a
-                        href="https://whatsnexus.invictusglobaltech.com/"
+                        href="https://whatsnexus.kingpinventures.in/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black hover:bg-gray-100 font-bold text-xl rounded-full transition-all duration-300 hover:scale-105"
