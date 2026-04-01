@@ -93,7 +93,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
             </section>
 
             {/* Client List (Optional Section) */}
-            <section className="py-16 md:py-24 px-6 md:px-12 border-b border-[#333] bg-[#0E0E0E]">
+            {/* <section className="py-16 md:py-24 px-6 md:px-12 border-b border-[#333] bg-[#0E0E0E]">
                 <div className="max-w-[2000px] mx-auto">
                     <h2 className="font-display text-4xl font-bold uppercase mb-12 text-white text-center">Highlighted Clients</h2>
                     <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 max-w-7xl mx-auto ">
@@ -104,7 +104,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
             {/* Closing CTA */}
