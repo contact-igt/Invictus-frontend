@@ -107,7 +107,6 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
             </section>
 
 
-            {/* Closing CTA */}
             <section className="py-16 md:py-32 border-t border-[#333] text-center px-6 bg-[#1A1A1A]/30">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="font-display text-4xl md:text-6xl text-white font-bold mb-8 leading-tight">
