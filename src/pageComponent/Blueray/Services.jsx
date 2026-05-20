@@ -14,7 +14,7 @@ const Services = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Card 1 */}
                     <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-deep shadow-sm hover:translate-y-[-5px] transition-all duration-300 flex flex-col">
-                        <div className="w-12 h-12 bg-navy-deep text-white rounded-lg flex items-center justify-center mb-6">
+                        <div className="w-12 h-12 bg-navy-deep text-[var(--text-primary)] rounded-lg flex items-center justify-center mb-6">
                             <BookOpen size={24} />
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-navy-deep font-montserrat">NDT Training (ASNT Level II)</h3>
@@ -39,7 +39,7 @@ const Services = () => {
 
                     {/* Card 3 */}
                     <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-midnight shadow-sm hover:translate-y-[-5px] transition-all duration-300 flex flex-col">
-                        <div className="w-12 h-12 bg-navy-midnight text-white rounded-lg flex items-center justify-center mb-6">
+                        <div className="w-12 h-12 bg-navy-midnight text-[var(--text-primary)] rounded-lg flex items-center justify-center mb-6">
                             <PlaneTakeoff size={24} />
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-navy-deep font-montserrat">Overseas Placement Support</h3>

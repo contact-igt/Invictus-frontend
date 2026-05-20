@@ -77,7 +77,7 @@ const TeamModal = ({ isOpen, onClose, teamMembers, initialSlide = 0 }) => {
             {/* Close Button */}
             <button
                 onClick={onClose}
-                className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors z-[1010]"
+                className="absolute top-8 right-8 text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] transition-colors z-[1010]"
             >
                 <X size={40} strokeWidth={1} />
             </button>
@@ -86,14 +86,14 @@ const TeamModal = ({ isOpen, onClose, teamMembers, initialSlide = 0 }) => {
                 {/* Navigation Arrows */}
                 <button
                     onClick={() => sliderRef.current?.slickPrev()}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full hidden md:flex items-center justify-center text-white/30 hover:text-white transition-colors h-full px-8"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full hidden md:flex items-center justify-center text-[var(--text-primary)]/30 hover:text-[var(--text-primary)] transition-colors h-full px-8"
                 >
                     <ChevronLeft size={60} strokeWidth={1} />
                 </button>
 
                 <button
                     onClick={() => sliderRef.current?.slickNext()}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full hidden md:flex items-center justify-center text-white/30 hover:text-white transition-colors h-full px-8"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full hidden md:flex items-center justify-center text-[var(--text-primary)]/30 hover:text-[var(--text-primary)] transition-colors h-full px-8"
                 >
                     <ChevronRight size={60} strokeWidth={1} />
                 </button>
@@ -115,7 +115,7 @@ const TeamModal = ({ isOpen, onClose, teamMembers, initialSlide = 0 }) => {
             </div>
 
             {/* Background hint */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/20 text-sm tracking-[0.3em] uppercase pointer-events-none text-center px-4 w-full">
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[var(--text-primary)]/20 text-sm tracking-[0.3em] uppercase pointer-events-none text-center px-4 w-full">
                 Use arrows or drag to navigate
             </div>
         </div>

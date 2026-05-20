@@ -16,7 +16,7 @@ const Process = () => {
 
                         {/* Step 1 */}
                         <div className="flex items-start gap-6 relative">
-                            <div className="w-16 h-16 bg-navy-deep text-white rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">1</div>
+                            <div className="w-16 h-16 bg-navy-deep text-[var(--text-primary)] rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">1</div>
                             <div className="bg-white p-6 rounded-lg shadow-sm w-full">
                                 <h4 className="text-lg font-bold text-navy-deep mb-2 font-montserrat">Enquiry / WhatsApp</h4>
                                 <p className="text-slate-600">Reach out to us via call or message to express your interest.</p>
@@ -25,7 +25,7 @@ const Process = () => {
 
                         {/* Step 2 */}
                         <div className="flex items-start gap-6 relative">
-                            <div className="w-16 h-16 bg-navy-midnight text-white rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">2</div>
+                            <div className="w-16 h-16 bg-navy-midnight text-[var(--text-primary)] rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">2</div>
                             <div className="bg-white p-6 rounded-lg shadow-sm w-full">
                                 <h4 className="text-lg font-bold text-navy-deep mb-2 font-montserrat">Profile Discussion</h4>
                                 <p className="text-slate-600 text-sm">One-on-one discussion about your career goals and ideal job category.</p>
@@ -34,7 +34,7 @@ const Process = () => {
 
                         {/* Step 3 */}
                         <div className="flex items-start gap-6 relative">
-                            <div className="w-16 h-16 bg-navy-deep text-white rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">3</div>
+                            <div className="w-16 h-16 bg-navy-deep text-[var(--text-primary)] rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">3</div>
                             <div className="bg-white p-6 rounded-lg shadow-sm w-full">
                                 <h4 className="text-lg font-bold text-navy-deep mb-2 font-montserrat">Training / Guidance Plan</h4>
                                 <p className="text-slate-600">Structured ASNT Level II training and certification roadmap.</p>
@@ -43,7 +43,7 @@ const Process = () => {
 
                         {/* Step 4 */}
                         <div className="flex items-start gap-6 relative">
-                            <div className="w-16 h-16 bg-navy-midnight text-white rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">4</div>
+                            <div className="w-16 h-16 bg-navy-midnight text-[var(--text-primary)] rounded-full flex items-center justify-center font-bold text-xl z-10 shrink-0 shadow-lg">4</div>
                             <div className="bg-white p-6 rounded-lg shadow-sm w-full">
                                 <h4 className="text-lg font-bold text-navy-deep mb-2 font-montserrat">Preparation Support</h4>
                                 <p className="text-slate-600">Comprehensive resume correction and interview preparation training.</p>

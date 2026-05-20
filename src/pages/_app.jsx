@@ -5,6 +5,8 @@ import Footer from '@/common/Footer';
 import { useRouter } from 'next/router';
 import CustomCursor from '@/common/Cursor';
 import BackgroundAnimation from '@/common/BackgroundAnimation';
+import { ThemeProvider } from '@/context/ThemeContext';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -17,16 +19,19 @@ export default function App({ Component, pageProps }) {
   const isBluerayPage = pathname === '/blueray';
 
   return (
-    <div className={`min-h-screen ${jakarta.variable} ${!isBluerayPage ? 'text-[#E0E0E0] font-sans selection:bg-[#2AB182] selection:text-black cursor-none overflow-x-hidden relative' : ''}`}>
-      {!isBluerayPage && (
-        <>
-          <CustomCursor />
-          <BackgroundAnimation />
-          <Navbar />
-        </>
-      )}
-      <Component {...pageProps} />
-      {!isBluerayPage && <Footer />}
-    </div>
+    <ThemeProvider>
+      <div className={`min-h-screen ${jakarta.variable} ${!isBluerayPage ? 'font-sans selection:bg-[#2AB182] selection:text-black cursor-none overflow-x-hidden relative' : ''}`}>
+        {!isBluerayPage && (
+          <>
+            <CustomCursor />
+            <BackgroundAnimation />
+            <Navbar />
+            <ThemeToggle />
+          </>
+        )}
+        <Component {...pageProps} />
+        {!isBluerayPage && <Footer />}
+      </div>
+    </ThemeProvider>
   );
-}
+};

@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTheme } from '@/context/ThemeContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Close menu when route changes
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const handleRouteChange = () => setIsMenuOpen(false);
     router.events.on('routeChangeStart', handleRouteChange);
     return () => {
@@ -22,18 +26,19 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed w-full z-50 mix-blend-normal bg-[#0E0E0E]/80 backdrop-blur-md border-b border-[#333]">
+      <nav className="fixed w-full z-50 mix-blend-normal bg-[var(--navbar-bg)] backdrop-blur-md border-b border-[var(--border-subtle)]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
             <img
-              src="/assets/invictus_logo.png"
+              src="/assets/invictus_logo2.png"
               alt="Invictus Global Tech"
-              className="h-8 w-auto invert hue-rotate-180 saturate-150 brightness-90 transition-all duration-300"
+              className={`h-10 md:h-12 w-auto transition-all duration-300 ${mounted && theme === 'dark' ? 'invert hue-rotate-180 saturate-150 brightness-90' : 'invert hue-rotate-180 saturate-150 brightness-90'}`}
+              style={{ filter: mounted && theme === 'light' ? 'none' : '' }}
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-12 text-xs font-bold tracking-[0.2em] uppercase font-body text-white">
+          <div className="hidden lg:flex items-center gap-12 text-xs font-bold tracking-[0.2em] uppercase font-body text-[var(--text-primary)]">
             <Link
               href="/services"
               className={`relative hover:text-[#2AB182] transition-colors ${isActive('/services') ? 'text-[#2AB182]' : ''}`}
@@ -74,21 +79,21 @@ const Navbar = () => {
             </a>
           </div>
 
-          <button onClick={toggleMenu} className="lg:hidden text-white hover:text-[#2AB182] transition-colors p-2 rounded-lg">
+          <button onClick={toggleMenu} className="lg:hidden text-[var(--text-primary)] hover:text-[#2AB182] transition-colors p-2 rounded-lg">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-[#0E0E0E] z-40 flex items-center justify-center transition-transform duration-500 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div className={`fixed inset-0 bg-[var(--bg-primary)] z-40 flex items-center justify-center transition-transform duration-500 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="flex flex-col text-center gap-8 font-display text-4xl uppercase font-bold">
           <Link href="/services" className="hover:text-[#2AB182]">Services</Link>
           <Link href="/clients" className="hover:text-[#2AB182]">Clients & Industries</Link>
           <Link href="/global" className="hover:text-[#2AB182]">Where We Are</Link>
           <Link href="/about" className="hover:text-[#2AB182]">About</Link>
           <Link href="/contact" className="hover:text-[#2AB182]">Contact</Link>
-          <Link href="https://whatsnexus.invictusglobaltech.com/" className="text-[#2AB182] hover:text-white transition-colors">WhatsNexus</Link>
+          <Link href="https://whatsnexus.invictusglobaltech.com/" className="text-[#2AB182] hover:text-[var(--text-primary)] transition-colors">WhatsNexus</Link>
         </div>
       </div>
     </>

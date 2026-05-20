@@ -3,7 +3,7 @@ import { Award, CheckCircle, MessageCircle, PhoneCall, Globe2 } from 'lucide-rea
 
 const Hero = () => {
     return (
-        <section className="bg-gradient-to-br from-navy-deep to-navy-midnight text-white py-20 px-4 relative overflow-hidden font-open-sans">
+        <section className="bg-gradient-to-br from-navy-deep to-navy-midnight text-[var(--text-primary)] py-20 px-4 relative overflow-hidden font-open-sans">
             <div className="container mx-auto flex flex-col lg:flex-row items-center gap-12">
                 <div className="lg:w-1/2 z-10">
                     <div className="inline-flex items-center gap-2 bg-gold/20 border border-gold/30 rounded-full px-4 py-1 mb-6">
@@ -33,10 +33,10 @@ const Hero = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-4">
-                        <a href="https://wa.me/917010606321" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-md font-bold flex items-center gap-2 transition shadow-lg">
+                        <a href="https://wa.me/917010606321" className="bg-green-600 hover:bg-green-700 text-[var(--text-primary)] px-8 py-3 rounded-md font-bold flex items-center gap-2 transition shadow-lg">
                             <MessageCircle className="w-5 h-5" /> WhatsApp Now
                         </a>
-                        <a href="tel:7010606321" className="border-2 border-white hover:bg-white hover:text-navy-deep px-8 py-3 rounded-md font-bold flex items-center gap-2 transition">
+                        <a href="tel:7010606321" className="border-2 border-white hover:bg-[var(--text-primary)] hover:text-navy-deep px-8 py-3 rounded-md font-bold flex items-center gap-2 transition">
                             <PhoneCall className="w-5 h-5" /> Call Now
                         </a>
                     </div>
