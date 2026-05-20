@@ -5,6 +5,19 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Anti-FOUC: set theme before first paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('invictus-theme') || 'dark';
+                  document.documentElement.setAttribute('data-theme', t);
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         {/* <link rel="icon" href="/assets/favicon.png" /> */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

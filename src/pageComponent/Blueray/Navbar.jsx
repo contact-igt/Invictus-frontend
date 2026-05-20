@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <>
             {/* DIV 1 — Top Bar */}
-            <div className="bg-navy-deep text-white py-2 px-4 border-b border-navy-midnight font-open-sans">
+            <div className="bg-navy-deep text-[var(--text-primary)] py-2 px-4 border-b border-navy-midnight font-open-sans">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm gap-2">
                     <div className="flex items-center gap-4">
                         <a href="mailto:senthilvadi@gmail.com" className="flex items-center gap-2 hover:text-gold transition">

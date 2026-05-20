@@ -9,14 +9,14 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
             onClick={onClose}
         >
             <div
-                className="relative bg-[#0E0E0E] rounded-2xl max-w-2xl w-full shadow-[0_0_80px_rgba(42,177,130,0.2)] animate-scaleIn overflow-hidden group/modal"
+                className="relative bg-[var(--bg-primary)] rounded-2xl max-w-2xl w-full shadow-[0_0_80px_rgba(42,177,130,0.2)] animate-scaleIn overflow-hidden group/modal"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Glowing Border Gradient */}
                 <div className="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-[#2AB182] via-transparent to-[#1a6e50] opacity-50 pointer-events-none"></div>
 
                 {/* Inner Content Container */}
-                <div className="relative bg-[#0E0E0E] rounded-[14px] overflow-hidden h-full">
+                <div className="relative bg-[var(--bg-primary)] rounded-[14px] overflow-hidden h-full">
 
                     {/* Close Button */}
                     <button
@@ -24,7 +24,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                             e.stopPropagation();
                             onClose();
                         }}
-                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full text-gray-400 hover:text-white transition-all duration-200 z-[60] cursor-pointer group/close"
+                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-[var(--text-primary)]/10 rounded-full text-gray-400 hover:text-[var(--text-primary)] transition-all duration-200 z-[60] cursor-pointer group/close"
                         aria-label="Close popup"
                     >
                         <svg className="w-5 h-5 transition-transform duration-300 group-hover/close:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
                             <div className="relative flex items-center justify-center gap-2 mb-3">
-                                <h2 className="relative font-sans font-bold text-3xl md:text-3xl text-white tracking-tight">
+                                <h2 className="relative font-sans font-bold text-3xl md:text-3xl text-[var(--text-primary)] tracking-tight">
                                     WhatsNexus<span className="text-[#2AB182] inline-block w-1.5 h-1.5 bg-[#2AB182] ml-1 mb-0"></span>
                                     <span className="absolute top-0 -right-12 px-2 py-[4px] mb-4 rounded-full border border-[#2AB182]/30 bg-[#2AB182]/10 text-[#2AB182] text-[9px] font-bold tracking-wider">
                                         BETA
@@ -75,7 +75,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-white mb-1 group-hover:text-[#2AB182] transition-colors">{feature.title}</h3>
+                                        <h3 className="font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[#2AB182] transition-colors">{feature.title}</h3>
                                         <p className="text-sm text-gray-400">{feature.desc}</p>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                                 href="https://whatsnexus.invictusglobaltech.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-white font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.6)] hover:scale-105"
+                                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-[var(--text-primary)] font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.6)] hover:scale-105"
                                 onClick={onClose}
                             >
                                 <span className="relative z-10">Explore WhatsNexus</span>
@@ -103,7 +103,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                                 {/* Shine Effect */}
                                 <div className="absolute inset-0 -translate-x-full group-hover:animate-shine bg-gradient-to-r from-transparent via-white/20 to-transparent z-20"></div>
                             </a>
-                            <p className="text-sm text-gray-500 mt-4 cursor-pointer hover:text-white transition-colors" onClick={onClose}>Maybe later</p>
+                            <p className="text-sm text-gray-500 mt-4 cursor-pointer hover:text-[var(--text-primary)] transition-colors" onClick={onClose}>Maybe later</p>
                         </div>
                     </div>
 

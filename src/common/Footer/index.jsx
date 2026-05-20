@@ -5,7 +5,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest text-[#888] font-body relative z-10 bg-[#0E0E0E]/80 backdrop-blur-sm border-t border-[#333]">
+    <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest text-[var(--text-muted)] font-body relative z-10 bg-[var(--navbar-bg)] backdrop-blur-sm border-t border-[var(--border-subtle)]">
       <span>© 2025 Invictus Global Tech</span>
       <div className="flex gap-8 mt-6 md:mt-0">
         <a

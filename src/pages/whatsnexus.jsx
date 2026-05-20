@@ -10,7 +10,7 @@ const WhatsNexus = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0E0E0E] font-jakarta text-white pt-20 px-6 md:px-12 relative overflow-hidden">
+        <div className="min-h-screen bg-[var(--bg-primary)] font-jakarta text-[var(--text-primary)] pt-20 px-6 md:px-12 relative overflow-hidden">
             <Head>
                 <title>WhatsNexus | Invictus Global Tech</title>
                 <meta name="description" content="Discover WhatsNexus - Our latest product." />
@@ -45,7 +45,7 @@ const WhatsNexus = () => {
                             href="https://whatsnexus.invictusglobaltech.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-white font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.4)] hover:scale-105"
+                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-[var(--text-primary)] font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.4)] hover:scale-105"
                         >
                             <span className="relative z-10">Get Started Now</span>
                             <svg className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@ const WhatsNexus = () => {
                             <div className="absolute inset-0 bg-gradient-to-r from-[#22956d] to-[#2AB182] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
                         <button
-                            className="px-8 py-4 bg-transparent border border-[#333] hover:border-[#2AB182] text-white rounded-lg transition-all duration-300 hover:bg-[#2AB182]/5"
+                            className="px-8 py-4 bg-transparent border border-[var(--border-subtle)] hover:border-[#2AB182] text-[var(--text-primary)] rounded-lg transition-all duration-300 hover:bg-[#2AB182]/5"
                             onClick={() => document.getElementById('demo').scrollIntoView({ behavior: 'smooth' })}
                         >
                             View Demo
@@ -102,12 +102,12 @@ const WhatsNexus = () => {
                             )
                         }
                     ].map((feature, i) => (
-                        <div key={i} className="p-8 rounded-2xl bg-[#111] border border-[#222] hover:border-[#2AB182]/50 hover:bg-[#1A1A1A] transition-all duration-300 group">
+                        <div key={i} className="p-8 rounded-2xl bg-[#111] border border-[var(--border-subtle)] hover:border-[#2AB182]/50 hover:bg-[var(--bg-card)] transition-all duration-300 group">
                             <div className="w-12 h-12 bg-[#2AB182]/10 rounded-lg flex items-center justify-center text-[#2AB182] mb-6 group-hover:scale-110 transition-transform">
                                 {feature.icon}
                             </div>
                             <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                            <p className="text-[#888] leading-relaxed">{feature.desc}</p>
+                            <p className="text-[var(--text-muted)] leading-relaxed">{feature.desc}</p>
                         </div>
                     ))}
                 </div>
@@ -116,24 +116,24 @@ const WhatsNexus = () => {
                 <div id="demo" className="mb-32">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-bold mb-4">Experience the Intelligence</h2>
-                        <p className="text-[#888]">See how WhatsNexus handles conversations naturally.</p>
+                        <p className="text-[var(--text-muted)]">See how WhatsNexus handles conversations naturally.</p>
                     </div>
 
-                    <div className="max-w-4xl mx-auto bg-[#1A1A1A] rounded-2xl border border-[#333] overflow-hidden shadow-2xl relative">
+                    <div className="max-w-4xl mx-auto bg-[var(--bg-card)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden shadow-2xl relative">
                         {/* Fake Browser Bar */}
-                        <div className="bg-[#111] px-4 py-3 border-b border-[#333] flex items-center gap-2">
+                        <div className="bg-[#111] px-4 py-3 border-b border-[var(--border-subtle)] flex items-center gap-2">
                             <div className="flex gap-1.5">
                                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
                             </div>
-                            <div className="mx-auto text-xs text-[#666] font-mono">whats-nexus-demo.exe</div>
+                            <div className="mx-auto text-xs text-[var(--text-muted)] font-mono">whats-nexus-demo.exe</div>
                         </div>
 
                         <div className="grid md:grid-cols-[250px_1fr] h-[500px]">
                             {/* Sidebar */}
-                            <div className="bg-[#111] border-r border-[#333] p-4 hidden md:block">
-                                <div className="text-xs font-bold text-[#666] uppercase mb-4">Active Chats</div>
+                            <div className="bg-[#111] border-r border-[var(--border-subtle)] p-4 hidden md:block">
+                                <div className="text-xs font-bold text-[var(--text-muted)] uppercase mb-4">Active Chats</div>
                                 <div className="space-y-2">
                                     <div className="p-3 bg-[#2AB182]/10 border border-[#2AB182]/20 rounded-lg cursor-pointer">
                                         <div className="font-semibold text-sm">New Lead (Sarah)</div>
@@ -141,22 +141,22 @@ const WhatsNexus = () => {
                                     </div>
                                     <div className="p-3 rounded-lg hover:bg-[#222] cursor-pointer opacity-60">
                                         <div className="font-semibold text-sm">Support #4291</div>
-                                        <div className="text-xs text-[#666] mt-1">Resolved</div>
+                                        <div className="text-xs text-[var(--text-muted)] mt-1">Resolved</div>
                                     </div>
                                     <div className="p-3 rounded-lg hover:bg-[#222] cursor-pointer opacity-60">
                                         <div className="font-semibold text-sm">Booking Inquiry</div>
-                                        <div className="text-xs text-[#666] mt-1">Waiting</div>
+                                        <div className="text-xs text-[var(--text-muted)] mt-1">Waiting</div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Chat Area */}
-                            <div className="bg-[#0E0E0E] flex flex-col">
+                            <div className="bg-[var(--bg-primary)] flex flex-col">
                                 <div className="flex-1 p-6 space-y-6 overflow-y-auto">
                                     {/* Bot Message */}
                                     <div className="flex gap-4">
                                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2AB182] to-[#1a6e50] flex items-center justify-center font-bold text-xs">AI</div>
-                                        <div className="bg-[#1A1A1A] p-4 rounded-2xl rounded-tl-none border border-[#333] max-w-[80%]">
+                                        <div className="bg-[var(--bg-card)] p-4 rounded-2xl rounded-tl-none border border-[var(--border-subtle)] max-w-[80%]">
                                             <p className="text-sm text-gray-300">Hello! Thanks for reaching out to Invictus Global Tech. How can I help you scale your business today?</p>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@ const WhatsNexus = () => {
                                     {/* Bot Message w/ Typing */}
                                     <div className="flex gap-4">
                                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2AB182] to-[#1a6e50] flex items-center justify-center font-bold text-xs">AI</div>
-                                        <div className="bg-[#1A1A1A] p-4 rounded-2xl rounded-tl-none border border-[#333] max-w-[80%]">
+                                        <div className="bg-[var(--bg-card)] p-4 rounded-2xl rounded-tl-none border border-[var(--border-subtle)] max-w-[80%]">
                                             <p className="text-sm text-gray-300 mb-3">Our automation packages are tailored to your needs. They typically include:</p>
                                             <ul className="text-sm text-gray-400 list-disc ml-4 space-y-1">
                                                 <li>24/7 AI Lead Capture</li>
@@ -188,8 +188,8 @@ const WhatsNexus = () => {
                                 </div>
 
                                 {/* Input Area Mockup */}
-                                <div className="p-4 border-t border-[#333] flex gap-3">
-                                    <div className="flex-1 bg-[#1A1A1A] rounded-lg h-10 border border-[#333] px-3 flex items-center text-sm text-gray-500">
+                                <div className="p-4 border-t border-[var(--border-subtle)] flex gap-3">
+                                    <div className="flex-1 bg-[var(--bg-card)] rounded-lg h-10 border border-[var(--border-subtle)] px-3 flex items-center text-sm text-gray-500">
                                         Reply as AI...
                                     </div>
                                     <div className="w-10 h-10 rounded-lg bg-[#2AB182] flex items-center justify-center cursor-not-allowed opacity-50">

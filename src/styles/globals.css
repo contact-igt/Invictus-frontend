@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
+/* ─── THEME TOKENS ────────────────────────────────────────────────────────── */
+/* Default / dark — exactly matches the existing site colours */
+:root,
+[data-theme="dark"] {
+  --bg-primary:      #0E0E0E;
+  --bg-secondary:    #151515;
+  --bg-card:         #1A1A1A;
+  --text-primary:    #E0E0E0;
+  --text-secondary:  #A0A0A0;
+  --text-muted:      #666666;
+  --border-subtle:   #333333;
+  --accent:          #2AB182;
+  --accent-hover:    #22956d;
+  --navbar-bg:       rgba(14, 14, 14, 0.80);
+  --scrollbar-track: #0E0E0E;
+  --scrollbar-thumb: #333333;
+  --select-bg:       #1A1A1A;
+  --select-color:    #E0E0E0;
+  --grid-bg-line:    rgba(255, 255, 255, 0.05);
+  --stroke-text-color: #999999;
+}
+
+[data-theme="light"] {
+  --bg-primary:      #F0F4F8;
+  --bg-secondary:    #FFFFFF;
+  --bg-card:         #E8EDF2;
+  --text-primary:    #111827;
+  --text-secondary:  #374151;
+  --text-muted:      #6B7280;
+  --border-subtle:   #D1D5DB;
+  --accent:          #2AB182;
+  --accent-hover:    #1f8560;
+  --navbar-bg:       rgba(240, 244, 248, 0.88);
+  --scrollbar-track: #E5E7EB;
+  --scrollbar-thumb: #9CA3AF;
+  --select-bg:       #FFFFFF;
+  --select-color:    #111827;
+  --grid-bg-line:    rgba(0, 0, 0, 0.06);
+  --stroke-text-color: #555555;
+}
+/* ────────────────────────────────────────────────────────────────────────── */
+
 @theme {
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
@@ -20,7 +62,7 @@
 
 a {
   text-decoration: none !important;
-  color: #fff !important;
+  color: inherit;
 }
 
 /* Custom Scrollbar */
@@ -29,32 +71,32 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0E0E0E;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--scrollbar-thumb);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2AB182;
+  background: var(--accent);
 }
 
 select option {
-  background-color: #1A1A1A;
-  color: white;
+  background-color: var(--select-bg);
+  color: var(--select-color);
 }
 
 select option:hover,
 select option:focus,
 select option:checked {
-  background-color: white !important;
-  color: black !important;
+  background-color: var(--accent) !important;
+  color: #fff !important;
 }
 
 /* Hollow Text Effect */
 .stroke-text {
-  -webkit-text-stroke: 1px #666;
+  -webkit-text-stroke: 1px var(--stroke-text-color, #666);
   color: transparent;
 }
 
@@ -144,6 +186,9 @@ select option:checked {
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Blueray Page Overrides */
@@ -212,10 +257,10 @@ html {
   }
 
 .grid-bg {
-  background-color: #000;
+  background-color: var(--bg-primary);
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(var(--grid-bg-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-bg-line) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 

@@ -49,8 +49,8 @@ const Contact = () => {
                             </div>
                         </div>
                         <div className="mt-10 flex flex-wrap gap-4">
-                            <a href="https://wa.me/917010606321" className="bg-navy-deep text-white px-6 py-2 rounded font-bold hover:bg-navy-midnight transition">WhatsApp Now</a>
-                            <button onClick={scrollToTop} className="border-2 border-navy-deep text-navy-deep px-6 py-2 rounded font-bold hover:bg-navy-deep hover:text-white transition">Back to Top</button>
+                            <a href="https://wa.me/917010606321" className="bg-navy-deep text-[var(--text-primary)] px-6 py-2 rounded font-bold hover:bg-navy-midnight transition">WhatsApp Now</a>
+                            <button onClick={scrollToTop} className="border-2 border-navy-deep text-navy-deep px-6 py-2 rounded font-bold hover:bg-navy-deep hover:text-[var(--text-primary)] transition">Back to Top</button>
                         </div>
                     </div>
                     <div className="bg-gray-50 p-2 rounded-xl border border-gray-200 shadow-inner min-h-[300px] h-full overflow-hidden">

@@ -16,13 +16,13 @@ const ContactDetail = ({ icon: Icon, title, details }) => {
                     <a
                         key={index}
                         href={href}
-                        className="flex items-center gap-2 text-white text-lg hover:text-[#2AB182] transition-colors mb-1"
+                        className="flex items-center gap-2 text-[var(--text-primary)] text-lg hover:text-[#2AB182] transition-colors mb-1"
                     >
                         <Icon className="w-4 h-4 text-[#2AB182]" />
                         {detail}
                     </a>
                 ) : (
-                    <p key={index} className="flex items-center gap-2 text-white text-lg mb-1">
+                    <p key={index} className="flex items-center gap-2 text-[var(--text-primary)] text-lg mb-1">
                         <Icon className="w-4 h-4 text-[#2AB182]" />
                         {detail}
                     </p>

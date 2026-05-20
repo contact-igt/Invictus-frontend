@@ -55,12 +55,12 @@ const ContactForm = () => {
     });
 
     return (
-        <div className="p-8 md:p-20 flex flex-col justify-center bg-[#0E0E0E]/80 backdrop-blur-sm">
+        <div className="p-8 md:p-20 flex flex-col justify-center bg-[var(--navbar-bg)] backdrop-blur-sm">
             {formStatus === "success" ? (
                 <div className="text-center animate-fade-in">
                     <CheckCircle className="mx-auto text-[#2AB182] w-16 h-16 mb-6" />
-                    <h3 className="font-display text-3xl uppercase text-white mb-2">Received</h3>
-                    <p className="font-body text-[#888]">We'll analyze your business and get back to you shortly.</p>
+                    <h3 className="font-display text-3xl uppercase text-[var(--text-primary)] mb-2">Received</h3>
+                    <p className="font-body text-[var(--text-muted)]">We'll analyze your business and get back to you shortly.</p>
                     <button onClick={() => setFormStatus('idle')} className="mt-8 text-[#2AB182] font-bold underline underline-offset-4">
                         Submit another
                     </button>
@@ -68,13 +68,13 @@ const ContactForm = () => {
             ) : (
                 <form onSubmit={formik.handleSubmit} className="space-y-8">
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">Name</label>
+                        <label className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-bold font-body">Name</label>
                         <input
                             required
                             name="name"
                             type="text"
                             placeholder="Your Name"
-                            className="w-full font-body bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
+                            className="w-full font-body bg-transparent border-b border-[var(--border-subtle)] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
                             {...formik.getFieldProps('name')}
                         />
                         {formik.touched.name && formik.errors.name && (
@@ -82,13 +82,13 @@ const ContactForm = () => {
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">Mobile</label>
+                        <label className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-bold font-body">Mobile</label>
                         <input
                             required
                             name="mobile"
                             type="tel"
                             placeholder="+91 99999 99999"
-                            className="w-full font-body bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
+                            className="w-full font-body bg-transparent border-b border-[var(--border-subtle)] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
                             {...formik.getFieldProps('mobile')}
                         />
                         {formik.touched.mobile && formik.errors.mobile && (
@@ -96,13 +96,13 @@ const ContactForm = () => {
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">Email</label>
+                        <label className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-bold font-body">Email</label>
                         <input
                             required
                             name="email"
                             type="email"
                             placeholder="Email Address"
-                            className="w-full font-body bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white placeholder-[#333]"
+                            className="w-full font-body bg-transparent border-b border-[var(--border-subtle)] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
                             {...formik.getFieldProps('email')}
                         />
                         {formik.touched.email && formik.errors.email && (
@@ -110,10 +110,10 @@ const ContactForm = () => {
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-[#888] font-bold font-body">Industry</label>
+                        <label className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-bold font-body">Industry</label>
                         <select
                             name="industry"
-                            className="w-full bg-transparent border-b border-[#333] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-white font-body appearance-none rounded-none cursor-pointer"
+                            className="w-full bg-transparent border-b border-[var(--border-subtle)] py-3 focus:border-[#2AB182] outline-none transition-colors text-lg text-[var(--text-primary)] font-body appearance-none rounded-none cursor-pointer"
                             {...formik.getFieldProps('industry')}
                         >
                             <option value="" disabled>Select Industry</option>
@@ -133,7 +133,7 @@ const ContactForm = () => {
                     <button
                         type="submit"
                         disabled={formStatus === 'submitting'}
-                        className="w-full bg-white text-black font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] active:bg-[#2AB182] transition-all duration-300 disabled:opacity-50"
+                        className="w-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-display font-bold uppercase tracking-widest py-5 mt-8 hover:bg-[#2AB182] hover:text-black active:bg-[#2AB182] active:text-black transition-all duration-300 disabled:opacity-50"
                     >
                         {formStatus === 'submitting' ? 'Sending...' : 'Submit Application'}
                     </button>
