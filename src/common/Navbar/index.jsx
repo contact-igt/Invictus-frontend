@@ -31,7 +31,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center gap-3 group">
             <img
               src="/assets/invictus_logo2.png"
-              alt="Invictus Global Tech"
+              alt="Invictus Global Tech Private Limited"
               className={`h-10 md:h-12 w-auto transition-all duration-300 ${mounted && theme === 'dark' ? 'invert hue-rotate-180 saturate-150 brightness-90' : 'invert hue-rotate-180 saturate-150 brightness-90'}`}
               style={{ filter: mounted && theme === 'light' ? 'none' : '' }}
             />

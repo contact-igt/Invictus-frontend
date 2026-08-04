@@ -9,7 +9,7 @@ const Global = () => {
     return (
         <>
             <Head>
-                <title>Where We Are | Invictus Global Tech</title>
+                <title>Where We Are | Invictus Global Tech Private Limited</title>
                 <meta name="description" content="Our global footprint: India (HQ), Singapore, and the United States." />
             </Head>
             <WhereWeArePage onContactClick={onContactClick} />

@@ -50,6 +50,7 @@ const designer = {
   title: "Graphic Designer",
   department: "Creative",
   minExperience: "At least 1 year of relevant professional design experience",
+  freshersAllowed: "Freshers with strong skills can also apply",
   applicationMaterialLabel: "Portfolio",
   estimatedMinutes: "2–3 minutes",
   summary:
@@ -232,6 +233,7 @@ const videoEditor = {
   title: "Video Editor",
   department: "Creative",
   minExperience: "At least 1 year of relevant professional video-editing experience",
+  freshersAllowed: "Freshers with strong skills can also apply",
   applicationMaterialLabel: "Showreel",
   estimatedMinutes: "2–3 minutes",
   summary:

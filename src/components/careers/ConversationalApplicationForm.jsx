@@ -285,7 +285,7 @@ export default function ConversationalApplicationForm({ role }) {
   function renderField(field) {
     const value = formData[field.id];
     const error = errors[field.id];
-    const baseInputClass = `w-full bg-[var(--bg-primary,#0E0E0E)] border text-base ${
+    const baseInputClass = `w-full bg-[var(--bg-primary,#0E0E0E)] border text-base font-body ${
       error ? "border-red-500" : "border-[var(--border-subtle,#333)] focus:border-[#2AB182] focus:ring-1 focus:ring-[#2AB182]"
     } outline-none px-4 py-3 text-[var(--text-primary,#E0E0E0)] transition-colors duration-150 ease-out rounded-sm`;
 
@@ -295,7 +295,7 @@ export default function ConversationalApplicationForm({ role }) {
 
       return (
         <fieldset key={field.id} className="mb-2">
-          <legend className="text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-3">
+          <legend className="text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-3 font-body">
             {field.label} {field.required && <span className="text-[#2AB182]">*</span>}
           </legend>
           <div className={isMulti ? "flex flex-wrap gap-2" : "flex flex-col gap-2"} role={isMulti ? "group" : "radiogroup"}>
@@ -316,7 +316,7 @@ export default function ConversationalApplicationForm({ role }) {
                     }
                   }}
                   aria-pressed={selected}
-                  className={`min-h-[44px] inline-flex items-center text-left px-4 py-2.5 border transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${
+                  className={`min-h-[44px] inline-flex items-center text-left px-4 py-2.5 border font-body transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${
                     isMulti ? "rounded-full text-sm" : "rounded-sm w-full"
                   } ${
                     selected
@@ -330,7 +330,7 @@ export default function ConversationalApplicationForm({ role }) {
             })}
           </div>
           {error && (
-            <p role="alert" className="text-red-500 text-xs mt-2 font-bold">
+            <p role="alert" className="text-red-500 text-xs mt-2 font-bold font-body">
               {error}
             </p>
           )}
@@ -342,7 +342,7 @@ export default function ConversationalApplicationForm({ role }) {
       const length = typeof value === "string" ? value.trim().length : 0;
       return (
         <div key={field.id} className="mb-2">
-          <label htmlFor={field.id} className="block text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-2">
+          <label htmlFor={field.id} className="block text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-2 font-body">
             {field.label} {field.required && <span className="text-[#2AB182]">*</span>}
           </label>
           <textarea
@@ -358,11 +358,11 @@ export default function ConversationalApplicationForm({ role }) {
             aria-invalid={!!error}
             aria-describedby={error ? `${field.id}-error` : undefined}
           />
-          <div className="text-xs text-[var(--text-muted,#666)] mt-2 text-right">
+          <div className="text-xs text-[var(--text-muted,#666)] mt-2 text-right font-body">
             {length} characters{field.minLength ? ` (minimum ${field.minLength})` : ""}
           </div>
           {error && (
-            <p id={`${field.id}-error`} role="alert" className="text-red-500 text-xs mt-1 font-bold">
+            <p id={`${field.id}-error`} role="alert" className="text-red-500 text-xs mt-1 font-bold font-body">
               {error}
             </p>
           )}
@@ -372,7 +372,7 @@ export default function ConversationalApplicationForm({ role }) {
 
     return (
       <div key={field.id} className="mb-2">
-        <label htmlFor={field.id} className="block text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-2">
+        <label htmlFor={field.id} className="block text-xs font-bold text-[var(--text-muted,#666)] uppercase tracking-widest mb-2 font-body">
           {field.label} {field.required && <span className="text-[#2AB182]">*</span>}
         </label>
         <input
@@ -391,7 +391,7 @@ export default function ConversationalApplicationForm({ role }) {
           autoComplete={autoCompleteFor(field.id)}
         />
         {error && (
-          <p id={`${field.id}-error`} role="alert" className="text-red-500 text-xs mt-2 font-bold">
+          <p id={`${field.id}-error`} role="alert" className="text-red-500 text-xs mt-2 font-bold font-body">
             {error}
           </p>
         )}
@@ -404,23 +404,23 @@ export default function ConversationalApplicationForm({ role }) {
       <div
         role="status"
         aria-live="polite"
-        className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-8 sm:p-12 text-center rounded-sm max-w-[700px] mx-auto"
+        className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-8 sm:p-12 text-center rounded-sm max-w-[700px] mx-auto font-body"
       >
         <h2 className="font-display font-bold text-3xl sm:text-4xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">{SUCCESS_HEADING}</h2>
-        <p className="text-[var(--text-secondary,#A0A0A0)] max-w-lg mx-auto mb-8 leading-relaxed">{SUCCESS_COPY}</p>
-        <div className="flex flex-col sm:flex-row justify-center gap-6 mb-10 text-sm">
+        <p className="text-[var(--text-secondary,#A0A0A0)] max-w-lg mx-auto mb-8 leading-relaxed font-body">{SUCCESS_COPY}</p>
+        <div className="flex flex-col sm:flex-row justify-center gap-6 mb-10 text-sm font-body">
           <div>
-            <span className="block text-[var(--text-muted,#666)] uppercase tracking-widest text-xs mb-1">Role</span>
-            <span className="font-bold text-[var(--text-primary,#E0E0E0)]">{role.title}</span>
+            <span className="block text-[var(--text-muted,#666)] uppercase tracking-widest text-xs mb-1 font-body">Role</span>
+            <span className="font-bold text-[var(--text-primary,#E0E0E0)] font-body">{role?.title}</span>
           </div>
           <div>
-            <span className="block text-[var(--text-muted,#666)] uppercase tracking-widest text-xs mb-1">Application Reference</span>
+            <span className="block text-[var(--text-muted,#666)] uppercase tracking-widest text-xs mb-1 font-body">Application Reference</span>
             <span className="font-mono font-bold text-[var(--text-primary,#E0E0E0)]">{applicationRef}</span>
           </div>
         </div>
         <a
           href="/careers"
-          className="inline-block bg-[#2AB182] text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
+          className="inline-block bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
         >
           Return to Careers
         </a>
@@ -429,7 +429,7 @@ export default function ConversationalApplicationForm({ role }) {
   }
 
   return (
-    <div ref={formRef} className="max-w-[700px] mx-auto">
+    <div ref={formRef} className="max-w-[700px] mx-auto font-body">
       {/* Honeypot */}
       <div className="sr-only" aria-hidden="true">
         <label htmlFor={HONEYPOT_FIELD_NAME}>Leave this field empty</label>
@@ -445,29 +445,29 @@ export default function ConversationalApplicationForm({ role }) {
       </div>
 
       {currentStep === 0 && (
-        <div key="intro" className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm">
-          <p className="text-[#2AB182] font-bold text-xs uppercase tracking-widest mb-3">{role.title}</p>
+        <div key="intro" className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm font-body">
+          <p className="text-[#2AB182] font-bold text-xs uppercase tracking-widest mb-3 font-body">{role?.title}</p>
           <h2 className="font-display font-bold text-2xl sm:text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-8">
-            Apply in about {role.estimatedMinutes}
+            Apply in about {role?.estimatedMinutes}
           </h2>
-          <ul className="space-y-4 text-[var(--text-secondary,#A0A0A0)] mb-10 text-sm">
+          <ul className="space-y-4 text-[var(--text-secondary,#A0A0A0)] mb-10 text-sm font-body">
             <li>
-              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1">Minimum experience</strong>
-              {role.minExperience}
+              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1 font-body">Minimum experience</strong>
+              {role?.minExperience}
             </li>
             <li>
-              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1">{role.applicationMaterialLabel} required</strong>
-              You&apos;ll need a link to your {role.applicationMaterialLabel.toLowerCase()} to complete this application.
+              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1 font-body">{role?.applicationMaterialLabel} required</strong>
+              You&apos;ll need a link to your {role?.applicationMaterialLabel?.toLowerCase()} to complete this application.
             </li>
             <li>
-              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1">Estimated time</strong>
-              {role.estimatedMinutes}
+              <strong className="text-[var(--text-primary,#E0E0E0)] block mb-1 font-body">Estimated time</strong>
+              {role?.estimatedMinutes}
             </li>
           </ul>
           <button
             type="button"
             onClick={handleStart}
-            className="min-h-[44px] bg-[#2AB182] text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
+            className="min-h-[44px] bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
           >
             Start Application
           </button>
@@ -478,14 +478,14 @@ export default function ConversationalApplicationForm({ role }) {
         <div
           key={currentStep}
           onKeyDown={handleKeyDown}
-          className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm"
+          className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm font-body"
         >
           <div className="mb-8" aria-live="polite">
-            <div className="text-xs font-bold tracking-widest uppercase text-[var(--text-muted,#666)] mb-3">
+            <div className="text-xs font-bold tracking-widest uppercase text-[var(--text-muted,#666)] mb-3 font-body">
               {currentStep} of {totalAnswerScreens}
             </div>
             <div className="flex gap-2 max-w-[280px]">
-              {role.screens.map((_, i) => (
+              {role?.screens?.map((_, i) => (
                 <div
                   key={i}
                   className={`h-1 flex-1 rounded-full transition-colors duration-150 ease-out ${
@@ -497,17 +497,17 @@ export default function ConversationalApplicationForm({ role }) {
           </div>
 
           <h3 className="font-display font-bold text-xl sm:text-2xl uppercase text-[var(--text-primary,#E0E0E0)] mb-8">
-            {role.screens[currentStep - 1].title}
+            {role?.screens?.[currentStep - 1]?.title}
           </h3>
 
-          <div className="space-y-6">{role.screens[currentStep - 1].fields.map((field) => renderField(field))}</div>
+          <div className="space-y-6">{role?.screens?.[currentStep - 1]?.fields?.map((field) => renderField(field))}</div>
 
           <div className="flex items-center justify-between pt-8 mt-8 border-t border-[var(--border-subtle,#333)]">
             {currentStep > 1 ? (
               <button
                 type="button"
                 onClick={handleBack}
-                className="min-h-[44px] text-[var(--text-muted,#666)] hover:text-[var(--text-primary,#E0E0E0)] font-bold uppercase tracking-widest text-sm transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
+                className="min-h-[44px] text-[var(--text-muted,#666)] hover:text-[var(--text-primary,#E0E0E0)] font-display font-bold uppercase tracking-widest text-sm transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
               >
                 ← Back
               </button>
@@ -517,7 +517,7 @@ export default function ConversationalApplicationForm({ role }) {
             <button
               type="button"
               onClick={handleNext}
-              className="min-h-[44px] bg-[var(--text-primary,#E0E0E0)] text-black px-8 py-3 font-bold uppercase tracking-wider hover:bg-[#2AB182] hover:text-black transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
+              className="min-h-[44px] bg-[#2AB182] text-black px-8 py-3 font-display font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
             >
               Continue
             </button>
@@ -526,34 +526,34 @@ export default function ConversationalApplicationForm({ role }) {
       )}
 
       {currentStep === reviewStep && (
-        <div key="review" className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm">
+        <div key="review" className="animate-form-screen bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-10 rounded-sm font-body">
           <h3 className="font-display font-bold text-xl sm:text-2xl uppercase text-[var(--text-primary,#E0E0E0)] mb-8">Review &amp; Submit</h3>
 
           {submitError && (
-            <div role="alert" className="bg-red-500/10 border border-red-500/30 p-4 mb-8 rounded-sm">
-              <p className="text-red-500 font-bold text-sm">{submitError}</p>
-              <p className="text-red-500/80 text-xs mt-1">Your answers have been kept. You can retry submitting below.</p>
+            <div role="alert" className="bg-red-500/10 border border-red-500/30 p-4 mb-8 rounded-sm font-body">
+              <p className="text-red-500 font-bold text-sm font-body">{submitError}</p>
+              <p className="text-red-500/80 text-xs mt-1 font-body">Your answers have been kept. You can retry submitting below.</p>
             </div>
           )}
 
           <div className="space-y-6 mb-10">
-            {role.screens.map((screen, idx) => (
-              <div key={screen.id} className="border border-[var(--border-subtle,#333)] p-5 rounded-sm">
+            {role?.screens?.map((screen, idx) => (
+              <div key={screen.id} className="border border-[var(--border-subtle,#333)] p-5 rounded-sm font-body">
                 <div className="flex justify-between items-center mb-3 border-b border-[var(--border-subtle,#333)] pb-3">
-                  <h4 className="font-bold text-[var(--text-primary,#E0E0E0)] uppercase tracking-widest text-xs">{screen.title}</h4>
+                  <h4 className="font-display font-bold text-[var(--text-primary,#E0E0E0)] uppercase tracking-widest text-xs">{screen.title}</h4>
                   <button
                     type="button"
                     onClick={() => goToScreen(idx + 1)}
-                    className="text-[#2AB182] text-xs font-bold uppercase hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
+                    className="text-[#2AB182] text-xs font-display font-bold uppercase hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
                   >
                     Edit
                   </button>
                 </div>
-                <div className="space-y-3 text-sm">
-                  {screen.fields.map((field) => (
+                <div className="space-y-3 text-sm font-body">
+                  {screen.fields?.map((field) => (
                     <div key={field.id} className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4">
-                      <span className="text-[var(--text-muted,#666)] font-bold break-words">{field.label}</span>
-                      <span className="col-span-2 text-[var(--text-primary,#E0E0E0)] break-words">{renderAnswer(field, formData[field.id])}</span>
+                      <span className="text-[var(--text-muted,#666)] font-bold break-words font-body">{field.label}</span>
+                      <span className="col-span-2 text-[var(--text-primary,#E0E0E0)] break-words font-body">{renderAnswer(field, formData[field.id])}</span>
                     </div>
                   ))}
                 </div>
@@ -566,7 +566,7 @@ export default function ConversationalApplicationForm({ role }) {
               type="button"
               onClick={handleBack}
               disabled={isSubmitting}
-              className="min-h-[44px] text-[var(--text-muted,#666)] hover:text-[var(--text-primary,#E0E0E0)] font-bold uppercase tracking-widest text-sm transition-colors duration-150 ease-out disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
+              className="min-h-[44px] text-[var(--text-muted,#666)] hover:text-[var(--text-primary,#E0E0E0)] font-display font-bold uppercase tracking-widest text-sm transition-colors duration-150 ease-out disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] rounded-sm"
             >
               ← Back
             </button>
@@ -575,7 +575,7 @@ export default function ConversationalApplicationForm({ role }) {
               onClick={handleSubmit}
               disabled={isSubmitting}
               aria-busy={isSubmitting}
-              className={`min-h-[44px] bg-[#2AB182] text-black px-10 py-4 font-bold uppercase tracking-wider transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${
+              className={`min-h-[44px] bg-[#2AB182] text-black px-10 py-4 font-display font-bold uppercase tracking-wider transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${
                 isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:bg-[var(--text-primary,#E0E0E0)]"
               }`}
             >

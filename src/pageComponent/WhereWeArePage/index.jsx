@@ -17,7 +17,7 @@ const WhereWeArePage = ({ onContactClick }) => {
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">Footprint.</span>
                     </h1>
                     <p className="font-body text-lg md:text-xl text-[var(--text-muted)] max-w-3xl">
-                        Invictus Global Tech works with growth-focused brands across India, the United States, Singapore, and the United Kingdom. We’re not everywhere — we’re exactly where serious founders need us.
+                        Invictus Global Tech Private Limited works with growth-focused brands across India, the United States, Singapore, and the United Kingdom. We’re not everywhere — we’re exactly where serious founders need us.
                     </p>
                 </div>
             </section>

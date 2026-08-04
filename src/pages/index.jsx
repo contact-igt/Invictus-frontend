@@ -72,8 +72,8 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>Invictus Global Tech - Performance Marketing Agency</title>
-        <meta name="description" content="Invictus Global Tech - A performance marketing agency built on data, accountability, and clear numbers." />
+        <title>Invictus Global Tech Private Limited - Performance Marketing Agency</title>
+        <meta name="description" content="Invictus Global Tech Private Limited - A performance marketing agency built on data, accountability, and clear numbers." />
       </Head>
 
       {/* WhatsNexus Product Announcement Popup */}
