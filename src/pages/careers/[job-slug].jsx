@@ -1,0 +1,125 @@
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { getRoleConfig } from "@/config/careerRoles";
+import ConversationalApplicationForm from "@/components/careers/ConversationalApplicationForm";
+
+export default function DynamicJobPage() {
+  const router = useRouter();
+  const { "job-slug": jobSlug } = router.query;
+  const role = getRoleConfig(typeof jobSlug === "string" ? jobSlug : "");
+
+  if (!router.isReady) {
+    return <div className="min-h-screen bg-[var(--bg-primary,#0E0E0E)] pt-32 text-center text-[var(--text-muted,#666)]">Loading...</div>;
+  }
+
+  if (!role) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-primary,#0E0E0E)] pt-32 text-center text-[var(--text-primary,#E0E0E0)]">
+        <h1 className="text-3xl font-bold mb-4">ROLE NOT FOUND</h1>
+        <p className="text-[var(--text-secondary,#A0A0A0)] mb-8">The requested career opportunity could not be found.</p>
+        <Link href="/careers" className="inline-block bg-[#2AB182] text-black px-6 py-3 font-bold uppercase rounded-sm">
+          Return to Careers
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Head>
+        <title>{`${role.title} | Invictus Global Tech`}</title>
+        <meta name="description" content={role.summary} />
+      </Head>
+
+      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)]">
+        <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-24">
+          <Link
+            href="/careers"
+            className="inline-flex items-center text-[var(--text-muted,#666)] hover:text-[#2AB182] font-bold uppercase tracking-widest text-xs mb-12 transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:outline-none rounded-sm p-1 -ml-1"
+          >
+            ← Back to Careers
+          </Link>
+
+          {/* Hero */}
+          <div className="mb-16">
+            <span className="text-[#2AB182] font-bold text-sm tracking-widest uppercase mb-6 block">{role.department}</span>
+            <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl uppercase text-[var(--text-primary,#E0E0E0)] mb-6 break-words">
+              {role.title}
+            </h1>
+            <div className="flex flex-wrap gap-2 md:gap-4 text-xs font-bold text-[var(--text-secondary,#A0A0A0)] uppercase mb-8">
+              <span className="border border-[var(--border-subtle,#333)] px-4 py-2">{role.minExperience}</span>
+              <span className="border border-[var(--border-subtle,#333)] px-4 py-2">{role.applicationMaterialLabel} required</span>
+            </div>
+            <p className="text-xl text-[var(--text-secondary,#A0A0A0)] max-w-3xl leading-relaxed mb-10">{role.summary}</p>
+            <a
+              href="#apply"
+              className="inline-block min-h-[44px] bg-[#2AB182] text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:outline-none"
+            >
+              Apply Now
+            </a>
+          </div>
+
+          <div className="w-full h-px bg-[var(--border-subtle,#333)] mb-16" />
+
+          {/* Content */}
+          <div className="text-[var(--text-secondary,#A0A0A0)]">
+            <h2 className="text-2xl font-bold text-[var(--text-primary,#E0E0E0)] mb-6">Responsibilities</h2>
+            <ul className="list-disc pl-5 space-y-3 mb-12">
+              {role.responsibilities.map((item) => (
+                <li key={item} className="leading-relaxed">
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-[var(--text-primary,#E0E0E0)] mb-6">Requirements</h2>
+            <ul className="list-disc pl-5 space-y-3 mb-12">
+              {role.requirements.map((item) => (
+                <li key={item} className="leading-relaxed">
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-[var(--text-primary,#E0E0E0)] mb-6">Preferred</h2>
+            <ul className="list-disc pl-5 space-y-3 mb-12">
+              {role.preferred.map((item) => (
+                <li key={item} className="leading-relaxed">
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-8 rounded-sm mb-4">
+              <h2 className="text-xl font-bold text-[var(--text-primary,#E0E0E0)] mb-5">What we look for beyond the tools</h2>
+              <ul className="space-y-3">
+                {role.positioning.map((item) => (
+                  <li key={item} className="leading-relaxed flex gap-3">
+                    <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-[var(--border-subtle,#333)] my-16" />
+
+          {/* Application */}
+          <div id="apply">
+            <div className="text-center mb-12">
+              <h2 className="font-display font-bold text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">Apply for this role</h2>
+              <p className="text-[var(--text-secondary,#A0A0A0)] max-w-xl mx-auto">
+                Complete the form below in about {role.estimatedMinutes}. No account, no Google Form — just a short set of
+                questions.
+              </p>
+            </div>
+
+            <ConversationalApplicationForm role={role} />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

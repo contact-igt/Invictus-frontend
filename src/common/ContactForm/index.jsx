@@ -25,18 +25,30 @@ const ContactForm = () => {
             industry: Yup.string().required("Industry is Required"),
         }),
         onSubmit: async (values) => {
-            const ipResponse = await fetch('https://api.ipify.org?format=json');
-            const ipData = await ipResponse.json();
             setFormStatus("submitting");
+            setError(null);
+            let ip = "";
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ip = ipData.ip || "";
+            } catch (e) {
+                // IP lookup fallback
+            }
+
             try {
                 const newFormData = {
+                    sheet: "Sheet1",
+                    sheet_name: "Sheet1",
                     name: values.name,
                     mobile: values.mobile,
                     email: values.email,
                     industry: values.industry,
-                    ip_address: ipData.ip,
+                    applied_for: "General Inquiry",
+                    appliedFor: "General Inquiry",
+                    ip_address: ip,
                 };
-                await fetch("https://script.google.com/macros/s/AKfycby7JkmbE1A64YvB9wbmDObHb5HmFFPVsa2q951BROa-tDYOoEySz_19EGqbQw24gJMUQQ/exec", {
+                await fetch("https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec", {
                     method: "POST",
                     mode: "no-cors",
                     headers: {
