@@ -37,14 +37,14 @@ const ThankYouPage = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                     <Link
                         href="/"
-                        className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[var(--text-primary)] transition-all duration-300"
+                        className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[#22956d] hover:text-black transition-all duration-300 rounded-sm"
                     >
                         <Home size={18} />
                         Back to Home
                     </Link>
                     <Link
                         href="/services"
-                        className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300"
+                        className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300 rounded-sm"
                     >
                         Explore Services
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -53,7 +53,7 @@ const ThankYouPage = () => {
 
                 {/* Bottom Trust Note */}
                 <div className="pt-12 border-t border-[var(--border-subtle)]">
-                    <p className="font-body text-xs text-[#444] uppercase tracking-widest">
+                    <p className="font-body text-xs text-[var(--text-muted)] uppercase tracking-widest">
                         Performance Driven Growth • Invictus Global Tech Private Limited
                     </p>
                 </div>

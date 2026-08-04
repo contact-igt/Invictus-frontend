@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { getApiBaseUrl } from "@/config/api";
 import { HONEYPOT_FIELD_NAME } from "@/lib/careersSpamGuards";
 
 const SUCCESS_HEADING = "APPLICATION RECEIVED";
@@ -218,9 +219,50 @@ export default function ConversationalApplicationForm({ role }) {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const generatedRef = "IGT-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+    let generatedRef = "IGT-" + Math.random().toString(36).substring(2, 8).toUpperCase();
 
     try {
+      const apiBase = getApiBaseUrl();
+
+      // 1. Submit to Invictus Lead Backend API (Admin Panel DB) first
+      try {
+        const backendCareersPayload = {
+          role: role?.title || "Graphic Designer",
+          full_name: formData.fullName || "",
+          phone: formData.phone || "",
+          email: formData.email || "",
+          current_city: formData.city || "",
+          notice_period: formData.noticePeriod || "",
+          experience: formData.experience || "",
+          portfolio_or_showreel: formData.portfolioOrShowreel || "",
+          resume_or_linkedin: formData.resumeOrLinkedin || null,
+          tools: Array.isArray(formData.tools) ? formData.tools : (formData.tools ? [formData.tools] : []),
+          work_categories: Array.isArray(formData.categories) ? formData.categories : (formData.categories ? [formData.categories] : []),
+          workflow_answer: formData.workflowAnswer || "",
+          ai_usage: formData.aiUsage || "",
+          judgement_answer: formData.judgementAnswer || "",
+          practical_assessment: formData.practicalAssessment || "",
+        };
+
+        const apiRes = await fetch(`${apiBase}/careers/public`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(backendCareersPayload),
+        });
+
+        if (apiRes.ok) {
+          const apiData = await apiRes.json();
+          if (apiData?.data?.application_reference) {
+            generatedRef = apiData.data.application_reference;
+          }
+        }
+      } catch (apiErr) {
+        console.error("Invictus Backend API Careers Error:", apiErr);
+      }
+
+      // 2. Submit to Google Apps Script Webhook (Google Sheets Backup)
       const googleSheetPayload = {
         sheet: "Careers",
         sheet_name: "Careers",
@@ -249,7 +291,6 @@ export default function ConversationalApplicationForm({ role }) {
         practical_assessment: formData.practicalAssessment || "",
       };
 
-      // Direct post to Google Apps Script Webhook (Careers Sheet)
       await fetch("https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec", {
         method: "POST",
         mode: "no-cors",

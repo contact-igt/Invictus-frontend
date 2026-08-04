@@ -410,9 +410,338 @@ const videoEditor = {
   ],
 };
 
+const hrOperationsExecutive = {
+  slug: "hr-operations-executive",
+  title: "HR & Operations Executive",
+  department: "HR & Operations",
+  location: "Chennai (Hybrid)",
+  salary: "₹15,000–₹25,000/month (based on skills, performance, and management evaluation)",
+  probationPeriod: "1 Month",
+  minimumCommitment: "1 Year",
+  minExperience: "Chennai (Hybrid) • Probation: 1 Month • Commitment: 1 Year",
+  freshersAllowed: "Salary: ₹15,000–₹25,000/month",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "Manage recruitment, onboarding, employee documentation, attendance, leave tracking, daily business operations, and client communication.",
+  positioning: [
+    "Manage recruitment, onboarding, employee documentation, attendance, and leave management.",
+    "Coordinate task allocation, workflow, and daily business operations.",
+    "Handle client communication, meetings, requirement gathering, and follow-ups.",
+    "Prepare MOMs, reports, SOPs, and operational documentation.",
+    "Monitor project progress and ensure timely task completion.",
+    "Support process improvements and team productivity initiatives.",
+  ],
+  responsibilities: [
+    "Manage recruitment, onboarding, employee documentation, attendance, and leave management.",
+    "Coordinate task allocation, workflow, and daily business operations.",
+    "Handle client communication, meetings, requirement gathering, and follow-ups.",
+    "Prepare MOMs, reports, SOPs, and operational documentation.",
+    "Monitor project progress and ensure timely task completion.",
+    "Support process improvements and team productivity initiatives.",
+  ],
+  requirements: [
+    "Bachelor's degree in any discipline.",
+    "Strong communication and coordination skills.",
+    "Good organizational and multitasking abilities.",
+    "Proficiency in Google Workspace/MS Office.",
+    "Ability to work independently and collaboratively in a hybrid work environment.",
+    "Probation Period: 1 Month | Minimum Commitment: 1 Year.",
+    "Salary: ₹15,000–₹25,000/month (based on skills, performance, and management evaluation).",
+  ],
+  preferred: [
+    "Prior experience in HR recruitment, onboarding, or administrative coordination.",
+    "Client communication, requirement gathering, and meeting follow-up skills.",
+    "Demonstrated ability to prepare MOMs, SOPs, and operational reports.",
+    "Fluency in Google Workspace (Docs, Sheets, Slides) and MS Office.",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("How many years of relevant HR or operations experience do you have?"),
+    {
+      id: "resume",
+      title: "Resume & Profile",
+      fields: [
+        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn URL", required: true, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Portfolio / Work Samples (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools & Software",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which tools are you proficient in?",
+          required: true,
+          options: [
+            { value: "google_workspace", label: "Google Workspace (Docs/Sheets/Slides)" },
+            { value: "ms_office", label: "MS Office (Word/Excel/PowerPoint)" },
+            { value: "hr_software", label: "HRIS / Recruitment Portals" },
+            { value: "notion_trello", label: "Notion / Trello / Task Trackers" },
+            { value: "slack_teams", label: "Slack / Teams" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Key Functional Areas",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which operational areas have you handled?",
+          required: true,
+          options: [
+            { value: "recruitment_onboarding", label: "Recruitment & Onboarding" },
+            { value: "employee_docs_leave", label: "Employee Documentation & Leave Management" },
+            { value: "workflow_task_allocation", label: "Workflow & Task Allocation" },
+            { value: "client_communication_moms", label: "Client Communication & MOMs" },
+            { value: "sops_operational_reports", label: "SOPs & Operational Reports" },
+            { value: "project_progress_monitoring", label: "Project Progress Monitoring" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Work Mode & Commitment",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable working in Chennai (Hybrid) with a 1-year minimum commitment?",
+          required: true,
+          options: [
+            { value: "chennai_hybrid_1year_ready", label: "Yes, fully comfortable with Chennai Hybrid & 1-year commitment." },
+            { value: "chennai_hybrid_flexible", label: "Comfortable with Chennai Hybrid, open to discussing commitment." },
+            { value: "remote_preferred", label: "Prefer fully remote work." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "AI & Productivity Tools",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "How do you leverage AI tools (ChatGPT/Gemini/Claude) in HR & operations?",
+          required: true,
+          options: [
+            { value: "ai_documentation_drafting", label: "Drafting emails, SOPs, MOMs, and operational content." },
+            { value: "ai_process_research", label: "Researching best practices and process improvements." },
+            { value: "ai_selective", label: "Using AI selectively when helpful." },
+            { value: "ai_rare", label: "Rarely use AI tools." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Operations & HR Scenario",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label: "Describe a situation where you managed multiple tasks or client follow-ups under tight deadlines. How did you ensure accuracy and timeliness?",
+          required: true,
+          minLength: 120,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Assessment",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to complete a short HR & operations scenario assessment if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const hrOperationsIntern = {
+  slug: "hr-operations-intern",
+  title: "HR & Operations Intern",
+  department: "HR & Operations",
+  location: "Chennai (Hybrid)",
+  duration: "3 Months (Month 1: Unpaid Training | Months 2 & 3: Performance Stipend)",
+  minExperience: "Chennai (Hybrid) • Duration: 3 Months • PPO Available",
+  freshersAllowed: "Freshers & Final-Year Students Can Apply",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "Assist in recruitment, interview scheduling, candidate follow-ups, onboarding, documentation, client meeting MOMs, and operational trackers.",
+  positioning: [
+    "Duration: 3 Months (Month 1: Unpaid Training & Evaluation | Months 2 & 3: Performance-based stipend).",
+    "High-performing interns may receive a Pre-Placement Offer (PPO) for a full-time HR & Operations Executive role.",
+    "Minimum Commitment: 6–12 months (including internship and full-time employment if selected through PPO).",
+    "Assist in recruitment, interview scheduling, and candidate follow-ups.",
+    "Attend client meetings, prepare MOMs, and follow up on action items.",
+  ],
+  responsibilities: [
+    "Assist in recruitment, interview scheduling, and candidate follow-ups.",
+    "Support onboarding, documentation, attendance, and leave tracking.",
+    "Coordinate with internal teams and monitor task progress.",
+    "Attend client meetings, prepare MOMs, and follow up on action items.",
+    "Maintain reports, trackers, and operational documentation.",
+    "Support day-to-day HR and operational activities.",
+  ],
+  requirements: [
+    "Bachelor's degree or final-year student (any discipline).",
+    "Good communication and organizational skills.",
+    "Basic knowledge of Google Workspace/MS Office.",
+    "Eagerness to learn HR, operations, and client management.",
+    "Minimum Commitment: 6–12 months (including internship & full-time employment via PPO).",
+    "Structure: Month 1 Unpaid Training & Evaluation; Months 2 & 3 Performance-based Stipend.",
+  ],
+  preferred: [
+    "Strong verbal and written English communication skills.",
+    "Good note-taking ability for MOMs and client meetings.",
+    "Familiarity with Google Sheets, Docs, and MS Office.",
+    "Enthusiasm for learning HR, recruitment, and project coordination.",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("What is your current education or experience status?"),
+    {
+      id: "resume",
+      title: "Resume & Profile",
+      fields: [
+        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn URL", required: true, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Portfolio / Work Samples (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools Familiarity",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which tools are you familiar with?",
+          required: true,
+          options: [
+            { value: "google_workspace", label: "Google Workspace (Docs/Sheets/Slides)" },
+            { value: "ms_office", label: "MS Office (Word/Excel/PowerPoint)" },
+            { value: "canva", label: "Canva / Basic Design" },
+            { value: "slack_whatsapp", label: "Slack / WhatsApp Business" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Learning Interests",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which areas are you most excited to assist with and learn?",
+          required: true,
+          options: [
+            { value: "recruitment_scheduling", label: "Recruitment & Interview Scheduling" },
+            { value: "onboarding_docs", label: "Onboarding & Employee Documentation" },
+            { value: "client_meetings_moms", label: "Client Meetings & MOM Preparation" },
+            { value: "task_tracking_operations", label: "Task Tracking & Operations Coordination" },
+            { value: "reports_trackers", label: "Reports & Trackers Maintenance" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Internship Structure & Commitment",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable with the 3-month internship structure (Month 1 evaluation, Months 2-3 stipend), Chennai Hybrid mode & PPO pathway?",
+          required: true,
+          options: [
+            { value: "internship_ready_ppo", label: "Yes, ready for 3-month internship & PPO pathway in Chennai (Hybrid)." },
+            { value: "internship_only", label: "Interested in 3-month internship only." },
+            { value: "remote_only", label: "Seeking fully remote internship only." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "AI Awareness",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "How do you use AI tools (ChatGPT/Gemini) to improve learning and productivity?",
+          required: true,
+          options: [
+            { value: "ai_learning_writing", label: "Drafting notes, learning new concepts, and organizing information." },
+            { value: "ai_selective", label: "Using AI selectively when helpful." },
+            { value: "ai_rare", label: "Rarely use AI tools." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Motivation & Goals",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label: "Why are you interested in this HR & Operations internship at Invictus, and what skills or experience do you hope to build?",
+          required: true,
+          minLength: 120,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Assessment",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to complete a short screening task if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const careerRoles = {
   "graphic-designer": designer,
   "video-editor": videoEditor,
+  "hr-operations-executive": hrOperationsExecutive,
+  "hr-operations-intern": hrOperationsIntern,
 };
 
 export function getRoleConfig(slug) {
