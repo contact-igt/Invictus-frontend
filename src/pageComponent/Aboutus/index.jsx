@@ -234,12 +234,30 @@ const AboutPage = ({ onContactClick }) => {
           </div>
           <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6">
             <p>
-              Invictus Global Tech started with a simple frustration: most
-              agencies talk big, but don’t own the numbers. We wanted to build a
-              team that thinks like a partner, not a vendor.
+              Invictus Global Tech Private Limited started with a simple frustration: most
+              agencies focus on vanity metrics. Likes, impressions, and clicks
+              mean nothing if they don’t turn into pipeline and revenue.
             </p>
-            <p>
-              We come from a background of working closely with founders,
+            <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed mb-6">
+              We built this company to be different. Every strategy we deploy,
+              every campaign we run, and every line of code we write is tied directly to measurable business outcomes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Origin Story Section */}
+      <section className="py-24 border-b border-[var(--border-subtle)] relative overflow-hidden">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <span className="font-body text-[#2AB182] text-sm uppercase tracking-widest font-bold mb-4 block">
+              (04) — OUR ORIGIN
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl text-[var(--text-primary)] font-bold mb-8 uppercase leading-tight">
+              FROM A BOLD IDEA TO A GLOBAL PARTNER.
+            </h2>
+            <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed mb-6">
+              Invictus Global Tech Private Limited began as a small team helping a few brands. We come from a background of working closely with founders,
               doctors, educators, and brand owners. We’ve seen first-hand where
               money is wasted in ads, and where it compounds into real growth.
             </p>

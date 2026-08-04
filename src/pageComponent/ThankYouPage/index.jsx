@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { CheckCircle, ArrowRight, Home } from 'lucide-react';
 import { useRouter } from 'next/router';
 
@@ -29,32 +30,31 @@ const ThankYouPage = () => {
 
                 {/* Confirmation Text */}
                 <p className="font-body text-lg md:text-xl text-[var(--text-muted)] mb-12 max-w-2xl mx-auto leading-relaxed">
-                    Thank you for reaching out to Invictus Global Tech. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours.
+                    Thank you for reaching out to Invictus Global Tech Private Limited. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours.
                 </p>
 
-                {/* Buttons */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <button
-                        onClick={() => router.push('/')}
+                {/* Actions */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <Link
+                        href="/"
                         className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[var(--text-primary)] transition-all duration-300"
                     >
-                        <Home size={20} />
+                        <Home size={18} />
                         Back to Home
-                    </button>
-
-                    <button
-                        onClick={() => router.push('/services')}
+                    </Link>
+                    <Link
+                        href="/services"
                         className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300"
                     >
                         Explore Services
-                        <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
-                    </button>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
                 </div>
 
-                {/* Footer-like text placed below buttons */}
-                <div className="mt-8 text-center w-full px-6">
+                {/* Bottom Trust Note */}
+                <div className="pt-12 border-t border-[var(--border-subtle)]">
                     <p className="font-body text-xs text-[#444] uppercase tracking-widest">
-                        Performance Driven Growth • Invictus Global Tech
+                        Performance Driven Growth • Invictus Global Tech Private Limited
                     </p>
                 </div>
             </div>

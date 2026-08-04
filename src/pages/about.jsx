@@ -9,7 +9,7 @@ const About = () => {
     return (
         <>
             <Head>
-                <title>About Us | Invictus Global Tech</title>
+                <title>About Us | Invictus Global Tech Private Limited</title>
                 <meta name="description" content="We are not an agency. We are a growth partner obsessed with data, accountability, and clear numbers." />
             </Head>
             <AboutPage onContactClick={onContactClick} />

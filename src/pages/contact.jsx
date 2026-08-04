@@ -18,7 +18,7 @@ const Contact = () => {
     return (
         <>
             <Head>
-                <title>Contact Us | Invictus Global Tech</title>
+                <title>Contact Us | Invictus Global Tech Private Limited</title>
                 <meta name="description" content="Ready to scale? Get in touch with our team for a discovery call." />
             </Head>
             <ContactPage
