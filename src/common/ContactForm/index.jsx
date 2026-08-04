@@ -1,3 +1,4 @@
+import { getApiBaseUrl } from "../../config/api";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
@@ -37,6 +38,27 @@ const ContactForm = () => {
             }
 
             try {
+                const apiBase = getApiBaseUrl();
+
+                // 1. Submit to Invictus Lead Backend API (Admin Panel DB) first
+                try {
+                    await fetch(`${apiBase}/general/public`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            name: values.name,
+                            mobile: values.mobile,
+                            email: values.email,
+                            industry: values.industry,
+                        }),
+                    });
+                } catch (apiErr) {
+                    console.error("Invictus Backend API Submission Error:", apiErr);
+                }
+
+                // 2. Submit to Google Apps Script Webhook (Google Sheets Backup)
                 const newFormData = {
                     sheet: "Sheet1",
                     sheet_name: "Sheet1",
@@ -56,6 +78,7 @@ const ContactForm = () => {
                     },
                     body: new URLSearchParams(newFormData).toString(),
                 });
+
                 formik.resetForm();
                 setFormStatus("success");
                 router.push('/thank-you');
