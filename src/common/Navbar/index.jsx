@@ -64,6 +64,12 @@ const Navbar = () => {
               About
             </Link>
             <Link
+              href="/careers"
+              className={`relative hover:text-[#2AB182] transition-colors ${isActive('/careers') || router.pathname.startsWith('/careers') ? 'text-[#2AB182]' : ''}`}
+            >
+              Careers
+            </Link>
+            <Link
               href="/contact"
               className={`relative hover:text-[#2AB182] transition-colors ${isActive('/contact') ? 'text-[#2AB182]' : ''}`}
             >
@@ -92,6 +98,7 @@ const Navbar = () => {
           <Link href="/clients" className="hover:text-[#2AB182]">Clients & Industries</Link>
           <Link href="/global" className="hover:text-[#2AB182]">Where We Are</Link>
           <Link href="/about" className="hover:text-[#2AB182]">About</Link>
+          <Link href="/careers" className="hover:text-[#2AB182]">Careers</Link>
           <Link href="/contact" className="hover:text-[#2AB182]">Contact</Link>
           <Link href="https://whatsnexus.invictusglobaltech.com/" className="text-[#2AB182] hover:text-[var(--text-primary)] transition-colors">WhatsNexus</Link>
         </div>
