@@ -59,9 +59,16 @@ export default function CareersPage() {
                       </div>
                       <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-bold uppercase mb-2 text-[var(--text-primary,#E0E0E0)]">{role.title}</h3>
                       <p className="text-[var(--text-secondary,#A0A0A0)] text-sm max-w-2xl mb-3 font-body">{role.summary}</p>
-                      <span className="inline-block border border-[var(--border-subtle,#333)] px-3 py-1 text-xs font-bold text-[var(--text-muted,#666)] uppercase font-body">
-                        {role.minExperience}
-                      </span>
+                      <div className="flex flex-wrap gap-2 items-center">
+                        <span className="inline-block border border-[var(--border-subtle,#333)] px-3 py-1 text-xs font-bold text-[var(--text-muted,#666)] uppercase font-body">
+                          {role.minExperience}
+                        </span>
+                        {role.freshersAllowed && (
+                          <span className="inline-block border border-[#2AB182]/40 text-[#2AB182] px-3 py-1 text-xs font-bold uppercase font-body bg-[#2AB182]/5">
+                            {role.freshersAllowed}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex gap-3 shrink-0">

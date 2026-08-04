@@ -52,6 +52,9 @@ export default function GraphicDesignerPage() {
             <div className="flex flex-wrap gap-2 md:gap-4 text-xs font-bold text-[var(--text-secondary,#A0A0A0)] uppercase mb-8 font-body">
               <span className="border border-[var(--border-subtle,#333)] px-4 py-2 font-body">{role.minExperience}</span>
               <span className="border border-[var(--border-subtle,#333)] px-4 py-2 font-body">{role.applicationMaterialLabel} required</span>
+              {role.freshersAllowed && (
+                <span className="border border-[#2AB182]/40 text-[#2AB182] px-4 py-2 font-body bg-[#2AB182]/5">{role.freshersAllowed}</span>
+              )}
             </div>
             <p className="text-xl text-[var(--text-secondary,#A0A0A0)] max-w-3xl leading-relaxed mb-10 font-body">{role.summary}</p>
             <a
