@@ -21,16 +21,6 @@ export default function HrOperationsExecutivePage() {
       "@type": "Place",
       address: { "@type": "PostalAddress", addressLocality: "Chennai", addressCountry: "IN" },
     },
-    baseSalary: {
-      "@type": "MonetaryAmount",
-      currency: "INR",
-      value: {
-        "@type": "QuantitativeValue",
-        minValue: 15000,
-        maxValue: 25000,
-        unitText: "MONTH",
-      },
-    },
   };
 
   return (
