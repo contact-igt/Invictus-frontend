@@ -1,10 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { CheckCircle, ArrowRight, Home } from 'lucide-react';
+import { CheckCircle, ArrowRight, Home, Briefcase } from 'lucide-react';
 import { useRouter } from 'next/router';
 
 const ThankYouPage = () => {
     const router = useRouter();
+    const { type, source, role, ref: applicationRef } = router.query || {};
+
+    const isCareer = type === 'career' || type === 'careers' || source === 'careers';
 
     return (
         <div className="pt-32 min-h-screen flex flex-col justify-center items-center px-6 md:px-12 bg-[var(--bg-primary)] relative overflow-hidden">
@@ -22,33 +25,79 @@ const ThankYouPage = () => {
 
                 {/* Heading */}
                 <h1 className="font-display font-bold text-5xl md:text-7xl text-[var(--text-primary)] uppercase mb-6 leading-tight">
-                    Message <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
-                        Received.
-                    </span>
+                    {isCareer ? (
+                        <>
+                            Application <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
+                                Received.
+                            </span>
+                        </>
+                    ) : (
+                        <>
+                            Message <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
+                                Received.
+                            </span>
+                        </>
+                    )}
                 </h1>
 
                 {/* Confirmation Text */}
-                <p className="font-body text-lg md:text-xl text-[var(--text-muted)] mb-12 max-w-2xl mx-auto leading-relaxed">
-                    Thank you for reaching out to Invictus Global Tech Private Limited. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours.
+                <p className="font-body text-lg md:text-xl text-[var(--text-muted)] mb-8 max-w-2xl mx-auto leading-relaxed">
+                    {isCareer
+                        ? `Thank you for applying${role ? ` for the ${role} position` : ''} at Invictus Global Tech. We’ve received your details and our talent acquisition team is reviewing your profile. Shortlisted candidates will be contacted using the provided details.`
+                        : "Thank you for reaching out to Invictus Global Tech Private Limited. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours."}
                 </p>
+
+                {/* Application Reference (if careers submission) */}
+                {isCareer && applicationRef && (
+                    <div className="mb-10 inline-flex flex-col items-center bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] px-6 py-4 rounded-sm">
+                        <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted,#666)] mb-1 font-body">
+                            Application Reference
+                        </span>
+                        <span className="font-mono text-lg font-bold text-[#2AB182]">
+                            {applicationRef}
+                        </span>
+                    </div>
+                )}
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                    <Link
-                        href="/"
-                        className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[#22956d] hover:text-black transition-all duration-300 rounded-sm"
-                    >
-                        <Home size={18} />
-                        Back to Home
-                    </Link>
-                    <Link
-                        href="/services"
-                        className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300 rounded-sm"
-                    >
-                        Explore Services
-                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                    {isCareer ? (
+                        <>
+                            <Link
+                                href="/careers"
+                                className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[#22956d] hover:text-black transition-all duration-300 rounded-sm"
+                            >
+                                <Briefcase size={18} />
+                                Back to Careers
+                            </Link>
+                            <Link
+                                href="/"
+                                className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300 rounded-sm"
+                            >
+                                <Home size={18} />
+                                Back to Home
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/"
+                                className="group flex items-center gap-3 bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-widest hover:bg-[#22956d] hover:text-black transition-all duration-300 rounded-sm"
+                            >
+                                <Home size={18} />
+                                Back to Home
+                            </Link>
+                            <Link
+                                href="/services"
+                                className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300 rounded-sm"
+                            >
+                                Explore Services
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </>
+                    )}
                 </div>
 
                 {/* Bottom Trust Note */}

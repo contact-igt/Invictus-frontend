@@ -16,7 +16,7 @@ const AboutPage = ({ onContactClick }) => {
     { name: "IYYAPPAN", role: "Web Developer" },
     { name: "DR. SENTHIL", role: "Strategist & Advisor" },
     { name: "THARIQ", role: "CTO" },
-    { name: "KARAN", role: "Performance Marketing Head" },
+    { name: "ANJU", role: "Performance Marketing" },
     { name: "DIKSHITA", role: "Performance Marketing Executive" },
     { name: "AALAM", role: "Operations" },
     { name: "SUSHIL", role: "CEO" },
@@ -24,8 +24,8 @@ const AboutPage = ({ onContactClick }) => {
     { name: "CREATIVE", role: "Generalist" },
     { name: "ANITHA", role: "Operations Head" },
     { name: "ABHILASH", role: "HR & Ops" },
-    { name: "TANIA", role: "Bde" },
-    { name: "SUMITH", role: "Graphic Designer" },
+    { name: "NAVEEN", role: "Growth Specialist" },
+    { name: "RUTUJA", role: "Operations" },
   ];
 
   const handleMemberClick = (index) => {
@@ -143,13 +143,13 @@ const AboutPage = ({ onContactClick }) => {
           <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px] scale-[0.6] sm:scale-[0.7] md:scale-90 lg:scale-100 mt-20 sm:mt-24 lg:mt-0">
             {/* Collage of team members, absolute positioning for overlap */}
             <div className="absolute left-[-20%] top-[-50%]  md:left-[-45%]   md:top-[-42%] lg:left-[-25%] lg:top-[-35%] xl:left-[-15%] xl:top-[-33%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="IYYAPPAN" image="/assets/team/alam.png" rotation={0} onClick={() => handleMemberClick(0)} />
+              <TeamMember name="Alam" image="/assets/team/alam.png" rotation={0} onClick={() => handleMemberClick(0)} />
             </div>
-             <div className="absolute left-[-30%] top-[-20%]  md:left-[-30%]   md:top-[-16%] lg:left-[-25%] lg:top-[-3%] xl:left-[-10%] xl:top-[-0%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Jashwanth" image="/assets/team/iyyappan1.png" rotation={0} onClick={() => handleMemberClick(0)} />
+             <div className="absolute left-[-30%] top-[-15%]  md:left-[-30%]   md:top-[-16%] lg:left-[-25%] lg:top-[-3%] xl:left-[-10%] xl:top-[-0%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="Iyyappan" image="/assets/team/iyyappan1.png" rotation={0} onClick={() => handleMemberClick(0)} />
             </div>
-             <div className="absolute left-[-25%] top-[10%]  md:left-[-85%]   md:top-[-15%] lg:left-[-70%] lg:top-[-20%] xl:left-[-50%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Param" image="/assets/team/param.png" rotation={0} onClick={() => handleMemberClick(0)} />
+             <div className="absolute left-[-25%] top-[18%]  md:left-[-85%]   md:top-[-15%] lg:left-[-70%] lg:top-[-20%] xl:left-[-50%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
+              <TeamMember name="Naveen" image="/assets/team/naveen.png" rotation={0} onClick={() => handleMemberClick(0)} />
             </div>
             <div className="absolute  left-[25%] top-[-55%]  md:left-[10%] md:top-[-40%] lg:left-[30%] lg:top-[-40%] xl:left-[30%] xl:top-[-35%] z-20 transform hover:scale-110 transition-transform">
               <TeamMember name="DR. SENTHIL" image="/assets/team/senthil.png" rotation={2} onClick={() => handleMemberClick(1)} />
@@ -158,9 +158,9 @@ const AboutPage = ({ onContactClick }) => {
               <TeamMember name="THARIQ" image="/assets/team/thariq.png" rotation={3} onClick={() => handleMemberClick(2)} />
             </div>
             <div className="absolute left-[30%] top-[20%]   md:left-[-35%] md:top-[10%] lg:left-[-10%] lg:top-[29%] xl:left-[-10%] xl:top-[34%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="KARAN" image="/assets/team/karan1.png" rotation={-3} onClick={() => handleMemberClick(3)} />
+              <TeamMember name="Anju" image="/assets/team/anju.jpeg" rotation={-3} onClick={() => handleMemberClick(3)} />
             </div>
-            <div className="absolute left-[30%] bottom-[23%]   md:left-[20%] md:top-[30%] lg:left-[35%] lg:top-[24%] xl:left-[40%] xl:top-[35%] z-30 transform hover:scale-110 transition-transform">
+            <div className="absolute left-[30%] bottom-[23%]   md:left-[20%] md:top-[30%] lg:left-[35%] lg:top-[24%] xl:left-[35%] xl:top-[35%] z-30 transform hover:scale-110 transition-transform">
               <TeamMember
                 name="DIKSHITA"
                 image="/assets/team/dikshita.png"
@@ -174,15 +174,15 @@ const AboutPage = ({ onContactClick }) => {
             <div className="absolute  right-[-20%] top-[10%]  md:right-[-15%] md:top-[10%] lg:right-[-20%] lg:top-[10%] xl:right-[-10%] xl:top-[15%] z-10 transform hover:scale-110 transition-transform">
               <TeamMember name="SUSHIL" image="/assets/team/aiswarya.png" rotation={5} onClick={() => handleMemberClick(6)} />
             </div>
-            <div className="absolute  left-[-20%] bottom-[29%]  md:left-[-35%] md:bottom-[15%] lg:left-[-10%] lg:bottom-[11%] xl:left-[-10%] xl:bottom-[-2%] z-50 transform hover:scale-110 transition-transform">
+            <div className="absolute  left-[-20%] bottom-[14%]  md:left-[-35%] md:bottom-[15%] lg:left-[-10%] lg:bottom-[11%] xl:left-[-10%] xl:bottom-[-2%] z-50 transform hover:scale-110 transition-transform">
               <TeamMember name="VEERAVEL" image="/assets/team/veeravel.png" rotation={-6} onClick={() => handleMemberClick(7)} />
             </div>
-            <div className="absolute   left-[-20%] bottom-[-30%]  md:left-[-15%] md:bottom-[-13%] lg:left-[-15%] lg:bottom-[-22%] xl:left-[-15%] xl:bottom-[-36%] z-40 transform hover:scale-110 transition-transform">
+            <div className="absolute   left-[-20%] bottom-[-25%]  md:left-[-15%] md:bottom-[-13%] lg:left-[-15%] lg:bottom-[-22%] xl:left-[-15%] xl:bottom-[-36%] z-40 transform hover:scale-110 transition-transform">
               <TeamMember name="CREATIVE" image="/assets/team/creative.png" rotation={-3} onClick={() => handleMemberClick(8)} />
             </div>
-            <div className="absolute   left-[-20%] bottom-[-3%]  md:left-[-70%] md:bottom-[-10%] lg:left-[-60%] lg:bottom-[-10%] xl:left-[-52%] xl:bottom-[-15%] z-40 transform hover:scale-110 transition-transform">
+            {/* <div className="absolute   left-[-20%] bottom-[-3%]  md:left-[-70%] md:bottom-[-10%] lg:left-[-60%] lg:bottom-[-10%] xl:left-[-52%] xl:bottom-[-15%] z-40 transform hover:scale-110 transition-transform">
               <TeamMember name="Yogesh" image="/assets/team/yogesh.png" rotation={-3} onClick={() => handleMemberClick(8)} />
-            </div>
+            </div> */}
             <div className="absolute  left-[50%] bottom-[-5%]  md:left-[53%] md:bottom-[10%] lg:left-[53%] lg:bottom-[10%] xl:left-[50%] xl:bottom-[0%] -translate-x-1/2 z-[60] transform hover:scale-110 transition-transform">
               <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={2} onClick={() => handleMemberClick(9)} />
             </div>
@@ -190,7 +190,7 @@ const AboutPage = ({ onContactClick }) => {
               <TeamMember name="ABHILASH" image="/assets/team/abhilash1.png" rotation={4} onClick={() => handleMemberClick(10)} />
             </div>
             <div className="absolute right-[-25%] bottom-[-20%]  md:right-[-15%] md:bottom-[-10%] lg:right-[-15%] lg:bottom-[-10%] xl:right-[-10%] xl:bottom-[-30%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="TANIA" image="/assets/team/tania.png" rotation={4} onClick={() => handleMemberClick(11)} />
+              <TeamMember name="Rutuja" image="/assets/team/rutuja.png" rotation={4} onClick={() => handleMemberClick(12)} />
             </div>
             <div className="absolute right-[30%] bottom-[-40%]  md:left-[30%] md:bottom-[-25%] lg:left-[30%] lg:bottom-[-25%] xl:left-[30%] xl:bottom-[-35%] z-30 transform hover:scale-110 transition-transform">
               <TeamMember name="Jashwanth" image="/assets/team/jashwanth.jpeg" rotation={4} onClick={() => handleMemberClick(12)} />
@@ -385,7 +385,7 @@ const AboutPage = ({ onContactClick }) => {
           </h2>
           <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6 text-left md:text-center">
             <p>
-              Invictus Global Tech began as a small team helping a few brands
+              Invictus Global Tech Private Limited began as a small team helping a few brands
               scale through paid ads and automation. What we noticed early was
               that most “digital marketing agencies” were selling posters,
               reels, and vanity metrics.
