@@ -411,8 +411,8 @@ const videoEditor = {
 };
 
 const hrOperationsExecutive = {
-  slug: "hr-operations-executive",
-  title: "HR & Operations Executive",
+  slug: "hr-operations-associate",
+  title: "HR & Operations Associate",
   department: "HR & Operations",
   location: "Chennai (Hybrid)",
   salary: "Prior experience in HR recruitment, onboarding, or administrative coordination.",
@@ -589,7 +589,7 @@ const hrOperationsIntern = {
     "Assist in recruitment, interview scheduling, candidate follow-ups, onboarding, documentation, client meeting MOMs, and operational trackers.",
   positioning: [
     "Duration: 3 Months (Month 1: Unpaid Training & Evaluation | Months 2 & 3: Performance-based stipend).",
-    "High-performing interns may receive a Pre-Placement Offer (PPO) for a full-time HR & Operations Executive role.",
+    "High-performing interns may receive a Pre-Placement Offer (PPO) for a full-time position",
     "Minimum Commitment: 6–12 months (including internship and full-time employment if selected through PPO).",
     "Assist in recruitment, interview scheduling, and candidate follow-ups.",
     "Attend client meetings, prepare MOMs, and follow up on action items.",
@@ -735,11 +735,181 @@ const hrOperationsIntern = {
   ],
 };
 
+const telecallingExecutive = {
+  slug: "telecalling-executive",
+  title: "Telecalling Executive",
+  department: "Healthcare & Telecalling",
+  location: "Chennai (Work From Home)",
+  salary: "",
+  employmentType: "Full-time",
+  minExperience: "Chennai (Work From Home) • Full-time",
+  freshersAllowed: "Freshers with good communication skills can also apply",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "We are looking for a Telecalling Executive to handle and follow up with leads generated through digital marketing campaigns for a reputed healthcare client. The role involves patient communication, lead management, follow-ups, and coordination with the marketing team.",
+  positioning: [
+    "Work Mode: Work From Home (Full-time).",
+    "Location Focus: Healthcare client base in Chennai.",
+    "Call and communicate with leads generated through marketing campaigns.",
+    "Understand patient requirements and provide relevant information.",
+    "Update lead details, call status, and follow-ups in CRM, Google Sheets, or MS Excel.",
+    "Maintain high professional empathy and patient coordination standards.",
+  ],
+  responsibilities: [
+    "Call and communicate with leads generated through marketing campaigns.",
+    "Understand patient requirements and provide relevant information.",
+    "Follow up with interested and pending leads regularly.",
+    "Update lead details, call status, and follow-ups in CRM, Google Sheets, or MS Excel.",
+    "Maintain accurate records of all calls and lead interactions.",
+    "Share daily lead and follow-up updates with the concerned team.",
+    "Coordinate with the marketing team regarding lead quality and conversion.",
+    "Escalate relevant patient queries to the appropriate hospital team when required.",
+  ],
+  requirements: [
+    "Good verbal communication and interpersonal skills.",
+    "Basic knowledge of Google Sheets / MS Excel / CRM.",
+    "Good follow-up and coordination skills.",
+    "Basic healthcare/medical knowledge is preferred.",
+    "Familiarity with women and child care services is an added advantage.",
+    "Previous experience in healthcare telecalling, patient coordination, or customer support is preferred.",
+    "Freshers with good communication skills can also apply.",
+  ],
+  preferred: [
+    "Communication",
+    "Patient Coordination",
+    "Lead Follow-up",
+    "CRM Management",
+    "Google Sheets",
+    "MS Excel",
+    "Healthcare",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("How many years of relevant telecalling, patient coordination, or customer support experience do you have?"),
+    {
+      id: "resume",
+      title: "Resume & Profile",
+      fields: [
+        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn URL", required: true, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Portfolio / Work Samples (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools & Software",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which tools and software are you proficient in?",
+          required: true,
+          options: [
+            { value: "google_sheets", label: "Google Sheets" },
+            { value: "ms_excel", label: "MS Excel" },
+            { value: "crm_management", label: "CRM Management Systems" },
+            { value: "telephony_whatsapp", label: "Cloud Telephony / WhatsApp Business" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Core Competencies",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which key areas align with your experience?",
+          required: true,
+          options: [
+            { value: "healthcare_telecalling", label: "Healthcare / Medical Telecalling" },
+            { value: "patient_coordination", label: "Patient Coordination" },
+            { value: "lead_followup", label: "Lead Follow-up & Nurturing" },
+            { value: "women_child_care", label: "Women & Child Care Services Knowledge" },
+            { value: "customer_support", label: "Customer Support & Lead Management" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Work Mode & Schedule",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable with Work From Home (Full-time, ₹10k–15k/month) handling healthcare leads?",
+          required: true,
+          options: [
+            { value: "wfh_fulltime_ready", label: "Yes, fully comfortable with Work From Home (Full-time)." },
+            { value: "wfh_flexible", label: "Comfortable with WFH, open to discussing schedule." },
+            { value: "office_preferred", label: "Prefer in-office role." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "Language Fluency",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "Which languages can you communicate in fluently with patient leads?",
+          required: true,
+          options: [
+            { value: "tamil_english", label: "Tamil & English" },
+            { value: "tamil_english_hindi", label: "Tamil, English & Hindi" },
+            { value: "english_only", label: "English" },
+            { value: "other_regional", label: "Other Regional Languages" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Patient Lead Coordination Scenario",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label: "Describe how you would handle a hesitant patient lead who inquired about healthcare services. How do you follow up respectfully while maintaining accurate CRM notes?",
+          required: true,
+          minLength: 100,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Evaluation",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to complete a short telecalling scenario assessment if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const careerRoles = {
   "graphic-designer": designer,
   "video-editor": videoEditor,
   "hr-operations-executive": hrOperationsExecutive,
   "hr-operations-intern": hrOperationsIntern,
+  "telecalling-executive": telecallingExecutive,
 };
 
 export function getRoleConfig(slug) {

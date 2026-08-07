@@ -16,6 +16,16 @@ function initialFormData(role) {
   return data;
 }
 
+function isValidUrl(urlStr) {
+  if (!urlStr || typeof urlStr !== "string") return false;
+  try {
+    const parsed = new URL(urlStr.trim());
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch (_) {
+    return false;
+  }
+}
+
 function inputTypeFor(field) {
   if (field.type === "tel" || field.type === "email" || field.type === "url") return field.type;
   return "text";
@@ -124,28 +134,35 @@ export default function ConversationalApplicationForm({ role }) {
 
     for (const field of fields) {
       const value = formData[field.id];
+      const fieldLabel = field.label || "This field";
 
       if (field.type === "multiselect") {
         const arr = Array.isArray(value) ? value : [];
         if (field.required && arr.length === 0) {
-          screenErrors[field.id] = "Select at least one option";
+          screenErrors[field.id] = `${fieldLabel} is required — select at least one option`;
         }
       } else {
         const str = typeof value === "string" ? value.trim() : "";
         if (field.required && !str) {
-          screenErrors[field.id] = "This field is required";
+          screenErrors[field.id] = `${fieldLabel} is required`;
         } else if (str) {
-          if (field.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) {
-            screenErrors[field.id] = "Enter a valid email address";
-          } else if (field.type === "tel" && (str.length < 6 || str.length > 20)) {
-            screenErrors[field.id] = "Enter a valid phone number";
-          } else if (field.type === "url" && !/^https?:\/\//i.test(str) && !/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(str)) {
-            screenErrors[field.id] = "Enter a valid URL (including http:// or https://)";
-          } else if (field.type === "textarea") {
-            if (field.minLength && str.length < field.minLength) {
-              screenErrors[field.id] = `Please write at least ${field.minLength} characters (currently ${str.length})`;
-            } else if (field.maxLength && str.length > field.maxLength) {
-              screenErrors[field.id] = `Please keep your response under ${field.maxLength} characters`;
+          if (field.id === "fullName" && str.length < 2) {
+            screenErrors[field.id] = "Full name must be at least 2 characters";
+          } else if (field.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)) {
+            screenErrors[field.id] = "Enter a valid email address format";
+          } else if ((field.type === "tel" || field.id === "phone") && !/^[0-9]{10}$/.test(str)) {
+            screenErrors[field.id] = "Phone number must be exactly 10 digits";
+          } else if (field.type === "url" || field.id === "resumeOrLinkedin" || field.id === "portfolioOrShowreel") {
+            if (!isValidUrl(str)) {
+              screenErrors[field.id] = "Enter a valid URL starting with http:// or https://";
+            }
+          } else if (field.type === "textarea" || field.id === "judgementAnswer") {
+            const min = field.minLength || (field.id === "judgementAnswer" ? 120 : undefined);
+            const max = field.maxLength || (field.id === "judgementAnswer" ? 700 : undefined);
+            if (min && str.length < min) {
+              screenErrors[field.id] = `Please write at least ${min} characters (currently ${str.length})`;
+            } else if (max && str.length > max) {
+              screenErrors[field.id] = `Please keep your response under ${max} characters`;
             }
           }
         }
@@ -225,41 +242,40 @@ export default function ConversationalApplicationForm({ role }) {
       const apiBase = getApiBaseUrl();
 
       // 1. Submit to Invictus Lead Backend API (Admin Panel DB) first
-      try {
-        const backendCareersPayload = {
-          role: role?.title || "Graphic Designer",
-          full_name: formData.fullName || "",
-          phone: formData.phone || "",
-          email: formData.email || "",
-          current_city: formData.city || "",
-          notice_period: formData.noticePeriod || "",
-          experience: formData.experience || "",
-          portfolio_or_showreel: formData.portfolioOrShowreel || "",
-          resume_or_linkedin: formData.resumeOrLinkedin || null,
-          tools: Array.isArray(formData.tools) ? formData.tools : (formData.tools ? [formData.tools] : []),
-          work_categories: Array.isArray(formData.categories) ? formData.categories : (formData.categories ? [formData.categories] : []),
-          workflow_answer: formData.workflowAnswer || "",
-          ai_usage: formData.aiUsage || "",
-          judgement_answer: formData.judgementAnswer || "",
-          practical_assessment: formData.practicalAssessment || "",
-        };
+      const backendCareersPayload = {
+        role: role?.title || "Graphic Designer",
+        full_name: (formData.fullName || "").trim(),
+        phone: (formData.phone || "").trim(),
+        email: (formData.email || "").trim(),
+        current_city: (formData.city || "").trim(),
+        notice_period: (formData.noticePeriod || "").trim(),
+        experience: formData.experience || "",
+        portfolio_or_showreel: (formData.portfolioOrShowreel || "").trim(),
+        resume_or_linkedin: formData.resumeOrLinkedin ? formData.resumeOrLinkedin.trim() : null,
+        tools: Array.isArray(formData.tools) ? formData.tools : (formData.tools ? [formData.tools] : []),
+        work_categories: Array.isArray(formData.categories) ? formData.categories : (formData.categories ? [formData.categories] : []),
+        workflow_answer: (formData.workflowAnswer || "").trim(),
+        ai_usage: (formData.aiUsage || "").trim(),
+        judgement_answer: (formData.judgementAnswer || "").trim(),
+        practical_assessment: (formData.practicalAssessment || "").trim(),
+      };
 
-        const apiRes = await fetch(`${apiBase}/careers/public`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(backendCareersPayload),
-        });
+      const apiRes = await fetch(`${apiBase}/careers/public`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(backendCareersPayload),
+      });
 
-        if (apiRes.ok) {
-          const apiData = await apiRes.json();
-          if (apiData?.data?.application_reference) {
-            generatedRef = apiData.data.application_reference;
-          }
-        }
-      } catch (apiErr) {
-        console.error("Invictus Backend API Careers Error:", apiErr);
+      if (!apiRes.ok) {
+        const apiData = await apiRes.json().catch(() => ({}));
+        throw new Error(apiData?.message || "Failed to submit application to backend server.");
+      }
+
+      const apiData = await apiRes.json();
+      if (apiData?.data?.application_reference) {
+        generatedRef = apiData.data.application_reference;
       }
 
       // 2. Submit to Google Apps Script Webhook (Google Sheets Backup)
@@ -291,7 +307,17 @@ export default function ConversationalApplicationForm({ role }) {
         practical_assessment: formData.practicalAssessment || "",
       };
 
-      await fetch("https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec", {
+      // Select Google Sheet Webhook URL based on role (Telecalling Executive vs Other Roles)
+      const isTelecalling =
+        role?.slug === "telecalling-executive" ||
+        role?.id === "telecalling-executive" ||
+        (typeof role?.title === "string" && role.title.toLowerCase().includes("telecalling"));
+
+      const googleSheetWebhookUrl = isTelecalling
+        ? "https://script.google.com/macros/s/AKfycbzq9hrzInOfVuCPviw53w-U75_vbj5DAee7aiRb5oF1puML_n-LQmpJ1X4OyuSLay_7/exec"
+        : "https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec";
+
+      await fetch(googleSheetWebhookUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -300,10 +326,17 @@ export default function ConversationalApplicationForm({ role }) {
 
       setApplicationRef(generatedRef);
       if (router && typeof router.push === "function") {
-        router.push('/thank-you');
+        router.push({
+          pathname: "/thank-you",
+          query: {
+            type: "career",
+            role: role?.title || "",
+            ref: generatedRef,
+          },
+        });
       }
-    } catch {
-      setSubmitError("We couldn't submit your application. Please check your connection and try again.");
+    } catch (err) {
+      setSubmitError(err.message || "We couldn't submit your application. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
       scrollToFormTop();
@@ -617,7 +650,7 @@ export default function ConversationalApplicationForm({ role }) {
               disabled={isSubmitting}
               aria-busy={isSubmitting}
               className={`min-h-[44px] bg-[#2AB182] text-black px-10 py-4 font-display font-bold uppercase tracking-wider transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${
-                isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:bg-[var(--text-primary,#E0E0E0)]"
+                isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:bg-[#22956d]"
               }`}
             >
               {isSubmitting ? "Submitting Application" : "Submit Application"}
