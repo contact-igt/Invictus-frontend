@@ -28,7 +28,7 @@ export default function DynamicJobPage() {
   return (
     <>
       <Head>
-        <title>{`${role.title} | Invictus Global Tech Private Limited`}</title>
+        <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
       </Head>
 

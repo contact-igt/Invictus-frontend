@@ -146,7 +146,8 @@ const AboutPage = ({ onContactClick }) => {
               <TeamMember name="Alam" image="/assets/team/alam.png" rotation={0} onClick={() => handleMemberClick(0)} />
             </div>
              <div className="absolute left-[-30%] top-[-15%]  md:left-[-30%]   md:top-[-16%] lg:left-[-25%] lg:top-[-3%] xl:left-[-10%] xl:top-[-0%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Iyyappan" image="/assets/team/iyyappan1.png" rotation={0} onClick={() => handleMemberClick(0)} />
+              <TeamMember name="SUSHIL" image="/assets/team/sushil.png" rotation={-2} onClick={() => handleMemberClick(5)} />
+            
             </div>
              <div className="absolute left-[-25%] top-[18%]  md:left-[-85%]   md:top-[-15%] lg:left-[-70%] lg:top-[-20%] xl:left-[-50%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
               <TeamMember name="Naveen" image="/assets/team/naveen.png" rotation={0} onClick={() => handleMemberClick(0)} />
@@ -169,7 +170,7 @@ const AboutPage = ({ onContactClick }) => {
               />
             </div>
             <div className="absolute  left-[30%] top-[-15%]  md:left-[25%] md:top-[-15%] lg:left-[30%] lg:top-[-10%] xl:left-[30%] xl:top-[0%] z-20 transform hover:scale-110 transition-transform">
-              <TeamMember name="AALAM" image="/assets/team/sushil.png" rotation={-2} onClick={() => handleMemberClick(5)} />
+                <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={0} onClick={() => handleMemberClick(9)} />
             </div>
             <div className="absolute  right-[-20%] top-[10%]  md:right-[-15%] md:top-[10%] lg:right-[-20%] lg:top-[10%] xl:right-[-10%] xl:top-[15%] z-10 transform hover:scale-110 transition-transform">
               <TeamMember name="SUSHIL" image="/assets/team/aiswarya.png" rotation={5} onClick={() => handleMemberClick(6)} />
@@ -184,7 +185,7 @@ const AboutPage = ({ onContactClick }) => {
               <TeamMember name="Yogesh" image="/assets/team/yogesh.png" rotation={-3} onClick={() => handleMemberClick(8)} />
             </div> */}
             <div className="absolute  left-[50%] bottom-[-5%]  md:left-[53%] md:bottom-[10%] lg:left-[53%] lg:bottom-[10%] xl:left-[50%] xl:bottom-[0%] -translate-x-1/2 z-[60] transform hover:scale-110 transition-transform">
-              <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={2} onClick={() => handleMemberClick(9)} />
+              <TeamMember name="Iyyappan" image="/assets/team/iyyappan1.png" rotation={2} onClick={() => handleMemberClick(6)} />
             </div>
             <div className="absolute right-[-25%] bottom-[20%]  md:right-[-15%] md:bottom-[30%] lg:right-[-15%] lg:bottom-[30%] xl:right-[-10%] xl:bottom-[10%] z-30 transform hover:scale-110 transition-transform">
               <TeamMember name="ABHILASH" image="/assets/team/abhilash1.png" rotation={4} onClick={() => handleMemberClick(10)} />
@@ -234,7 +235,7 @@ const AboutPage = ({ onContactClick }) => {
           </div>
           <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6">
             <p>
-              Invictus Global Tech Private Limited started with a simple frustration: most
+              Invictus Global Tech Pvt Ltd started with a simple frustration: most
               agencies focus on vanity metrics. Likes, impressions, and clicks
               mean nothing if they don’t turn into pipeline and revenue.
             </p>
@@ -257,7 +258,7 @@ const AboutPage = ({ onContactClick }) => {
               FROM A BOLD IDEA TO A GLOBAL PARTNER.
             </h2>
             <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed mb-6">
-              Invictus Global Tech Private Limited began as a small team helping a few brands. We come from a background of working closely with founders,
+              Invictus Global Tech Pvt Ltd began as a small team helping a few brands. We come from a background of working closely with founders,
               doctors, educators, and brand owners. We’ve seen first-hand where
               money is wasted in ads, and where it compounds into real growth.
             </p>
@@ -385,7 +386,7 @@ const AboutPage = ({ onContactClick }) => {
           </h2>
           <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6 text-left md:text-center">
             <p>
-              Invictus Global Tech Private Limited began as a small team helping a few brands
+              Invictus Global Tech Pvt Ltd began as a small team helping a few brands
               scale through paid ads and automation. What we noticed early was
               that most “digital marketing agencies” were selling posters,
               reels, and vanity metrics.

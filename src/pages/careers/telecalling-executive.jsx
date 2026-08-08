@@ -14,7 +14,7 @@ export default function TelecallingExecutivePage() {
     employmentType: "FULL_TIME",
     hiringOrganization: {
       "@type": "Organization",
-      name: "Invictus Global Tech Private Limited",
+      name: "Invictus Global Tech Pvt Ltd",
       sameAs: "https://www.invictusglobaltech.com",
     },
     jobLocation: {
@@ -27,7 +27,7 @@ export default function TelecallingExecutivePage() {
   return (
     <>
       <Head>
-        <title>{`${role.title} | Invictus Global Tech Private Limited`}</title>
+        <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
         <script
           type="application/ld+json"
