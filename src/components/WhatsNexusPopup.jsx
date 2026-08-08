@@ -52,7 +52,7 @@ const WhatsNexusPopup = ({ isOpen, onClose }) => {
                                 </h2>
                             </div>
                             <p className="text-gray-500 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
-                                Powered by Invictus Global Tech Private Limited
+                                Powered by Invictus Global Tech Pvt Ltd
                             </p>
                         </div>
 

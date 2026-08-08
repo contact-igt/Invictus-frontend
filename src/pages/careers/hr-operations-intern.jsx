@@ -14,7 +14,7 @@ export default function HrOperationsInternPage() {
     employmentType: "INTERN",
     hiringOrganization: {
       "@type": "Organization",
-      name: "Invictus Global Tech Private Limited",
+      name: "Invictus Global Tech Pvt Ltd",
       sameAs: "https://www.invictusglobaltech.com",
     },
     jobLocation: {
@@ -26,7 +26,7 @@ export default function HrOperationsInternPage() {
   return (
     <>
       <Head>
-        <title>{`${role.title} | Invictus Global Tech Private Limited`}</title>
+        <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
         <script
           type="application/ld+json"

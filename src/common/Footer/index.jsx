@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest text-[var(--text-muted)] font-body relative z-10 bg-[var(--navbar-bg)] backdrop-blur-sm border-t border-[var(--border-subtle)]">
-      <span>© 2026 Invictus Global Tech Private Limited</span>
+      <span>© 2026 Invictus Global Tech Pvt Ltd</span>
       <div className="flex gap-6 mt-6 md:mt-0 items-center">
         <a
           href="https://www.instagram.com/invictusglobaltech/"

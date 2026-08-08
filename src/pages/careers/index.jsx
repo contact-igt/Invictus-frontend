@@ -10,7 +10,7 @@ export default function CareersPage() {
   return (
     <>
       <Head>
-        <title>Careers | Invictus Global Tech Private Limited</title>
+        <title>Careers | Invictus Global Tech Pvt Ltd</title>
         <meta
           name="description"
           content="Join a multidisciplinary team working across creativity, technology, marketing and AI-assisted execution to solve meaningful business problems."

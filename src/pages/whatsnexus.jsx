@@ -12,7 +12,7 @@ const WhatsNexus = () => {
     return (
         <div className="min-h-screen bg-[var(--bg-primary)] font-jakarta text-[var(--text-primary)] pt-20 px-6 md:px-12 relative overflow-hidden">
             <Head>
-                <title>WhatsNexus | Invictus Global Tech Private Limited</title>
+                <title>WhatsNexus | Invictus Global Tech Pvt Ltd</title>
                 <meta name="description" content="Discover WhatsNexus - Our latest product." />
             </Head>
 
@@ -157,7 +157,7 @@ const WhatsNexus = () => {
                                     <div className="flex gap-4">
                                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2AB182] to-[#1a6e50] flex items-center justify-center font-bold text-xs">AI</div>
                                         <div className="bg-[var(--bg-card)] p-4 rounded-2xl rounded-tl-none border border-[var(--border-subtle)] max-w-[80%]">
-                                            <p className="text-sm text-gray-300">Hello! Thanks for reaching out to Invictus Global Tech Private Limited. How can I help you scale your business today?</p>
+                                            <p className="text-sm text-gray-300">Hello! Thanks for reaching out to Invictus Global Tech Pvt Ltd. How can I help you scale your business today?</p>
                                         </div>
                                     </div>
 

@@ -46,7 +46,7 @@ const ThankYouPage = () => {
                 <p className="font-body text-lg md:text-xl text-[var(--text-muted)] mb-8 max-w-2xl mx-auto leading-relaxed">
                     {isCareer
                         ? `Thank you for applying${role ? ` for the ${role} position` : ''} at Invictus Global Tech. We’ve received your details and our talent acquisition team is reviewing your profile. Shortlisted candidates will be contacted using the provided details.`
-                        : "Thank you for reaching out to Invictus Global Tech Private Limited. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours."}
+                        : "Thank you for reaching out to Invictus Global Tech Pvt Ltd. We’ve received your details and our team is already reviewing them. You can expect to hear from us within 24 hours."}
                 </p>
 
                 {/* Application Reference (if careers submission) */}
@@ -103,7 +103,7 @@ const ThankYouPage = () => {
                 {/* Bottom Trust Note */}
                 <div className="pt-12 border-t border-[var(--border-subtle)]">
                     <p className="font-body text-xs text-[var(--text-muted)] uppercase tracking-widest">
-                        Performance Driven Growth • Invictus Global Tech Private Limited
+                        Performance Driven Growth • Invictus Global Tech Pvt Ltd
                     </p>
                 </div>
             </div>

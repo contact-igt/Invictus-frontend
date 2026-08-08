@@ -9,7 +9,7 @@ const Clients = () => {
     return (
         <>
             <Head>
-                <title>Clients & Industries | Invictus Global Tech Private Limited</title>
+                <title>Clients & Industries | Invictus Global Tech Pvt Ltd</title>
                 <meta name="description" content="Industries we transform: Healthcare, EdTech, E-commerce, Real Estate, and B2B Consulting." />
             </Head>
             <ClientsIndustriesPage onContactClick={onContactClick} />

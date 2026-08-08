@@ -9,7 +9,7 @@ const Services = () => {
     return (
         <>
             <Head>
-                <title>Services | Invictus Global Tech Private Limited</title>
+                <title>Services | Invictus Global Tech Pvt Ltd</title>
                 <meta name="description" content="Our core services: Performance Marketing, Social Media Management, Web & App Development, and AI & Automation." />
             </Head>
             <ServicesPage onContactClick={onContactClick} />
