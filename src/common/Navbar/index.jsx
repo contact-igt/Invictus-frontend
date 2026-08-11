@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
             <img
-              src={mounted && theme === 'light' ? '/assets/invictus-logo-light.png' : '/assets/invictus-logo-dark.png'}
+              src={mounted && theme === 'dark' ? '/assets/logo_dark.png' : '/assets/logo_6.png'}
               alt="Invictus Global Tech Pvt Ltd"
               className="h-[40px] md:h-[42px] w-auto transition-all duration-300"
             />
