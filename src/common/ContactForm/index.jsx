@@ -70,7 +70,7 @@ const ContactForm = () => {
                     appliedFor: "General Inquiry",
                     ip_address: ip,
                 };
-                await fetch("https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec", {
+                await fetch("https://script.google.com/macros/s/AKfycbxEccKBZ_qCJeCfYeDNuVpTrE94yyLEHAdBuS6AZwRaGhgMNGVWe35y-09U3_hl_kJ27w/exec", {
                     method: "POST",
                     mode: "no-cors",
                     headers: {

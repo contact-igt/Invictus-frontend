@@ -3,9 +3,30 @@ import Link from "next/link";
 import { careerRoles } from "@/config/careerRoles";
 import ConversationalApplicationForm from "@/components/careers/ConversationalApplicationForm";
 
+// Role currently closed — kept for future reactivation.
 const role = careerRoles["telecalling-executive"];
 
 export default function TelecallingExecutivePage() {
+  if (!role) {
+    return (
+      <>
+        <Head>
+          <title>Role closed | Invictus Global Tech Pvt Ltd</title>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+          <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-24 text-center">
+            <h1 className="font-display font-bold text-3xl uppercase mb-4">This role is no longer open</h1>
+            <p className="text-[var(--text-secondary,#A0A0A0)] mb-8">Check the careers page for current opportunities.</p>
+            <Link href="/careers" className="inline-block bg-[#2AB182] text-black px-6 py-3 font-display font-bold uppercase rounded-sm">
+              Back to Careers
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
