@@ -307,14 +307,15 @@ export default function ConversationalApplicationForm({ role }) {
         practical_assessment: formData.practicalAssessment || "",
       };
 
-      // Select Google Sheet Webhook URL based on role (Telecalling Executive vs Other Roles)
-      const isTelecalling =
+      // Send hiring-specific roles to the Careers sheet webhook.
+      const usesCareersSheet =
+        role?.slug === "social-media-manager" ||
         role?.slug === "telecalling-executive" ||
         role?.id === "telecalling-executive" ||
         (typeof role?.title === "string" && role.title.toLowerCase().includes("telecalling"));
 
-      const googleSheetWebhookUrl = isTelecalling
-        ? "https://script.google.com/macros/s/AKfycbzq9hrzInOfVuCPviw53w-U75_vbj5DAee7aiRb5oF1puML_n-LQmpJ1X4OyuSLay_7/exec"
+      const googleSheetWebhookUrl = usesCareersSheet
+        ? "https://script.google.com/macros/s/AKfycbxEccKBZ_qCJeCfYeDNuVpTrE94yyLEHAdBuS6AZwRaGhgMNGVWe35y-09U3_hl_kJ27w/exec"
         : "https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec";
 
       await fetch(googleSheetWebhookUrl, {

@@ -904,12 +904,193 @@ const telecallingExecutive = {
   ],
 };
 
+const socialMediaManager = {
+  slug: "social-media-manager",
+  title: "Social Media Manager",
+  department: "Marketing & Content",
+  location: "Chennai / Hybrid",
+  salary: "",
+  employmentType: "Full-time",
+  minExperience: "Chennai / Hybrid • Full-time • 1–2 years",
+  freshersAllowed: "",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "Develop engaging content, identify digital trends, and build strong brand stories across social media platforms. Transform ideas, trends, and research into impactful social media content, with healthcare-related content experience an added advantage.",
+  positioning: [
+    "Location: Chennai / Hybrid. Employment Type: Full-Time. Experience: 1–2 Years.",
+    "Develop and execute social media content strategies aligned with brand objectives.",
+    "Plan and maintain monthly and weekly social media content calendars.",
+    "Develop creative concepts and scripts for Reels, short-form videos, and social campaigns.",
+    "Coordinate with graphic designers, video editors, marketers, and other creative team members.",
+    "Ensure consistent brand tone, messaging, and communication across all platforms.",
+    "We're looking for someone who doesn't just follow trends but understands why content works.",
+  ],
+  responsibilities: [
+    "Develop and execute social media content strategies aligned with brand objectives.",
+    "Create engaging content for Instagram, LinkedIn, Facebook, and other relevant platforms.",
+    "Plan and maintain monthly and weekly social media content calendars.",
+    "Research industry topics, audience interests, competitors, and emerging digital trends.",
+    "Write compelling captions, social media copy, campaign content, and brand stories.",
+    "Develop creative concepts and scripts for Reels, short-form videos, and social campaigns.",
+    "Coordinate with graphic designers, video editors, marketers, and other creative team members.",
+    "Identify trending formats, topics, audio, hashtags, and content opportunities.",
+    "Create content that educates, engages, and encourages audience interaction.",
+    "Monitor social media performance and identify opportunities to improve engagement and reach.",
+    "Ensure consistent brand tone, messaging, and communication across all platforms.",
+    "Support promotional campaigns, product/service launches, and brand-building initiatives.",
+    "Stay updated with changes in social media algorithms, content formats, and platform best practices.",
+  ],
+  requirements: [
+    "1–2 years of experience in social media management, content creation, digital marketing, or a related role.",
+    "Strong content writing, copywriting, and storytelling skills.",
+    "Experience creating Reels, captions, campaigns, and social media concepts.",
+    "Strong understanding of Instagram trends and digital marketing.",
+    "Ability to research topics and convert complex information into simple, engaging content.",
+    "Good understanding of audience behaviour and social media engagement.",
+    "Ability to generate creative content ideas independently.",
+    "Strong communication, organization, and time-management skills.",
+    "Ability to manage multiple content requirements and deadlines.",
+    "Basic understanding of social media analytics and performance metrics.",
+    "Ability to collaborate effectively with design, video, marketing, and business teams.",
+  ],
+  preferred: [
+    "Experience creating healthcare, medical, hospital, clinic, wellness, or health-tech content.",
+    "Understanding of healthcare communication and the ability to create informative yet audience-friendly content.",
+    "Familiarity with tools such as Canva, Meta Business Suite, Instagram Insights, or similar social media tools.",
+    "Basic knowledge of SEO, hashtags, keyword research, and content optimization.",
+    "Awareness of current AI-assisted content and research tools is an advantage.",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("How many years of social media management, content creation, or digital marketing experience do you have?"),
+    {
+      id: "resume",
+      title: "Resume & Portfolio",
+      fields: [
+        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn URL", required: true, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Work samples / portfolio URL (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools & Software",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which tools are you proficient in?",
+          required: true,
+          options: [
+            { value: "canva", label: "Canva" },
+            { value: "meta_business_suite", label: "Meta Business Suite" },
+            { value: "instagram_insights", label: "Instagram Insights" },
+            { value: "scheduling_tools", label: "Scheduling tools (Buffer / Later / Hootsuite)" },
+            { value: "ai_content_tools", label: "AI content / research tools" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Content Experience",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which types of content have you created?",
+          required: true,
+          options: [
+            { value: "reels_shortform", label: "Reels & short-form video concepts/scripts" },
+            { value: "captions_copy", label: "Captions & social media copy" },
+            { value: "content_calendars", label: "Content calendars & planning" },
+            { value: "campaigns", label: "Campaigns & launches" },
+            { value: "brand_storytelling", label: "Brand storytelling" },
+            { value: "healthcare_content", label: "Healthcare / wellness / health-tech content" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Work Mode & Commitment",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable with a full-time role based in Chennai (Hybrid)?",
+          required: true,
+          options: [
+            { value: "chennai_hybrid_ready", label: "Yes, fully comfortable with Chennai (Hybrid), full-time." },
+            { value: "chennai_hybrid_flexible", label: "Comfortable with Chennai (Hybrid), open to discussing details." },
+            { value: "remote_preferred", label: "Prefer fully remote work." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "AI & Research Tools",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "How do you use AI-assisted content and research tools in your workflow?",
+          required: true,
+          options: [
+            { value: "ai_ideation_research", label: "For ideation, research, and turning topics into content angles." },
+            { value: "ai_drafting", label: "For drafting captions, scripts, and copy that I refine myself." },
+            { value: "ai_selective", label: "Selectively, keeping creative direction my own." },
+            { value: "ai_rare", label: "Rarely use AI tools." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Content Judgement",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label:
+            "Pick one piece of social media content you created that performed well. Explain the idea, your role in making it, and why it connected with the audience.",
+          required: true,
+          minLength: 120,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Assessment",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to complete a short content / Reel concept assessment if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const careerRoles = {
   "graphic-designer": designer,
   "video-editor": videoEditor,
   "hr-operations-executive": hrOperationsExecutive,
   "hr-operations-intern": hrOperationsIntern,
-  "telecalling-executive": telecallingExecutive,
+  "social-media-manager": socialMediaManager,
+  // "telecalling-executive": telecallingExecutive,
 };
 
 export function getRoleConfig(slug) {
