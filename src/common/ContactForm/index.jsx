@@ -28,62 +28,32 @@ const ContactForm = () => {
         onSubmit: async (values) => {
             setFormStatus("submitting");
             setError(null);
-            let ip = "";
-            try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                ip = ipData.ip || "";
-            } catch (e) {
-                // IP lookup fallback
-            }
-
             try {
                 const apiBase = getApiBaseUrl();
 
-                // 1. Submit to Invictus Lead Backend API (Admin Panel DB) first
-                try {
-                    await fetch(`${apiBase}/general/public`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            name: values.name,
-                            mobile: values.mobile,
-                            email: values.email,
-                            industry: values.industry,
-                        }),
-                    });
-                } catch (apiErr) {
-                    console.error("Invictus Backend API Submission Error:", apiErr);
-                }
-
-                // 2. Submit to Google Apps Script Webhook (Google Sheets Backup)
-                const newFormData = {
-                    sheet: "Sheet1",
-                    sheet_name: "Sheet1",
-                    name: values.name,
-                    mobile: values.mobile,
-                    email: values.email,
-                    industry: values.industry,
-                    applied_for: "General Inquiry",
-                    appliedFor: "General Inquiry",
-                    ip_address: ip,
-                };
-                await fetch("https://script.google.com/macros/s/AKfycbxEccKBZ_qCJeCfYeDNuVpTrE94yyLEHAdBuS6AZwRaGhgMNGVWe35y-09U3_hl_kJ27w/exec", {
+                const response = await fetch(`${apiBase}/general/public`, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Content-Type": "application/json",
                     },
-                    body: new URLSearchParams(newFormData).toString(),
+                    body: JSON.stringify({
+                        name: values.name,
+                        mobile: values.mobile,
+                        email: values.email,
+                        industry: values.industry,
+                    }),
                 });
+
+                if (!response.ok) {
+                    const data = await response.json().catch(() => ({}));
+                    throw new Error(data?.message || "Unable to submit your enquiry.");
+                }
 
                 formik.resetForm();
                 setFormStatus("success");
                 router.push('/thank-you');
             } catch (err) {
-                setError("Something went wrong. Please try again.");
+                setError(err.message || "Something went wrong. Please try again.");
                 setFormStatus("idle");
             }
         },

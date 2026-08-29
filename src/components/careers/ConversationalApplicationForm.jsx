@@ -241,7 +241,7 @@ export default function ConversationalApplicationForm({ role }) {
     try {
       const apiBase = getApiBaseUrl();
 
-      // 1. Submit to Invictus Lead Backend API (Admin Panel DB) first
+      // The backend stores the application and owns Google Sheets synchronization.
       const backendCareersPayload = {
         role: role?.title || "Graphic Designer",
         full_name: (formData.fullName || "").trim(),
@@ -277,53 +277,6 @@ export default function ConversationalApplicationForm({ role }) {
       if (apiData?.data?.application_reference) {
         generatedRef = apiData.data.application_reference;
       }
-
-      // 2. Submit to Google Apps Script Webhook (Google Sheets Backup)
-      const googleSheetPayload = {
-        sheet: "Careers",
-        sheet_name: "Careers",
-        submitted_at: new Date().toLocaleString(),
-        application_reference: generatedRef,
-        role: role?.title || "",
-        applied_for: role?.title || "",
-        appliedFor: role?.title || "",
-        name: formData.fullName || "",
-        full_name: formData.fullName || "",
-        phone: formData.phone || "",
-        mobile: formData.phone || "",
-        email: formData.email || "",
-        city: formData.city || "",
-        current_city: formData.city || "",
-        notice_period: formData.noticePeriod || "",
-        experience: formData.experience || "",
-        portfolio_or_showreel: formData.portfolioOrShowreel || "",
-        resume_or_linkedin: formData.resumeOrLinkedin || "",
-        tools: Array.isArray(formData.tools) ? formData.tools.join(", ") : (formData.tools || ""),
-        categories: Array.isArray(formData.categories) ? formData.categories.join(", ") : (formData.categories || ""),
-        work_categories: Array.isArray(formData.categories) ? formData.categories.join(", ") : (formData.categories || ""),
-        workflow_answer: formData.workflowAnswer || "",
-        ai_usage: formData.aiUsage || "",
-        judgement_answer: formData.judgementAnswer || "",
-        practical_assessment: formData.practicalAssessment || "",
-      };
-
-      // Send hiring-specific roles to the Careers sheet webhook.
-      const usesCareersSheet =
-        role?.slug === "social-media-manager" ||
-        role?.slug === "telecalling-executive" ||
-        role?.id === "telecalling-executive" ||
-        (typeof role?.title === "string" && role.title.toLowerCase().includes("telecalling"));
-
-      const googleSheetWebhookUrl = usesCareersSheet
-        ? "https://script.google.com/macros/s/AKfycbxEccKBZ_qCJeCfYeDNuVpTrE94yyLEHAdBuS6AZwRaGhgMNGVWe35y-09U3_hl_kJ27w/exec"
-        : "https://script.google.com/macros/s/AKfycbz7vYFkLog3qAL_6GY2IKj5wx-K5cX_vYFWfCkQUau6m5Q_NPKuU7EI8ipe73SpTceq/exec";
-
-      await fetch(googleSheetWebhookUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(googleSheetPayload).toString(),
-      });
 
       setApplicationRef(generatedRef);
       if (router && typeof router.push === "function") {
