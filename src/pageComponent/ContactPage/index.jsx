@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, CheckCircle, Mail, Phone, MapPin, Home } from 'lucide-react';
 import ContactForm from '@/common/ContactForm';
 import ContactDetail from '@/common/ContactDetails';
@@ -6,6 +6,15 @@ import ContactDetail from '@/common/ContactDetails';
 const chennaiMapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2869.6477945823717!2d80.23509367507762!3d13.040105587281628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52665409d1c93d%3A0x63741c4fe929f692!2s26RQ%2B33P%2C%205%2F9%2C%20Deena%20Dayalu%20St%2C%20Pondy%20Bazaar%2C%20T.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu%20600017!5e1!3m2!1sen!2sin!4v1779281712721!5m2!1sen!2sin";
 
 const ContactPage = () => {
+    useEffect(() => {
+        const target = document.getElementById('get-in-touch');
+        if (!target) return;
+        const timer = setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className="pt-32 min-h-screen">
             {/* Hero Section */}
@@ -26,7 +35,7 @@ const ContactPage = () => {
             </section>
 
             {/* Main Section */}
-            <section className="grid lg:grid-cols-3 border-y border-[var(--border-subtle)] relative z-10 bg-[var(--bg-primary)]">
+            <section id="get-in-touch" className="scroll-mt-28 grid lg:grid-cols-3 border-y border-[var(--border-subtle)] relative z-10 bg-[var(--bg-primary)]">
                 {/* Contact Form */}
                 <div className="lg:col-span-2 p-8 md:p-16 border-b lg:border-r border-[var(--border-subtle)] backdrop-blur-sm">
                     <h2 className="font-display text-4xl font-bold uppercase mb-8 text-[var(--text-primary)]">Get in Touch</h2>
@@ -47,10 +56,10 @@ const ContactPage = () => {
                                 <ContactDetail icon={Mail} title="Email" details={["contact@invictusglobaltech.com"]} />
                                 <ContactDetail icon={Phone} title="Phone" details={["+91-6369757054"]} />
                                 <div className="flex gap-4 mt-8">
-                                    <a href="mailto:contact@invictusglobaltech.com" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-colors">
+                                    <a href="mailto:contact@invictusglobaltech.com" className="px-4 py-2 bg-[#2AB182] !text-black font-display font-bold uppercase hover:bg-[#22956d] hover:!text-white active:bg-[#22956d] active:!text-white transition-colors">
                                         Email Us
                                     </a>
-                                    <a href="tel:+91-6369757054" className="px-4 py-2 bg-[#2AB182] text-black font-display font-bold uppercase hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-colors">
+                                    <a href="tel:+91-6369757054" className="px-4 py-2 bg-[#2AB182] !text-black font-display font-bold uppercase hover:bg-[#22956d] hover:!text-white active:bg-[#22956d] active:!text-white transition-colors">
                                         Call Us
                                     </a>
                                 </div>

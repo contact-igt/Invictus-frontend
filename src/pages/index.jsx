@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import HomePage from '@/pageComponent/Home';
-import WhatsNexusPopup from '@/components/WhatsNexusPopup';
+import ChatGPTAdsPopup from '@/components/ChatGPTAdsPopup';
 
 const Home = () => {
   const [activeFaq, setActiveFaq] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [showWhatsNexusPopup, setShowWhatsNexusPopup] = useState(true);
+  const [showChatGPTAdsPopup, setShowChatGPTAdsPopup] = useState(true);
   const [showSticky, setShowSticky] = useState(false);
   const stepRefs = useRef([]);
 
@@ -19,8 +20,8 @@ const Home = () => {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const closeWhatsNexusPopup = () => {
-    setShowWhatsNexusPopup(false);
+  const closeChatGPTAdsPopup = () => {
+    setShowChatGPTAdsPopup(false);
   };
 
   // Intersection Observer for the Home Page process steps (mobile progress tracking)
@@ -76,8 +77,8 @@ const Home = () => {
         <meta name="description" content="Invictus Global Tech Pvt Ltd - A performance marketing agency built on data, accountability, and clear numbers." />
       </Head>
 
-      {/* WhatsNexus Product Announcement Popup */}
-      <WhatsNexusPopup isOpen={showWhatsNexusPopup} onClose={closeWhatsNexusPopup} />
+      {/* ChatGPT Ads announcement */}
+      <ChatGPTAdsPopup isOpen={showChatGPTAdsPopup} onClose={closeChatGPTAdsPopup} />
 
       <HomePage
         activeStep={activeStep}
@@ -88,12 +89,10 @@ const Home = () => {
         scrollToContact={scrollToContact}
       />
 
-      {/* Sticky WhatsNexus Button */}
-      <a
-        href="https://whatsnexus.invictusglobaltech.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`fixed bottom-6 right-6 z-50 flex items-center gap-4 py-3 px-5 rounded-2xl bg-gradient-to-r from-[#2AB182] to-[#22956d] text-black font-jakarta shadow-md shadow-[#2AB182]/20 hover:scale-105 hover:shadow-lg hover:shadow-[#2AB182]/30 transition-all duration-500 group overflow-hidden border border-[#2AB182]/30 ${showSticky ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+      {/* Sticky ChatGPT Ads Button */}
+      <Link
+        href="/services#chatgpt-ads"
+        className={`fixed bottom-6 right-6 z-50 flex items-center gap-4 py-3 px-5 rounded-2xl bg-gradient-to-r from-[#2AB182] to-[#22956d] text-black font-body shadow-md shadow-[#2AB182]/20 hover:scale-105 hover:shadow-lg hover:shadow-[#2AB182]/30 transition-all duration-500 group overflow-hidden border border-[#2AB182]/30 ${showSticky ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none'}`}
       >
         {/* Spark/Chat Icon */}
         <div className="bg-black/10 p-2.5 rounded-xl relative z-10 flex-shrink-0 text-black">
@@ -103,8 +102,8 @@ const Home = () => {
         </div>
 
         <div className="flex flex-col relative z-10 pr-2">
-          <span className="font-bold text-lg leading-none mb-1 text-left text-black">Your 24/7 AI Receptionist</span>
-          <span className="text-[11px] text-black/80 font-medium tracking-wide uppercase text-left">WhatsNexus by Invictus</span>
+          <span className="font-bold text-lg leading-none mb-1 text-left text-black">ChatGPT Ads Are Live</span>
+          <span className="text-[11px] text-black/80 font-medium tracking-wide uppercase text-left">Now in India · Explore the service</span>
         </div>
 
         {/* Arrow Icon */}
@@ -113,7 +112,7 @@ const Home = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </div>
-      </a>
+      </Link>
     </>
   );
 };

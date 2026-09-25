@@ -12,6 +12,7 @@ const CustomCursor = () => {
     let mouseY = 0;
     let trailerX = 0;
     let trailerY = 0;
+    let animId;
 
     const onMouseMove = (e) => {
       mouseX = e.clientX;
@@ -33,11 +34,11 @@ const CustomCursor = () => {
         trailer.style.transform = `translate3d(${trailerX}px, ${trailerY}px, 0)`;
       }
       
-      requestAnimationFrame(animateTrailer);
+      animId = requestAnimationFrame(animateTrailer);
     };
 
     window.addEventListener('mousemove', onMouseMove);
-    const animId = requestAnimationFrame(animateTrailer);
+    animId = requestAnimationFrame(animateTrailer);
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
