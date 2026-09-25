@@ -149,8 +149,35 @@ const ServicesPage = ({ onContactClick }) => {
             </span>
           </h1>
           <p className="font-body text-lg md:text-xl text-[var(--text-muted)] max-w-2xl">
-            We don't offer "digital marketing services." We build scalable growth systems powered by ads, data, and AI.
+            We don&apos;t offer &quot;digital marketing services.&quot; We build scalable growth systems powered by ads, data, and AI.
           </p>
+        </div>
+      </section>
+
+      <section id="chatgpt-ads" aria-labelledby="chatgpt-service-title" className="font-body scroll-mt-28 px-6 md:px-12 pb-16 md:pb-24">
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 rounded-2xl border border-[#2AB182]/40 bg-gradient-to-br from-[#2AB182]/10 to-[var(--bg-card)] p-6 md:p-12">
+          <div>
+            <p className="mb-5 flex items-center gap-2 text-[#2AB182] text-xs font-bold uppercase tracking-[0.2em]"><span className="h-2 w-2 rounded-full bg-[#2AB182]" /> Now live in India</p>
+            <h2 id="chatgpt-service-title" className="font-display text-4xl md:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight">ChatGPT Ads.<br /><span className="text-[#2AB182]">Be part of the discovery.</span></h2>
+            <p className="font-body mt-6 text-lg text-[var(--text-muted)] leading-relaxed">Connect with potential customers as they research products, compare options, and explore their next purchase in ChatGPT.</p>
+            <p className="font-body mt-4 text-[var(--text-secondary)] leading-relaxed">Specialist ChatGPT Ads management by Invictus. We bring campaign strategy, creative execution, and a focus on measurable growth to this new advertising channel.</p>
+            <button onClick={onContactClick} className="mt-8 inline-flex items-center justify-center gap-3 rounded-lg bg-[#2AB182] px-6 py-4 font-bold text-black hover:bg-[#35c795] cursor-pointer">Plan Your ChatGPT Ads Campaign <ArrowRight size={20} className="shrink-0" /></button>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4 content-center">
+            {[
+              { title: 'Strategy & launch', desc: 'Campaign planning, account setup support, and a launch approach built around your business goals.' },
+              { title: 'Copy & creative', desc: 'Clear messaging and ad creative that connect your offer with customer intent.' },
+              { title: 'Conversion experience', desc: 'Landing page recommendations and tracking setup to connect ad traffic with business outcomes.' },
+              { title: 'Optimise & report', desc: 'Ongoing testing, budget reviews, and transparent performance reporting.' },
+            ].map((item) => (
+              <div key={item.title} className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-5">
+                <CheckCircle size={24} className="mb-4 text-[#2AB182]" />
+                <h3 className="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{item.title}</h3>
+                <p className="font-body text-sm leading-relaxed text-[var(--text-muted)]">{item.desc}</p>
+              </div>
+            ))}
+            <p className="sm:col-span-2 text-xs leading-relaxed text-[var(--text-muted)]">ChatGPT ads are labelled paid placements, separate from its answers. Advertising does not influence ChatGPT responses. <a href="https://openai.com/index/expanding-access-to-ai-with-chatgpt-ads/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-[#2AB182]">Read the launch announcement</a>.</p>
+          </div>
         </div>
       </section>
 
@@ -433,7 +460,7 @@ const ServicesPage = ({ onContactClick }) => {
             Ready to Build Your <span className="text-[#2AB182]">Growth System?</span>
           </h2>
           <p className="font-body text-[var(--text-muted)] text-xl mb-12">
-            Let's talk about your goals and how we can help you achieve them.
+            Let&apos;s talk about your goals and how we can help you achieve them.
           </p>
           <button
             onClick={onContactClick}

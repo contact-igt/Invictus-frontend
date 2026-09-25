@@ -262,6 +262,12 @@ html {
 /* Restore cursor hiding for non-Blueray pages */
 /* Used a simpler approach than before to avoid conflicts */
 @media (min-width: 768px) {
+  /* The announcement renders its own custom cursor inside the top layer. */
+  dialog:modal,
+  dialog:modal::backdrop {
+    cursor: none;
+  }
+
   body:not(:has(#blueray-body)) {
     cursor: none;
   }

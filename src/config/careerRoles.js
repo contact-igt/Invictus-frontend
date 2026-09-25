@@ -1081,7 +1081,184 @@ const socialMediaManager = {
   ],
 };
 
+const businessDevelopmentExecutive = {
+  slug: "business-development-executive",
+  title: "Business Development Executive",
+  department: "Sales & Business Development",
+  location: "Chennai (Hybrid)",
+  employmentType: "Full-Time",
+  minExperience: "Chennai (Hybrid) • Full-Time • 1–3 Years Experience",
+  freshersAllowed: "Female candidates encouraged to apply",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "Identify and connect with potential business clients, generate and qualify new leads, and present digital marketing & performance marketing solutions to drive business growth. If you enjoy sales, digital marketing, client conversations, and creating real business opportunities, this could be the right opportunity for you.",
+  positioning: [
+    "Identify and connect with potential business clients to build strong sales pipelines.",
+    "Generate and qualify new leads through proactive outreach, networking, and industry research.",
+    "Present relevant digital marketing & performance marketing solutions aligned with client goals.",
+    "Confidently communicate with business owners, founders, and key decision-makers.",
+    "Manage client conversations, follow-ups, and negotiation discussions with a target-oriented mindset.",
+    "Build long-term business relationships and collaborate with internal marketing and strategy teams.",
+    "Female candidates are strongly encouraged to apply.",
+  ],
+  responsibilities: [
+    "Identify and connect with potential business clients across target industries.",
+    "Generate and qualify new leads through research, networking, and multi-channel outreach.",
+    "Understand client requirements, growth bottlenecks, and business goals.",
+    "Present relevant digital marketing & performance marketing solutions tailored to client needs.",
+    "Manage client conversations, follow-ups, and end-to-end sales discussions.",
+    "Build and nurture long-term, trust-based business relationships.",
+    "Coordinate with our internal marketing, creative, and strategy teams for client onboarding and execution.",
+  ],
+  requirements: [
+    "1–3 years of experience in Business Development / Sales.",
+    "Good understanding of Digital Marketing and online business growth.",
+    "Strong communication and negotiation skills.",
+    "Fluency in English & Hindi.",
+    "Confident in speaking with business owners and decision-makers.",
+    "Self-driven, proactive, and target oriented.",
+    "Female candidates are encouraged to apply.",
+    "Location: Chennai (Hybrid) | Full-Time.",
+  ],
+  preferred: [
+    "Prior experience selling digital marketing, performance marketing, or agency solutions.",
+    "Demonstrated ability to manage pipelines, qualify leads, and close sales conversations.",
+    "Proficiency with CRM platforms (HubSpot / Zoho / Salesforce / LeadSquared) and LinkedIn Sales Navigator.",
+    "Multi-lingual capability (Fluency in English & Hindi; Tamil is an added advantage).",
+    "Strong presentation, proposal drafting, and client relationship skills.",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("How many years of Business Development / Sales experience do you have?"),
+    {
+      id: "resume",
+      title: "Resume & Profile",
+      fields: [
+        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn Profile URL", required: true, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Portfolio / Pitch Deck / Track Record (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools & Software",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which sales, CRM, or outreach tools are you proficient in?",
+          required: true,
+          options: [
+            { value: "crm_software", label: "CRM Software (HubSpot / Zoho / Salesforce / LeadSquared)" },
+            { value: "linkedin_sales_navigator", label: "LinkedIn / Sales Navigator" },
+            { value: "google_workspace", label: "Google Workspace (Docs / Sheets / Slides)" },
+            { value: "ms_office", label: "MS Office (Excel / PowerPoint / Word)" },
+            { value: "cold_outreach_calling", label: "Cold Calling & Email Outreach Tools" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Core Competencies",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which key areas align with your business development experience?",
+          required: true,
+          options: [
+            { value: "b2b_sales", label: "B2B Sales & Client Acquisition" },
+            { value: "lead_generation_qualification", label: "Lead Generation & Qualification" },
+            { value: "digital_marketing_solutions", label: "Digital Marketing & Performance Marketing Solutions" },
+            { value: "client_pitching_negotiation", label: "Client Pitching, Presentations & Negotiation" },
+            { value: "relationship_management", label: "Client Relationship Management & Follow-ups" },
+            { value: "market_research", label: "Market Research & Competitor Analysis" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Work Mode & Commitment",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable working in Chennai (Hybrid) in a full-time, target-oriented role?",
+          required: true,
+          options: [
+            { value: "chennai_hybrid_fulltime_ready", label: "Yes, fully comfortable with Chennai (Hybrid) and full-time target-oriented role." },
+            { value: "chennai_hybrid_flexible", label: "Comfortable with Chennai (Hybrid), open to discussing details." },
+            { value: "remote_preferred", label: "Prefer fully remote work." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "Language Fluency & Communication",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "Which languages are you fluent in for client conversations and business pitches?",
+          required: true,
+          options: [
+            { value: "english_hindi", label: "Fluent in English & Hindi" },
+            { value: "english_hindi_tamil", label: "Fluent in English, Hindi & Tamil" },
+            { value: "english_only", label: "Fluent in English only" },
+            { value: "other_languages", label: "Other language combinations" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Sales Pitch & Client Scenario",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label:
+            "Describe a client deal you initiated and closed, or explain how you would pitch digital & performance marketing solutions to a new business owner hesitant about advertising.",
+          required: true,
+          minLength: 120,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Assessment",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to participate in a short sales pitch or mock client discussion assessment if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+  screeningRules: [
+    { fieldId: "workflowAnswer", optionValue: "remote_preferred", flag: "REMOTE_ONLY_PREFERRED" },
+    { fieldId: "aiUsage", optionValue: "english_hindi", flag: "FLUENT_ENGLISH_HINDI" },
+    { fieldId: "aiUsage", optionValue: "english_hindi_tamil", flag: "FLUENT_ENGLISH_HINDI_TAMIL" },
+    { fieldId: "aiUsage", optionValue: "english_only", flag: "ENGLISH_ONLY" },
+  ],
+};
+
 export const careerRoles = {
+  "business-development-executive": businessDevelopmentExecutive,
   "graphic-designer": designer,
   "video-editor": videoEditor,
   "hr-operations-executive": hrOperationsExecutive,
