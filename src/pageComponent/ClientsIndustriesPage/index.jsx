@@ -126,8 +126,8 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                 </div>
             </section>
 
-            {/* Client Logos Grid */}
-            <section className="py-16 md:py-24 px-4 md:px-12 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]">
+            {/* Client Logos Grid — temporarily hidden */}
+            {false && <section className="py-16 md:py-24 px-4 md:px-12 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]">
                 <div className="max-w-[1600px] mx-auto">
                     <h2 className="font-display text-3xl md:text-4xl font-bold uppercase text-[var(--text-primary)] text-center mb-10 md:mb-14 tracking-tight">
                         HIGHLIGHTED CLIENTS
@@ -178,7 +178,8 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>}
+
 
 
             {/* Closing CTA */}
