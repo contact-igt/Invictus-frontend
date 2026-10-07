@@ -1,18 +1,15 @@
 // API Environment Configuration helper
-// Evaluates API Base URL based on NEXT_PUBLIC_ENV ("local" | "production")
+// Local URLs are allowed only in development; a deployed build must never call localhost.
 
 export const getApiBaseUrl = () => {
-  const envMode = (process.env.NEXT_PUBLIC_ENV || "local").trim().toLowerCase();
+  const envMode = (process.env.NEXT_PUBLIC_ENV || "").trim().toLowerCase();
 
-  if (envMode === "production") {
-    return (
-      process.env.NEXT_PUBLIC_PRODUCTION_API_URL ||
-      "https://api.invictusglobaltech.com/api/v1/invictus-enquiries"
-    );
+  if (process.env.NODE_ENV !== "production" && ["local", "localhost"].includes(envMode)) {
+    return process.env.NEXT_PUBLIC_LOCALHOST_API_URL || "http://localhost:8000/api/v1/invictus-enquiries";
   }
 
   return (
-    process.env.NEXT_PUBLIC_LOCALHOST_API_URL ||
-    "http://localhost:8000/api/v1/invictus-enquiries"
+    process.env.NEXT_PUBLIC_PRODUCTION_API_URL ||
+    "https://api.invictusglobaltech.com/api/v1/invictus-enquiries"
   );
 };
