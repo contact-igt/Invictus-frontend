@@ -967,8 +967,8 @@ const socialMediaManager = {
       id: "resume",
       title: "Resume & Portfolio",
       fields: [
-        { id: "resumeOrLinkedin", type: "url", label: "Resume or LinkedIn URL", required: true, placeholder: "https://" },
-        { id: "portfolioOrShowreel", type: "url", label: "Work samples / portfolio URL (optional)", required: false, placeholder: "https://" },
+        { id: "portfolioOrShowreel", type: "url", label: "Work samples / portfolio / LinkedIn URL", required: true, placeholder: "https://" },
+        { id: "resumeOrLinkedin", type: "url", label: "Resume URL (optional)", required: false, placeholder: "https://" },
       ],
     },
     {
@@ -1039,9 +1039,8 @@ const socialMediaManager = {
           label: "How do you use AI-assisted content and research tools in your workflow?",
           required: true,
           options: [
-            { value: "ai_ideation_research", label: "For ideation, research, and turning topics into content angles." },
-            { value: "ai_drafting", label: "For drafting captions, scripts, and copy that I refine myself." },
-            { value: "ai_selective", label: "Selectively, keeping creative direction my own." },
+            { value: "ai_ideas", label: "For ideation, research, and turning topics into content angles." },
+            { value: "ai_selective", label: "Selectively, for drafting that I refine myself while keeping creative direction my own." },
             { value: "ai_rare", label: "Rarely use AI tools." },
           ],
         },
@@ -1257,6 +1256,172 @@ const businessDevelopmentExecutive = {
   ],
 };
 
+const googleAdsExpert = {
+  slug: "google-ads-expert",
+  title: "Google Ads Expert",
+  department: "Performance Marketing",
+  location: "Hybrid",
+  employmentType: "Full-Time",
+  minExperience: "Hybrid • Full-Time • 2–3 Years Experience",
+  freshersAllowed: "",
+  applicationMaterialLabel: "Resume or LinkedIn",
+  estimatedMinutes: "2–3 minutes",
+  summary:
+    "Manage and optimize performance-driven Google Ads campaigns focused on lead generation, customer acquisition, and business growth. Healthcare industry experience preferred.",
+  positioning: [
+    "Experience: 2–3 years. Work Mode: Hybrid. Employment Type: Full-Time.",
+    "Preferred: Healthcare industry experience.",
+    "Hybrid work environment.",
+    "Diverse performance-driven projects.",
+    "Exposure to Healthcare, Technology, AI & Automation.",
+    "Learning and career growth opportunities.",
+  ],
+  responsibilities: [
+    "Plan, manage, and optimize Google Ads campaigns.",
+    "Conduct keyword, competitor, and audience research.",
+    "Develop ad copies, targeting, and bidding strategies.",
+    "Monitor CTR, CPC, CPL, conversions, conversion rate, and ROAS.",
+    "Manage budgets and improve campaign performance.",
+    "Conduct A/B testing of ads, keywords, and landing pages.",
+    "Set up and monitor conversion tracking using Google Ads, GA4, and GTM.",
+    "Prepare performance reports and provide actionable insights.",
+  ],
+  requirements: [
+    "2–3 years of hands-on Google Ads/PPC experience.",
+    "Strong knowledge of campaign management, optimization, and lead generation.",
+    "Proficiency in GA4 and Google Tag Manager.",
+    "Strong analytical and communication skills.",
+    "Ability to manage multiple campaigns independently.",
+    "Healthcare/clinic/hospital marketing experience is an advantage.",
+  ],
+  preferred: [
+    "Healthcare, clinic, or hospital marketing experience.",
+    "Experience running lead-generation campaigns and optimizing CPL.",
+    "Hands-on conversion tracking setup using Google Ads, GA4, and GTM.",
+  ],
+  missingMaterialFlag: "RESUME_MISSING",
+  screens: [
+    contactScreen(),
+    locationScreen(),
+    experienceScreen("How many years of hands-on Google Ads / PPC experience do you have?"),
+    {
+      id: "resume",
+      title: "Resume & Profile",
+      fields: [
+        { id: "portfolioOrShowreel", type: "url", label: "Resume / LinkedIn / case studies URL", required: true, placeholder: "https://" },
+        { id: "resumeOrLinkedin", type: "url", label: "Additional profile or report link (optional)", required: false, placeholder: "https://" },
+      ],
+    },
+    {
+      id: "tools",
+      title: "Tools & Platforms",
+      fields: [
+        {
+          id: "tools",
+          type: "multiselect",
+          label: "Which tools and platforms can you use independently?",
+          required: true,
+          options: [
+            { value: "google_ads", label: "Google Ads" },
+            { value: "ga4", label: "Google Analytics 4 (GA4)" },
+            { value: "gtm", label: "Google Tag Manager (GTM)" },
+            { value: "looker_studio", label: "Looker Studio / reporting dashboards" },
+            { value: "keyword_research_tools", label: "Keyword Planner / SEMrush / similar" },
+            { value: "meta_ads", label: "Meta Ads" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "categories",
+      title: "Campaign Experience",
+      fields: [
+        {
+          id: "categories",
+          type: "multiselect",
+          label: "Which campaign types have you managed?",
+          required: true,
+          options: [
+            { value: "search", label: "Search campaigns" },
+            { value: "performance_max", label: "Performance Max" },
+            { value: "display_youtube", label: "Display / YouTube" },
+            { value: "lead_generation", label: "Lead-generation campaigns" },
+            { value: "healthcare_marketing", label: "Healthcare / clinic / hospital marketing" },
+            { value: "conversion_tracking", label: "Conversion tracking setup" },
+            { value: "other", label: "Other" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "workflow",
+      title: "Work Mode",
+      fields: [
+        {
+          id: "workflowAnswer",
+          type: "select",
+          label: "Are you comfortable with a full-time Hybrid role?",
+          required: true,
+          options: [
+            { value: "hybrid_fulltime_ready", label: "Yes, fully comfortable with Hybrid, full-time." },
+            { value: "hybrid_flexible", label: "Comfortable with Hybrid, open to discussing details." },
+            { value: "remote_preferred", label: "Prefer fully remote work." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "ai_usage",
+      title: "AI & Automation",
+      fields: [
+        {
+          id: "aiUsage",
+          type: "select",
+          label: "How do you use AI tools in your campaign workflow?",
+          required: true,
+          options: [
+            { value: "ai_ideas", label: "For keyword research, ad copy ideas, and analysis support." },
+            { value: "ai_selective", label: "Selectively, while making bidding and targeting decisions myself." },
+            { value: "ai_rare", label: "Rarely use AI tools." },
+          ],
+        },
+      ],
+    },
+    {
+      id: "judgement",
+      title: "Campaign Judgement",
+      fields: [
+        {
+          id: "judgementAnswer",
+          type: "textarea",
+          label:
+            "Describe a Google Ads campaign you improved. What was the problem, what did you change, and how did CPL / conversions / ROAS move?",
+          required: true,
+          minLength: 120,
+          maxLength: 700,
+        },
+      ],
+    },
+    {
+      id: "practical",
+      title: "Practical Assessment",
+      fields: [
+        {
+          id: "practicalAssessment",
+          type: "select",
+          label: "Are you willing to complete a short campaign-audit assessment if shortlisted?",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const careerRoles = {
   "business-development-executive": businessDevelopmentExecutive,
   "graphic-designer": designer,
@@ -1264,6 +1429,7 @@ export const careerRoles = {
   "hr-operations-executive": hrOperationsExecutive,
   "hr-operations-intern": hrOperationsIntern,
   "social-media-manager": socialMediaManager,
+  "google-ads-expert": googleAdsExpert,
   // "telecalling-executive": telecallingExecutive,
 };
 
