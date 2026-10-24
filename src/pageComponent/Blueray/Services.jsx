@@ -13,38 +13,38 @@ const Services = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Card 1 */}
-                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-deep shadow-sm hover:translate-y-[-5px] transition-all duration-300 flex flex-col">
+                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-deep shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col">
                         <div className="w-12 h-12 bg-navy-deep text-[var(--text-primary)] rounded-lg flex items-center justify-center mb-6">
                             <BookOpen size={24} />
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-navy-deep font-montserrat">NDT Training (ASNT Level II)</h3>
                         <p className="text-slate-600 mb-6 flex-grow">Focused training for candidates pursuing ASNT Level II. Practical insights from industry experts with 10+ years of ground experience.</p>
-                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-1 hover:gap-3 transition-all">
+                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-2">
                             View Training Details <ArrowRight className="w-4 h-4" />
                         </a>
                     </div>
 
                     {/* Card 2 */}
-                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-gold shadow-sm hover:translate-y-[-5px] transition-all duration-300 flex flex-col">
+                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-gold shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col">
                         <div className="w-12 h-12 bg-gold text-navy-deep rounded-lg flex items-center justify-center mb-6">
                             <Award size={24} />
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-navy-deep font-montserrat">Career Guidance & Certification Support</h3>
                         <p className="text-slate-600 mb-2">Guidance and support for career pathways and certification planning based on actual global standards.</p>
                         <p className="text-xs font-bold text-red-600 mb-6 uppercase">* Training is provided only for ASNT Level II.</p>
-                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-1 hover:gap-3 transition-all">
+                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-2">
                             Explore Guidance & Support <ArrowRight className="w-4 h-4" />
                         </a>
                     </div>
 
                     {/* Card 3 */}
-                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-midnight shadow-sm hover:translate-y-[-5px] transition-all duration-300 flex flex-col">
+                    <div className="bg-gray-50 p-8 rounded-xl border-b-4 border-navy-midnight shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col">
                         <div className="w-12 h-12 bg-navy-midnight text-[var(--text-primary)] rounded-lg flex items-center justify-center mb-6">
                             <PlaneTakeoff size={24} />
                         </div>
                         <h3 className="text-xl font-bold mb-4 text-navy-deep font-montserrat">Overseas Placement Support</h3>
                         <p className="text-slate-600 mb-6 flex-grow">Resume correction + interview preparation + documentation guidance leveraging 10+ years of international placement insights.</p>
-                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-1 hover:gap-3 transition-all">
+                        <a href="https://wa.me/917010606321" className="text-blue-700 font-bold flex items-center gap-2">
                             See Overseas Support <ArrowRight className="w-4 h-4" />
                         </a>
                     </div>

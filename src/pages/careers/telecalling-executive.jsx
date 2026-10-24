@@ -14,7 +14,7 @@ export default function TelecallingExecutivePage() {
           <title>Role closed | Invictus Global Tech Pvt Ltd</title>
           <meta name="robots" content="noindex" />
         </Head>
-        <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+        <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
           <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-24 text-center">
             <h1 className="font-display font-bold text-3xl uppercase mb-4">This role is no longer open</h1>
             <p className="text-[var(--text-secondary,#A0A0A0)] mb-8">Check the careers page for current opportunities.</p>
@@ -56,7 +56,7 @@ export default function TelecallingExecutivePage() {
         />
       </Head>
 
-      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-24">
           <Link
             href="/careers"
@@ -123,7 +123,7 @@ export default function TelecallingExecutivePage() {
               <ul className="space-y-3 font-body">
                 {role.positioning.map((item) => (
                   <li key={item} className="leading-relaxed flex gap-3 font-body">
-                    <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                    <span className="text-[#2AB182] font-bold shrink-0">•</span>
                     <span className="font-body">{item}</span>
                   </li>
                 ))}
@@ -138,7 +138,7 @@ export default function TelecallingExecutivePage() {
             <div className="text-center mb-12">
               <h2 className="font-display font-bold text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">Apply for this role</h2>
               <p className="text-[var(--text-secondary,#A0A0A0)] max-w-xl mx-auto">
-                Complete the form below in about {role.estimatedMinutes}. No account, no Google Form — just a short set of
+                Complete the form below in about {role.estimatedMinutes}. No account, no Google Form: just a short set of
                 questions.
               </p>
             </div>

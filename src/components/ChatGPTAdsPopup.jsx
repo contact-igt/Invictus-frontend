@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Check, MessageSquare, X } from 'lucide-react';
-import CustomCursor from '@/common/Cursor';
+import { ArrowRight, MessageSquare, X } from 'lucide-react';
 
 export default function ChatGPTAdsPopup({ isOpen, onClose }) {
     const dialogRef = useRef(null);
@@ -23,7 +22,6 @@ export default function ChatGPTAdsPopup({ isOpen, onClose }) {
             onCancel={onClose}
             onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
             className="fixed inset-0 h-full max-h-none w-full max-w-none overflow-y-auto bg-transparent p-0 backdrop:bg-black/80 backdrop:backdrop-blur-md font-body">
-            {isOpen && <CustomCursor />}
             <div onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
                 className="flex min-h-full items-center justify-center p-4 sm:p-6">
                 <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-[#2AB182]/40 bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-[0_0_80px_rgba(42,177,130,0.2)]">
@@ -33,11 +31,11 @@ export default function ChatGPTAdsPopup({ isOpen, onClose }) {
                             <span className="h-2 w-2 rounded-full bg-[#2AB182]" /> Now live in India
                         </div>
                         <MessageSquare className="mb-3.5 text-[#2AB182]" size={32} aria-hidden="true" />
-                        <h2 id="chatgpt-ads-title" className="font-display text-2xl sm:text-4xl font-bold uppercase leading-tight">ChatGPT Ads.<br /><span className="text-[#2AB182]">Your next growth channel.</span></h2>
+                        <h2 id="chatgpt-ads-title" className="font-display text-2xl sm:text-4xl font-bold uppercase leading-tight">ChatGPT Ads: <span className="text-[#2AB182]">Your Next Growth Channel</span></h2>
                         <p id="chatgpt-ads-description" className="mt-4 text-sm leading-relaxed text-[var(--text-muted)]">Reach potential customers as they explore, compare, and decide. Invictus brings specialist ChatGPT Ads management to your brand, from strategy and setup to ongoing optimisation.</p>
                         <div className="my-5 grid gap-3 sm:grid-cols-2">
                             {['Campaign strategy & setup', 'Ad copy & creative', 'Landing page optimisation', 'Performance tracking & reporting'].map((feature) => (
-                                <div key={feature} className="flex items-center gap-2 text-[13px] text-[var(--text-secondary)]"><Check size={16} className="shrink-0 text-[#2AB182]" />{feature}</div>
+                                <div key={feature} className="flex items-center gap-2 text-[13px] text-[var(--text-secondary)]"><span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0" />{feature}</div>
                             ))}
                         </div>
                         <Link href="/services#chatgpt-ads" onClick={onClose} className="flex items-center justify-center gap-3 rounded-lg bg-[#2AB182] px-5 py-3.5 text-center font-bold text-black hover:bg-[#35c795]">Explore ChatGPT Ads <ArrowRight size={18} className="shrink-0" /></Link>

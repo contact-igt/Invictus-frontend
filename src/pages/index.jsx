@@ -70,15 +70,67 @@ const Home = () => {
     };
   }, []);
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://www.invictusglobaltech.com/#website',
+    url: 'https://www.invictusglobaltech.com/',
+    name: 'Invictus Global Tech',
+    description: 'Performance marketing agency built on data, accountability, and clear numbers.',
+    publisher: {
+      '@id': 'https://www.invictusglobaltech.com/#organization',
+    },
+    inLanguage: 'en-US',
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Do you work on performance-based pricing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'We primarily work on a retainer + performance structure. Pure performance deals are evaluated on a case-by-case basis depending on your margins and historical data.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is the minimum budget?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'We typically recommend a minimum monthly ad spend that ensures statistical significance for testing and scaling (usually $2k+).',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How soon can we see results?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'For lead-gen campaigns, we usually start seeing data in the first 7–10 days, and meaningful optimisation from week 3 onwards.',
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
-        <title>Invictus Global Tech Pvt Ltd - Performance Marketing Agency</title>
+        <title>Invictus Global Tech | Performance Marketing Agency India</title>
         <meta name="description" content="Invictus Global Tech Pvt Ltd - A performance marketing agency built on data, accountability, and clear numbers." />
+        <link rel="canonical" href="https://www.invictusglobaltech.com/" />
+        <script
+          type="application/ld+json"
+          key="website-jsonld"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          key="faq-jsonld"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
       </Head>
-
-      {/* ChatGPT Ads announcement */}
-      <ChatGPTAdsPopup isOpen={showChatGPTAdsPopup} onClose={closeChatGPTAdsPopup} />
 
       <HomePage
         activeStep={activeStep}
@@ -89,13 +141,16 @@ const Home = () => {
         scrollToContact={scrollToContact}
       />
 
+      {/* ChatGPT Ads announcement */}
+      <ChatGPTAdsPopup isOpen={showChatGPTAdsPopup} onClose={closeChatGPTAdsPopup} />
+
       {/* Sticky ChatGPT Ads Button */}
       <Link
         href="/services#chatgpt-ads"
-        className={`fixed bottom-6 right-6 z-50 flex items-center gap-4 py-3 px-5 rounded-2xl bg-gradient-to-r from-[#2AB182] to-[#22956d] text-black font-body shadow-md shadow-[#2AB182]/20 hover:scale-105 hover:shadow-lg hover:shadow-[#2AB182]/30 transition-all duration-500 group overflow-hidden border border-[#2AB182]/30 ${showSticky ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+        className={`fixed bottom-6 right-6 z-50 flex items-center gap-4 py-3 px-5 rounded-lg bg-gradient-to-r from-[#2AB182] to-[#22956d] text-black font-body shadow-md hover:shadow-lg transition-[opacity,transform,box-shadow] duration-200 group overflow-hidden border border-[#2AB182]/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] ${showSticky ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-10 pointer-events-none'}`}
       >
         {/* Spark/Chat Icon */}
-        <div className="bg-black/10 p-2.5 rounded-xl relative z-10 flex-shrink-0 text-black">
+        <div className="bg-black/10 p-2.5 rounded-md relative z-10 flex-shrink-0 text-black">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
@@ -108,7 +163,7 @@ const Home = () => {
 
         {/* Arrow Icon */}
         <div className="relative z-10 pl-2 opacity-80 group-hover:opacity-100 text-black">
-          <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </div>

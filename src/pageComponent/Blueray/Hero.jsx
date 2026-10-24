@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, CheckCircle, MessageCircle, PhoneCall, Globe2 } from 'lucide-react';
+import { Award, MessageCircle, PhoneCall, Globe2 } from 'lucide-react';
 
 const Hero = () => {
     return (
@@ -19,15 +19,15 @@ const Hero = () => {
 
                     <div className="space-y-3 mb-10">
                         <div className="flex items-center gap-3">
-                            <CheckCircle className="text-gold w-5 h-5" />
+                            <span className="w-2 h-2 rounded-full bg-gold shrink-0" />
                             <span>Training Offered: NDT – ASNT Level II (Only)</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <CheckCircle className="text-gold w-5 h-5" />
+                            <span className="w-2 h-2 rounded-full bg-gold shrink-0" />
                             <span>Guidance & Support: Career direction & certification pathway</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <CheckCircle className="text-gold w-5 h-5" />
+                            <span className="w-2 h-2 rounded-full bg-gold shrink-0" />
                             <span>Overseas Support: Resume + interview + documentation guidance</span>
                         </div>
                     </div>

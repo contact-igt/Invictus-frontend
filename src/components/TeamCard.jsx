@@ -2,8 +2,13 @@ import React from "react";
 
 const TeamCard = ({ name, role, isSlider = false }) => {
     // Map names to the teamscroll images, removing "DR. " prefix for the filename
-    const fileName = name.toLowerCase().replace("dr. ", "").trim();
-    const imagePath = `/assets/team/teamscroll/${fileName}.png`;
+    const cleanName = name.toLowerCase().replace("dr. ", "").trim();
+    const nameMap = {
+        "naveen raj": "naveen",
+        "alam": "aalam",
+    };
+    const fileName = nameMap[cleanName] || cleanName;
+    const imagePath = `/assets/team/teamscroll/${fileName}.webp`;
 
     return (
         <div
@@ -13,6 +18,10 @@ const TeamCard = ({ name, role, isSlider = false }) => {
                 <img
                     src={imagePath}
                     alt={name}
+                    width={273}
+                    height={600}
+                    loading="lazy"
+                    decoding="async"
                     className="max-w-full max-h-full object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                 />
             </div>

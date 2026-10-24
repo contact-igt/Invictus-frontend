@@ -14,7 +14,7 @@ export default function CultureSection() {
     <section id="culture" className="py-20 border-b border-[var(--border-primary,#333)] transition-colors duration-300">
       <div className="max-w-[1240px] mx-auto px-6 md:px-12">
         <p className="font-body text-[var(--accent,#2AB182)] text-sm uppercase tracking-widest font-bold mb-4">
-          (03) — WORK CULTURE
+          (03) / WORK CULTURE
         </p>
         <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-6xl uppercase mb-16 text-[var(--text-primary,#E0E0E0)]">
           HOW WE WORK.

@@ -1,11 +1,24 @@
 import { Instagram, Facebook, Youtube, Linkedin } from "lucide-react";
 import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest text-[var(--text-muted)] font-body relative z-10 bg-[var(--navbar-bg)] backdrop-blur-sm border-t border-[var(--border-subtle)]">
-      <span>© 2026 Invictus Global Tech Pvt Ltd</span>
-      <div className="flex gap-6 mt-6 md:mt-0 items-center">
+    <footer className="py-12 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest text-[var(--text-muted)] font-body relative z-10 bg-[var(--navbar-bg)] backdrop-blur-sm border-t border-[var(--border-subtle)] gap-6">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+        <span>© 2026 Invictus Global Tech Pvt Ltd</span>
+        <span className="hidden sm:inline text-[var(--border-subtle)]">|</span>
+        <div className="flex gap-4">
+          <Link href="/privacy" className="hover:text-[#2AB182] transition-colors duration-150">
+            Privacy Policy
+          </Link>
+          <span className="text-[var(--border-subtle)]">•</span>
+          <Link href="/terms" className="hover:text-[#2AB182] transition-colors duration-150">
+            Terms of Service
+          </Link>
+        </div>
+      </div>
+      <div className="flex gap-6 items-center">
         <a
           href="https://www.instagram.com/invictusglobaltech/"
           target="_blank"

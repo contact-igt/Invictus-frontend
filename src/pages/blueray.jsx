@@ -15,7 +15,7 @@ export default function Blueray() {
                 <title>Blueray International | Engineering Quality & NDT Training</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <div id="blueray-body" className="bg-gray-50 text-slate-800 font-open-sans">
+            <div id="blueray-body" className="bg-transparent text-slate-800 font-open-sans">
                 <Navbar />
                 <Hero />
                 <Services />

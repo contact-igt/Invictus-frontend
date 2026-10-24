@@ -10,17 +10,11 @@ const WhatsNexus = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[var(--bg-primary)] font-jakarta text-[var(--text-primary)] pt-20 px-6 md:px-12 relative overflow-hidden">
+        <div className="min-h-screen bg-transparent font-jakarta text-[var(--text-primary)] pt-20 px-6 md:px-12 relative overflow-hidden">
             <Head>
                 <title>WhatsNexus | Invictus Global Tech Pvt Ltd</title>
                 <meta name="description" content="Discover WhatsNexus - Our latest product." />
             </Head>
-
-            {/* Background Gradients */}
-            <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#2AB182]/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#2AB182]/5 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
-            </div>
 
             {/* Product Announcement Popup */}
             <WhatsNexusPopup isOpen={showPopup} onClose={closePopup} />
@@ -34,7 +28,7 @@ const WhatsNexus = () => {
                         <span className="text-sm font-semibold tracking-wider uppercase">Introducing the Future of Support</span>
                     </div>
                     <h1 className="font-display font-bold text-6xl md:text-8xl mb-8 uppercase animate-slideUp">
-                        Whats<span className="text-[#2AB182] inline-block hover:scale-105 transition-transform cursor-default">Nexus</span>
+                        Whats<span className="text-[#2AB182]">Nexus</span>
                     </h1>
                     <p className="font-body text-xl text-[#AAA] max-w-2xl mb-12 leading-relaxed animate-slideUp delay-100">
                         The AI Receptionist Hub that transforms how you connect with customers. Automated, intelligent, and always available.
@@ -45,10 +39,10 @@ const WhatsNexus = () => {
                             href="https://whatsnexus.invictusglobaltech.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-[var(--text-primary)] font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(42,177,130,0.4)] hover:scale-105"
+                            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2AB182] to-[#22956d] text-[var(--text-primary)] font-semibold text-lg rounded-lg overflow-hidden transition-colors duration-150 shadow-md hover:shadow-lg"
                         >
                             <span className="relative z-10">Get Started Now</span>
-                            <svg className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="relative z-10 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                             <div className="absolute inset-0 bg-gradient-to-r from-[#22956d] to-[#2AB182] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -102,8 +96,8 @@ const WhatsNexus = () => {
                             )
                         }
                     ].map((feature, i) => (
-                        <div key={i} className="p-8 rounded-2xl bg-[#111] border border-[var(--border-subtle)] hover:border-[#2AB182]/50 hover:bg-[var(--bg-card)] transition-all duration-300 group">
-                            <div className="w-12 h-12 bg-[#2AB182]/10 rounded-lg flex items-center justify-center text-[#2AB182] mb-6 group-hover:scale-110 transition-transform">
+                        <div key={i} className="p-8 rounded-2xl bg-[#111] border border-[var(--border-subtle)] hover:border-[#2AB182]/50 hover:bg-[var(--bg-card)] transition-colors duration-150 group">
+                            <div className="w-12 h-12 bg-[#2AB182]/10 rounded-lg flex items-center justify-center text-[#2AB182] mb-6">
                                 {feature.icon}
                             </div>
                             <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
@@ -116,35 +110,35 @@ const WhatsNexus = () => {
                 <div id="demo" className="mb-32">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-bold mb-4">Experience the Intelligence</h2>
-                        <p className="text-[var(--text-muted)]">See how WhatsNexus handles conversations naturally.</p>
+                        <p className="text-[var(--text-muted)]">Interactive walkthrough illustrating how WhatsNexus automates customer conversations and workflow triage.</p>
                     </div>
 
                     <div className="max-w-4xl mx-auto bg-[var(--bg-card)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden shadow-2xl relative">
-                        {/* Fake Browser Bar */}
+                        {/* Demo Window Bar */}
                         <div className="bg-[#111] px-4 py-3 border-b border-[var(--border-subtle)] flex items-center gap-2">
                             <div className="flex gap-1.5">
                                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
                             </div>
-                            <div className="mx-auto text-xs text-[var(--text-muted)] font-mono">whats-nexus-demo.exe</div>
+                            <div className="mx-auto text-xs text-[var(--text-muted)] font-mono">whatsnexus.invictusglobaltech.com</div>
                         </div>
 
                         <div className="grid md:grid-cols-[250px_1fr] h-[500px]">
                             {/* Sidebar */}
                             <div className="bg-[#111] border-r border-[var(--border-subtle)] p-4 hidden md:block">
-                                <div className="text-xs font-bold text-[var(--text-muted)] uppercase mb-4">Active Chats</div>
+                                <div className="text-xs font-bold text-[var(--text-muted)] uppercase mb-4">Sample Scenarios</div>
                                 <div className="space-y-2">
                                     <div className="p-3 bg-[#2AB182]/10 border border-[#2AB182]/20 rounded-lg cursor-pointer">
-                                        <div className="font-semibold text-sm">New Lead (Sarah)</div>
-                                        <div className="text-xs text-[#2AB182] mt-1">Typing...</div>
+                                        <div className="font-semibold text-sm">Lead Capture Scenario</div>
+                                        <div className="text-xs text-[#2AB182] mt-1">Automated reply</div>
                                     </div>
                                     <div className="p-3 rounded-lg hover:bg-[#222] cursor-pointer opacity-60">
-                                        <div className="font-semibold text-sm">Support #4291</div>
+                                        <div className="font-semibold text-sm">Support Query Scenario</div>
                                         <div className="text-xs text-[var(--text-muted)] mt-1">Resolved</div>
                                     </div>
                                     <div className="p-3 rounded-lg hover:bg-[#222] cursor-pointer opacity-60">
-                                        <div className="font-semibold text-sm">Booking Inquiry</div>
+                                        <div className="font-semibold text-sm">Booking Request Scenario</div>
                                         <div className="text-xs text-[var(--text-muted)] mt-1">Waiting</div>
                                     </div>
                                 </div>
@@ -163,9 +157,9 @@ const WhatsNexus = () => {
 
                                     {/* User Message */}
                                     <div className="flex gap-4 flex-row-reverse">
-                                        <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-xs">S</div>
+                                        <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-xs">U</div>
                                         <div className="bg-[#2AB182] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
-                                            <p className="text-sm text-black font-medium">I'm interested in your AI automation services. Can you tell me more about pricing?</p>
+                                            <p className="text-sm text-black font-medium">I&apos;m interested in your AI automation services. Can you tell me more about pricing?</p>
                                         </div>
                                     </div>
 
@@ -190,7 +184,7 @@ const WhatsNexus = () => {
                                 {/* Input Area Mockup */}
                                 <div className="p-4 border-t border-[var(--border-subtle)] flex gap-3">
                                     <div className="flex-1 bg-[var(--bg-card)] rounded-lg h-10 border border-[var(--border-subtle)] px-3 flex items-center text-sm text-gray-500">
-                                        Reply as AI...
+                                        Interactive preview • Try the live hub at whatsnexus.invictusglobaltech.com
                                     </div>
                                     <div className="w-10 h-10 rounded-lg bg-[#2AB182] flex items-center justify-center cursor-not-allowed opacity-50">
                                         <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -208,7 +202,7 @@ const WhatsNexus = () => {
                         href="https://whatsnexus.invictusglobaltech.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black hover:bg-gray-100 font-bold text-xl rounded-full transition-all duration-300 hover:scale-105"
+                        className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black hover:bg-gray-100 font-bold text-xl rounded-full transition-colors duration-150"
                     >
                         <span>Launch WhatsNexus</span>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>

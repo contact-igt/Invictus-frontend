@@ -10,7 +10,8 @@ const Global = () => {
         <>
             <Head>
                 <title>Where We Are | Invictus Global Tech Pvt Ltd</title>
-                <meta name="description" content="Our global footprint: India (HQ), Singapore, and the United States." />
+                <meta name="description" content="Discover Invictus Global Tech's international presence across India (HQ), Singapore, and the USA. Delivering enterprise growth and performance marketing worldwide." />
+                <link rel="canonical" href="https://www.invictusglobaltech.com/global" />
             </Head>
             <WhereWeArePage onContactClick={onContactClick} />
         </>

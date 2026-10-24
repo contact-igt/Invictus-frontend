@@ -1,16 +1,32 @@
-import { useState } from "react";
-import TeamMember from "../../components/TeamMember";
+import { useState, useEffect, useRef } from "react";
+import TeamCircularCarousel from "@/components/TeamCircularCarousel";
 import TeamModal from "../../components/TeamModal";
 import { useTheme } from "@/context/ThemeContext";
-// eslint-disable-next-line import/no-webpack-loader-syntax
-// Use public path for static assets
 
-import { BarChart3, Target, Zap, Users, CheckCircle } from "lucide-react";
+const smoothstep = (t) => {
+  const clamped = Math.max(0, Math.min(1, t));
+  return clamped * clamped * (3 - 2 * clamped);
+};
 
 const AboutPage = ({ onContactClick }) => {
   const { theme } = useTheme();
   const [selectedMemberIndex, setSelectedMemberIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Entrance state for non-pinned animated sections
+  const [isBuiltVisible, setIsBuiltVisible] = useState(false);
+  const [isOriginVisible, setIsOriginVisible] = useState(false);
+
+  // Scroll progress for sticky sections
+  const [antiAgencyProgress, setAntiAgencyProgress] = useState(0);
+  const [invictusWayProgress, setInvictusWayProgress] = useState(0);
+  const [growthStoryProgress, setGrowthStoryProgress] = useState(0);
+
+  const builtRef = useRef(null);
+  const antiAgencyRef = useRef(null);
+  const originRef = useRef(null);
+  const invictusWayRef = useRef(null);
+  const growthStoryRef = useRef(null);
 
   const teamMembers = [
     { name: "IYYAPPAN", role: "Web Developer" },
@@ -24,7 +40,7 @@ const AboutPage = ({ onContactClick }) => {
     { name: "CREATIVE", role: "Generalist" },
     { name: "ANITHA", role: "Operations Head" },
     { name: "ABHILASH", role: "HR & Ops" },
-    { name: "NAVEEN", role: "Growth Specialist" },
+    { name: "NAVEEN RAJ", role: "Web Developer" },
     { name: "RUTUJA", role: "Operations" },
   ];
 
@@ -35,31 +51,27 @@ const AboutPage = ({ onContactClick }) => {
 
   const values = [
     {
-      icon: <BarChart3 className="text-[#2AB182]" size={32} />,
       title: "Data over Opinions",
       desc: "We don't guess. We test, track, and optimize based on hard numbers and unit economics.",
     },
     {
-      icon: <Target className="text-[#2AB182]" size={32} />,
       title: "Clarity over Confusion",
       desc: "No marketing jargon. Just clear reporting on leads, bookings, and revenue.",
     },
     {
-      icon: <Zap className="text-[#2AB182]" size={32} />,
       title: "Performance over Vanity",
       desc: "Likes and impressions don't pay bills. We focus entirely on ROI and Growth.",
     },
     {
-      icon: <Users className="text-[#2AB182]" size={32} />,
       title: "Partnership over Service",
-      desc: "We aren't just a vendor. We integrate with your team to fix sales funnels and bottlenecks.",
+      desc: "We integrate directly with your team as an embedded growth partner to resolve sales funnels and bottlenecks.",
     },
   ];
 
   const pillars = [
     {
       title: "01. Extreme Accountability",
-      desc: "We take responsibility for the numbers—from lead volume and quality to final booked appointments or revenue. No excuses. No stories. Only outcomes.",
+      desc: "We take responsibility for the numbers, from lead volume and quality to final booked appointments or revenue. No excuses. No stories. Only outcomes.",
     },
     {
       title: "02. Obsession With Data",
@@ -73,21 +85,166 @@ const AboutPage = ({ onContactClick }) => {
     },
   ];
 
+  // IntersectionObserver for non-sticky entrance animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === builtRef.current && entry.isIntersecting) {
+            setIsBuiltVisible(true);
+          }
+          if (entry.target === originRef.current && entry.isIntersecting) {
+            setIsOriginVisible(true);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    if (builtRef.current) observer.observe(builtRef.current);
+    if (originRef.current) observer.observe(originRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Scroll listener for sticky progress calculations
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const windowHeight = window.innerHeight || 800;
+
+          if (antiAgencyRef.current) {
+            const rect = antiAgencyRef.current.getBoundingClientRect();
+            const totalDistance = rect.height - windowHeight;
+            if (totalDistance > 50) {
+              const p = Math.max(0, Math.min(1, -rect.top / totalDistance));
+              setAntiAgencyProgress((prev) => (Math.abs(prev - p) < 0.002 ? prev : p));
+            }
+          }
+
+          if (invictusWayRef.current) {
+            const rect = invictusWayRef.current.getBoundingClientRect();
+            const totalDistance = rect.height - windowHeight;
+            if (totalDistance > 50) {
+              const p = Math.max(0, Math.min(1, -rect.top / totalDistance));
+              setInvictusWayProgress((prev) => (Math.abs(prev - p) < 0.002 ? prev : p));
+            }
+          }
+
+          if (growthStoryRef.current) {
+            const rect = growthStoryRef.current.getBoundingClientRect();
+            const totalDistance = rect.height - windowHeight;
+            if (totalDistance > 50) {
+              const p = Math.max(0, Math.min(1, -rect.top / totalDistance));
+              setGrowthStoryProgress((prev) => (Math.abs(prev - p) < 0.002 ? prev : p));
+            }
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // The Anti-Agency calculations
+  // Heading enters as p: 0 -> 0.22, settles in place with 100% opacity
+  const antiAgencyHeadingY = isMobile
+    ? 0
+    : (1 - smoothstep(Math.min(1, antiAgencyProgress / 0.22))) * 50;
+  // Description enters after heading settles as p: 0.22 -> 0.55
+  const antiAgencyDescProgress = Math.max(0, Math.min(1, (antiAgencyProgress - 0.22) / 0.33));
+  const antiAgencyDescY = isMobile ? 0 : (1 - smoothstep(antiAgencyDescProgress)) * 40;
+  const antiAgencyDescOpacity = isMobile ? 1 : antiAgencyDescProgress;
+
+  // The Invictus Way calculations
+  // Heading enters as p: 0 -> 0.12, stays pinned at top with 100% opacity
+  const invictusHeadingY = (1 - smoothstep(Math.min(1, invictusWayProgress / 0.12))) * 40;
+
+  // Card 0 (01. Extreme Accountability): enters as p: 0.15 -> 0.36, then completely settled
+  const c0Progress = Math.max(0, Math.min(1, (invictusWayProgress - 0.15) / 0.21));
+  const c0Y = (1 - smoothstep(c0Progress)) * 240;
+  const c0Opacity = smoothstep(Math.min(1, c0Progress * 2.2));
+
+  // Card 1 (02. Obsession With Data): enters as p: 0.42 -> 0.63, strictly AFTER Card 0 has settled
+  const c1Progress = Math.max(0, Math.min(1, (invictusWayProgress - 0.42) / 0.21));
+  const c1Y = (1 - smoothstep(c1Progress)) * 240;
+  const c1Opacity = smoothstep(Math.min(1, c1Progress * 2.2));
+
+  // Card 2 (03. AI in Every Layer): enters as p: 0.69 -> 0.90, strictly AFTER Card 1 has settled
+  const c2Progress = Math.max(0, Math.min(1, (invictusWayProgress - 0.69) / 0.21));
+  const c2Y = (1 - smoothstep(c2Progress)) * 240;
+  const c2Opacity = smoothstep(Math.min(1, c2Progress * 2.2));
+
+  const cardTransforms = [
+    { translateY: c0Y, opacity: c0Opacity },
+    { translateY: c1Y, opacity: c1Opacity },
+    { translateY: c2Y, opacity: c2Opacity },
+  ];
+
+  // 7. We Work Only With People Who Are Serious About Growth (Storytelling Scroll Animation)
+  // Stage 1: Heading enters from bottom to visual center (p: 0.00 -> 0.14)
+  const growthHeadingY = (1 - smoothstep(Math.min(1, growthStoryProgress / 0.14))) * 220;
+  const growthHeadingOpacity = smoothstep(Math.min(1, growthStoryProgress / 0.08));
+
+  // Stage 2: Description appears beneath heading in center (p: 0.16 -> 0.28)
+  const descProgress = Math.max(0, Math.min(1, (growthStoryProgress - 0.16) / 0.12));
+  const growthDescOpacity = smoothstep(descProgress);
+  const growthDescY = (1 - smoothstep(descProgress)) * 25;
+
+  // Stage 3: Heading and description move left (p: 0.32 -> 0.46)
+  const shiftLeftProgress = Math.max(0, Math.min(1, (growthStoryProgress - 0.32) / 0.14));
+  const leftGroupShiftX = (1 - smoothstep(shiftLeftProgress)) * 50; // translates from 50% (centered) to 0% (left)
+
+  // Stage 4: Partnership box enters from bottom in right column (p: 0.49 -> 0.63)
+  const partnerEnterProgress = Math.max(0, Math.min(1, (growthStoryProgress - 0.49) / 0.14));
+  const partnerY = (1 - smoothstep(partnerEnterProgress)) * 200;
+  const partnerEnterOpacity = smoothstep(Math.min(1, partnerEnterProgress * 2));
+
+  // Stage 5: Partnership box fades out smoothly in place (p: 0.67 -> 0.77)
+  const partnerFadeOutProgress = Math.max(0, Math.min(1, (growthStoryProgress - 0.67) / 0.10));
+  const partnerTotalOpacity = partnerEnterOpacity * (1 - smoothstep(partnerFadeOutProgress));
+
+  // Left group (Heading + Description) smoothly fades out before quote takes center stage (p: 0.77 -> 0.82)
+  const leftGroupFadeOut = Math.max(0, Math.min(1, (growthStoryProgress - 0.77) / 0.05));
+  const leftGroupOpacity = 1 - smoothstep(leftGroupFadeOut);
+
+  // Stage 6: Quote appears and settles in the center (p: 0.80 -> 0.92)
+  const quoteProgress = Math.max(0, Math.min(1, (growthStoryProgress - 0.80) / 0.12));
+  const quoteY = (1 - smoothstep(quoteProgress)) * 40;
+  const quoteOpacity = smoothstep(quoteProgress);
+
   return (
-    <div className="pt-21 min-h-screen">
-      <section className="py-16 md:py-32 lg:py-70 px-6 md:px-12 lg:px-20 border-t border-[var(--border-subtle)] bg-[var(--bg-primary)] grid-bg overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24 max-w-[1600px] mx-auto">
+    <div className="pt-20 md:pt-24 min-h-screen">
+      {/* 0. ABOUT US / OUR PEOPLE (Preserved exactly with team carousel) */}
+      <section className="pt-6 pb-14 md:pt-8 md:pb-16 lg:pt-10 lg:pb-20 px-6 md:px-12 lg:px-20 bg-transparent overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 max-w-[1600px] mx-auto">
           {/* Left: Text Section */}
-          <div
-            className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center relative z-10"
-          >
+          <div className="w-full lg:w-5/12 flex flex-col items-center lg:items-start justify-center relative z-10">
             <p
               className="mb-4 uppercase text-center lg:text-left text-[28px] md:text-[36px] lg:text-[44px] text-[var(--text-secondary)]"
               style={{
                 fontFamily: "'Epilogue', sans-serif",
                 fontWeight: 400,
                 lineHeight: "90%",
-                letterSpacing: "-0.05em"
+                letterSpacing: "-0.05em",
               }}
             >
               ABOUT US
@@ -98,7 +255,7 @@ const AboutPage = ({ onContactClick }) => {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontWeight: 500,
-                  marginLeft: "0.2rem"
+                  marginLeft: "0.2rem",
                 }}
               >
                 our
@@ -108,20 +265,20 @@ const AboutPage = ({ onContactClick }) => {
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   lineHeight: "0.85",
-                  letterSpacing: "-0.04em"
+                  letterSpacing: "-0.04em",
                 }}
               >
                 PEOPLE
               </span>
               {/* Arrow image below PEOPLE - theme conditional */}
               <img
-                src={theme === 'light' ? '/assets/arrowblack.png' : '/assets/arrow1.png'}
+                src={theme === "light" ? "/assets/arrowblack.png" : "/assets/arrow1.png"}
                 alt="arrow"
                 className="w-full max-w-[420px] mx-auto lg:mx-0 mt-2"
-                style={{ height: 'auto', maxHeight: '35px', objectFit: 'contain' }}
+                style={{ height: "auto", maxHeight: "35px", objectFit: "contain" }}
               />
             </div>
-            <div className="flex text-center mt-2 w-full lg:justify-start" >
+            <div className="flex text-center mt-2 w-full lg:justify-start">
               <span
                 className="font-body text-[var(--text-primary)] text-[1.2rem] md:text-[1.4rem] lg:text-[1.6rem] tracking-widest flex items-baseline justify-center lg:justify-start gap-2 w-full"
                 style={{ fontWeight: 400, letterSpacing: "0.08em" }}
@@ -138,64 +295,9 @@ const AboutPage = ({ onContactClick }) => {
             </div>
           </div>
 
-             {/* Right: Team Collage */}
-                    {/* Right: Team Collage */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px] scale-[0.6] sm:scale-[0.7] md:scale-90 lg:scale-100 mt-20 sm:mt-24 lg:mt-0">
-            {/* Collage of team members, absolute positioning for overlap */}
-            <div className="absolute left-[-20%] top-[-50%]  md:left-[-45%]   md:top-[-42%] lg:left-[-25%] lg:top-[-35%] xl:left-[-15%] xl:top-[-33%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Alam" image="/assets/team/alam.png" rotation={0} onClick={() => handleMemberClick(0)} />
-            </div>
-             <div className="absolute left-[-30%] top-[-15%]  md:left-[-30%]   md:top-[-16%] lg:left-[-25%] lg:top-[-3%] xl:left-[-10%] xl:top-[-0%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="SUSHIL" image="/assets/team/sushil.png" rotation={-2} onClick={() => handleMemberClick(5)} />
-            
-            </div>
-             <div className="absolute left-[-25%] top-[18%]  md:left-[-85%]   md:top-[-15%] lg:left-[-70%] lg:top-[-20%] xl:left-[-50%] xl:top-[-10%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Naveen" image="/assets/team/naveen.png" rotation={0} onClick={() => handleMemberClick(0)} />
-            </div>
-            <div className="absolute  left-[25%] top-[-55%]  md:left-[10%] md:top-[-40%] lg:left-[30%] lg:top-[-40%] xl:left-[30%] xl:top-[-35%] z-20 transform hover:scale-110 transition-transform">
-              <TeamMember name="DR. SENTHIL" image="/assets/team/senthil.png" rotation={2} onClick={() => handleMemberClick(1)} />
-            </div>
-            <div className="absolute left-[80%] top-[-30%]  md:right-[20%] md:top-[-30%] lg:right-[-10%] lg:top-[-25%] xl:right-[-10%] xl:top-[-20%] z-10 transform hover:scale-110 transition-transform">
-              <TeamMember name="THARIQ" image="/assets/team/thariq.png" rotation={3} onClick={() => handleMemberClick(2)} />
-            </div>
-            <div className="absolute left-[30%] top-[20%]   md:left-[-35%] md:top-[10%] lg:left-[-10%] lg:top-[29%] xl:left-[-10%] xl:top-[34%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="Anju" image="/assets/team/anju.jpeg" rotation={-3} onClick={() => handleMemberClick(3)} />
-            </div>
-            <div className="absolute left-[30%] bottom-[23%]   md:left-[20%] md:top-[30%] lg:left-[35%] lg:top-[24%] xl:left-[35%] xl:top-[35%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember
-                name="DIKSHITA"
-                image="/assets/team/dikshita.png"
-                rotation={4}
-                onClick={() => handleMemberClick(4)}
-              />
-            </div>
-            <div className="absolute  left-[30%] top-[-15%]  md:left-[25%] md:top-[-15%] lg:left-[30%] lg:top-[-10%] xl:left-[30%] xl:top-[0%] z-20 transform hover:scale-110 transition-transform">
-                <TeamMember name="ANITHA" image="/assets/team/anitha.png" rotation={0} onClick={() => handleMemberClick(9)} />
-            </div>
-            <div className="absolute  right-[-20%] top-[10%]  md:right-[-15%] md:top-[10%] lg:right-[-20%] lg:top-[10%] xl:right-[-10%] xl:top-[15%] z-10 transform hover:scale-110 transition-transform">
-              <TeamMember name="SUSHIL" image="/assets/team/aiswarya.png" rotation={5} onClick={() => handleMemberClick(6)} />
-            </div>
-            <div className="absolute  left-[-20%] bottom-[14%]  md:left-[-35%] md:bottom-[15%] lg:left-[-10%] lg:bottom-[11%] xl:left-[-10%] xl:bottom-[-2%] z-50 transform hover:scale-110 transition-transform">
-              <TeamMember name="VEERAVEL" image="/assets/team/veeravel.png" rotation={-6} onClick={() => handleMemberClick(7)} />
-            </div>
-            <div className="absolute   left-[-20%] bottom-[-25%]  md:left-[-15%] md:bottom-[-13%] lg:left-[-15%] lg:bottom-[-22%] xl:left-[-15%] xl:bottom-[-36%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="CREATIVE" image="/assets/team/creative.png" rotation={-3} onClick={() => handleMemberClick(8)} />
-            </div>
-            {/* <div className="absolute   left-[-20%] bottom-[-3%]  md:left-[-70%] md:bottom-[-10%] lg:left-[-60%] lg:bottom-[-10%] xl:left-[-52%] xl:bottom-[-15%] z-40 transform hover:scale-110 transition-transform">
-              <TeamMember name="Yogesh" image="/assets/team/yogesh.png" rotation={-3} onClick={() => handleMemberClick(8)} />
-            </div> */}
-            <div className="absolute  left-[50%] bottom-[-5%]  md:left-[53%] md:bottom-[10%] lg:left-[53%] lg:bottom-[10%] xl:left-[50%] xl:bottom-[0%] -translate-x-1/2 z-[60] transform hover:scale-110 transition-transform">
-              <TeamMember name="Iyyappan" image="/assets/team/iyyappan1.png" rotation={2} onClick={() => handleMemberClick(6)} />
-            </div>
-            <div className="absolute right-[-25%] bottom-[20%]  md:right-[-15%] md:bottom-[30%] lg:right-[-15%] lg:bottom-[30%] xl:right-[-10%] xl:bottom-[10%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="ABHILASH" image="/assets/team/abhilash1.png" rotation={4} onClick={() => handleMemberClick(10)} />
-            </div>
-            <div className="absolute right-[-25%] bottom-[-20%]  md:right-[-15%] md:bottom-[-10%] lg:right-[-15%] lg:bottom-[-10%] xl:right-[-10%] xl:bottom-[-30%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Rutuja" image="/assets/team/rutuja.png" rotation={4} onClick={() => handleMemberClick(12)} />
-            </div>
-            <div className="absolute right-[30%] bottom-[-40%]  md:left-[30%] md:bottom-[-25%] lg:left-[30%] lg:bottom-[-25%] xl:left-[30%] xl:bottom-[-35%] z-30 transform hover:scale-110 transition-transform">
-              <TeamMember name="Jashwanth" image="/assets/team/jashwanth.jpeg" rotation={4} onClick={() => handleMemberClick(12)} />
-            </div>
+          {/* Right: 3D Circular Carousel */}
+          <div className="w-full lg:w-7/12 relative min-h-[520px] md:min-h-[580px] lg:min-h-[660px] flex items-center justify-center mt-8 lg:mt-0">
+            <TeamCircularCarousel teamMembers={teamMembers} />
           </div>
         </div>
 
@@ -207,16 +309,23 @@ const AboutPage = ({ onContactClick }) => {
         />
       </section>
 
-      {/* Hero */}
-      <section className="px-6 md:px-12 mb-24 pt-21">
-        <div className="max-w-[1600px] mx-auto">
+      {/* 1. BUILT ON ACCOUNTABILITY (Smooth upward entrance on scroll, NOT sticky, scrolls naturally) */}
+      <section
+        ref={builtRef}
+        id="built-on-accountability"
+        className="px-6 md:px-12 pt-16 md:pt-24 pb-20 md:pb-28 text-left max-w-[1600px] mx-auto overflow-hidden"
+      >
+        <div
+          className={`transition-all duration-700 ease-out ${
+            isBuiltVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+        >
           <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
             Who We Are
           </p>
-          <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-[var(--text-primary)] uppercase mb-12">
-            Built On
-            <br />
+          <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-[var(--text-primary)] uppercase mb-6">
+            Built On <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600">
               Accountability.
             </span>
@@ -224,69 +333,149 @@ const AboutPage = ({ onContactClick }) => {
         </div>
       </section>
 
-      {/* Intro / Origin Story */}
-      <section className="border-y border-[var(--border-subtle)] bg-[var(--bg-card)]/30 backdrop-blur-sm py-16 md:py-24 px-6 md:px-12">
-        <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-16">
-          <div>
-            <h2 className="font-display text-4xl md:text-5xl text-[var(--text-primary)] font-bold leading-tight">
-              The Anti-Agency for <br />
-              <span className="text-[#2AB182]">Serious Brands.</span>
-            </h2>
-          </div>
-          <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6">
-            <p>
-              Invictus Global Tech Pvt Ltd started with a simple frustration: most
-              agencies focus on vanity metrics. Likes, impressions, and clicks
-              mean nothing if they don’t turn into pipeline and revenue.
-            </p>
-            <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed mb-6">
-              We built this company to be different. Every strategy we deploy,
-              every campaign we run, and every line of code we write is tied directly to measurable business outcomes.
-            </p>
+      {/* 2. THE ANTI-AGENCY FOR SERIOUS BRANDS (Sticky Centered Heading + Sequential Description Entrance) */}
+      <section
+        ref={antiAgencyRef}
+        id="anti-agency"
+        className="relative min-h-0 md:min-h-[175vh] bg-transparent"
+      >
+        <div className="md:sticky md:top-0 md:h-screen w-full flex items-center justify-center px-6 md:px-12 py-16 md:py-0 overflow-hidden">
+          <div className="max-w-[1500px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Heading: Animates upward into view, remains pinned with 100% opacity */}
+            <div
+              style={{
+                transform: `translate3d(0, ${antiAgencyHeadingY}px, 0)`,
+                willChange: "transform",
+              }}
+              className="transition-transform duration-75 ease-out"
+            >
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-[var(--text-primary)] font-bold leading-tight">
+                The Anti-Agency for <br />
+                <span className="text-[#2AB182]">Serious Brands.</span>
+              </h2>
+            </div>
+
+            {/* Description: Enters smoothly upward beside heading once heading settles */}
+            <div
+              style={{
+                transform: `translate3d(0, ${antiAgencyDescY}px, 0)`,
+                opacity: antiAgencyDescOpacity,
+                willChange: "transform, opacity",
+              }}
+              className="font-body text-[var(--text-secondary)] text-base sm:text-lg leading-relaxed space-y-6 transition-all duration-75 ease-out"
+            >
+              <p>
+                Invictus Global Tech Pvt Ltd started with a simple frustration: most
+                agencies focus on vanity metrics. Likes, impressions, and clicks
+                mean nothing if they don’t turn into pipeline and revenue.
+              </p>
+              <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed">
+                We built this company to be different. Every strategy we deploy,
+                every campaign we run, and every line of code we write is tied directly to measurable business outcomes.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Origin Story Section */}
-      <section className="py-24 border-b border-[var(--border-subtle)] relative overflow-hidden">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <span className="font-body text-[#2AB182] text-sm uppercase tracking-widest font-bold mb-4 block">
-              (04) — OUR ORIGIN
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl text-[var(--text-primary)] font-bold mb-8 uppercase leading-tight">
-              FROM A BOLD IDEA TO A GLOBAL PARTNER.
-            </h2>
-            <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed mb-6">
-              Invictus Global Tech Pvt Ltd began as a small team helping a few brands. We come from a background of working closely with founders,
-              doctors, educators, and brand owners. We’ve seen first-hand where
-              money is wasted in ads, and where it compounds into real growth.
-            </p>
-            <p>
-              Today, we operate as a performance marketing engine for businesses
-              that are ready to scale. We stay lean, focused, and obsessed with
-              one thing—making your numbers better month after month.
-            </p>
+      {/* 3 & 4. OUR ORIGIN & OUR STORY (Matching Floating-Card Design, Side-by-Side on Desktop) */}
+      <section
+        ref={originRef}
+        id="origin-story"
+        className="py-16 md:py-24 px-6 md:px-12 bg-transparent"
+      >
+        <div className="max-w-[1500px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+            {/* Card 1: Our Origin */}
+            <div
+              className={`rounded-2xl md:rounded-3xl bg-[var(--bg-card)]/40 border border-[#262626] p-8 md:p-10 flex flex-col justify-between shadow-[0_12px_32px_rgba(0,0,0,0.5)] hover:border-[#2AB182] hover:shadow-[0_20px_45px_rgba(42,177,130,0.15)] hover:-translate-y-2 transition-all duration-500 ease-out group ${
+                isOriginVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+            >
+              <div>
+                <span className="font-mono text-xs text-[#2AB182] font-semibold bg-[#2AB182]/10 border border-[#2AB182]/30 px-3.5 py-1 rounded-full uppercase tracking-widest inline-block mb-6">
+                  OUR ORIGIN
+                </span>
+                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[var(--text-primary)] font-bold mb-6 uppercase leading-tight group-hover:text-white transition-colors duration-300">
+                  FROM A BOLD IDEA TO A GLOBAL PARTNER.
+                </h3>
+                <p className="font-body text-[var(--text-muted)] text-base leading-relaxed mb-5">
+                  Invictus Global Tech Pvt Ltd began as a small team helping a few brands. We come from a background of working closely with founders,
+                  doctors, educators, and brand owners. We’ve seen first-hand where
+                  money is wasted in ads, and where it compounds into real growth.
+                </p>
+                <p className="font-body text-[var(--text-secondary)] text-base leading-relaxed">
+                  Today, we operate as a performance marketing engine for businesses
+                  that are ready to scale. We stay lean, focused, and obsessed with
+                  one thing: making your numbers better month after month.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Our Story */}
+            <div
+              style={{ transitionDelay: "150ms" }}
+              className={`rounded-2xl md:rounded-3xl bg-[var(--bg-card)]/40 border border-[#262626] p-8 md:p-10 flex flex-col justify-between shadow-[0_12px_32px_rgba(0,0,0,0.5)] hover:border-[#2AB182] hover:shadow-[0_20px_45px_rgba(42,177,130,0.15)] hover:-translate-y-2 transition-all duration-500 ease-out group ${
+                isOriginVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+            >
+              <div>
+                <span className="font-mono text-xs text-[#2AB182] font-semibold bg-[#2AB182]/10 border border-[#2AB182]/30 px-3.5 py-1 rounded-full uppercase tracking-widest inline-block mb-6">
+                  OUR STORY
+                </span>
+                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[var(--text-primary)] font-bold mb-6 uppercase leading-tight group-hover:text-white transition-colors duration-300">
+                  BUILT FOR ACTUAL BUSINESS OUTCOMES.
+                </h3>
+                <p className="font-body text-[var(--text-secondary)] text-base leading-relaxed mb-4">
+                  Invictus Global Tech Pvt Ltd began as a small team helping a few brands
+                  scale through paid ads and automation. What we noticed early was
+                  that most “digital marketing agencies” were selling posters,
+                  reels, and vanity metrics.
+                </p>
+                <div className="py-3 mb-4 border-y border-[var(--border-subtle)]">
+                  <p className="mb-2 text-xs uppercase tracking-wider font-bold text-[var(--text-muted)]">
+                    Businesses weren&apos;t getting:
+                  </p>
+                  <div className="flex flex-wrap gap-2 md:gap-3 font-mono text-xs uppercase tracking-wider text-[#2AB182]">
+                    <span className="bg-[#2AB182]/10 px-2 py-0.5 rounded">Clarity</span>
+                    <span className="bg-[#2AB182]/10 px-2 py-0.5 rounded">Proper Tracking</span>
+                    <span className="bg-[#2AB182]/10 px-2 py-0.5 rounded">Quality Leads</span>
+                    <span className="bg-[#2AB182]/10 px-2 py-0.5 rounded">ROI</span>
+                    <span className="bg-[#2AB182]/10 px-2 py-0.5 rounded">Accountability</span>
+                  </div>
+                </div>
+                <p className="font-body text-[var(--text-secondary)] text-base leading-relaxed mb-3">
+                  So we built the opposite model: a performance-first, data-backed,
+                  AI-integrated engine that focuses on one thing: actual business
+                  outcomes.
+                </p>
+                <p className="font-body text-[var(--text-muted)] text-sm leading-relaxed">
+                  Today, we partner with brands across{" "}
+                  <strong className="text-[var(--text-primary)]">Healthcare, EdTech, E-commerce, and Automotive</strong>.
+                  Across all these industries, our approach stays the same:{" "}
+                  <span className="text-[#2AB182] font-semibold">
+                    Test fast, scale what works, cut what doesn’t.
+                  </span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Values Grid (Non-Negotiables) */}
-      <section className="py-16 md:py-24 px-6 md:px-12">
+      {/* 5. OUR NON-NEGOTIABLES (Completely Static Section — Normal Page Scrolling, Zero Animations) */}
+      <section id="non-negotiables" className="py-16 md:py-24 px-6 md:px-12 bg-transparent">
         <div className="max-w-[1600px] mx-auto">
-          <h2 className="font-display text-4xl text-[var(--text-primary)] font-bold mb-16 text-center">
+          <h2 className="font-display text-4xl sm:text-5xl text-[var(--text-primary)] font-bold mb-16 text-center tracking-tight">
             Our Non-Negotiables
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {values.map((val, idx) => (
               <div
                 key={idx}
-                className="p-8 border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-primary)] hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-300 group"
+                className="p-8 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)]/30 hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-300 group"
               >
-                <div className="mb-6 p-4 bg-[var(--bg-card)] rounded-full w-fit group-hover:bg-[#2AB182]/10 transition-colors">
-                  {val.icon}
-                </div>
-                <h3 className="font-display text-xl text-[var(--text-primary)] font-bold mb-4">
+                <h3 className="font-display text-xl text-[var(--text-primary)] font-bold mb-4 group-hover:text-[#2AB182] transition-colors duration-300">
                   {val.title}
                 </h3>
                 <p className="font-body text-[var(--text-muted)] text-sm leading-relaxed">
@@ -298,77 +487,90 @@ const AboutPage = ({ onContactClick }) => {
         </div>
       </section>
 
-      {/* Who We Work With */}
-      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[var(--border-subtle)] bg-[var(--bg-primary)]">
-        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="font-display text-4xl md:text-6xl text-[var(--text-primary)] font-bold leading-tight mb-8">
-              We Work Only With People Who Are{" "}
-              <span className="text-[#2AB182]">Serious About Growth.</span>
-            </h2>
-            <p className="font-body text-[var(--text-muted)] text-lg mb-8">
-              We don't work with everyone intentionally. If you want an agency
-              that posts random reels and sends “engagement reports”, we’re not
-              for you.
-            </p>
-            <div className="p-6 border-l-2 border-[#2AB182] bg-[var(--bg-card)]/20">
-              <p className="text-[var(--text-primary)] font-bold font-display italic">
-                "If you want a partner who owns the numbers with you, we fit
-                perfectly."
-              </p>
-            </div>
-          </div>
-          <div className="bg-[var(--bg-card)]/30 p-8 md:p-12 border border-[var(--border-subtle)]">
-            <h3 className="font-display text-2xl text-[var(--text-primary)] font-bold mb-6 uppercase">
-              We partner with founders who:
-            </h3>
-            <ul className="space-y-4 font-body text-[var(--text-secondary)]">
-              {[
-                "Treat marketing as an investment, not an expense",
-                "Want full visibility on numbers, tracking, and ROI",
-                "Expect accountability, speed, and high standards",
-                "Are willing to fix sales processes, not blame ads",
-                "Value clarity over fluff, performance over vanity",
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <CheckCircle
-                    className="text-[#2AB182] shrink-0 mt-1"
-                    size={18}
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* The Invictus Way */}
-      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[var(--border-subtle)] bg-[var(--bg-card)]/20">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-6xl text-[var(--text-primary)] font-bold mb-4">
+      {/* 6. THE INVICTUS WAY (Sticky Heading + Staggered Three-Card Sequence) */}
+      <section
+        ref={invictusWayRef}
+        id="the-invictus-way"
+        className="relative min-h-0 md:min-h-[320vh] bg-transparent"
+      >
+        {/* Desktop Sticky Viewport */}
+        <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-20 md:pt-24 pb-12 px-6 md:px-12 overflow-hidden">
+          {/* Sticky Heading: Animates upward, settles near top, stays pinned with 100% opacity */}
+          <div
+            style={{
+              transform: `translate3d(0, ${invictusHeadingY}px, 0)`,
+              willChange: "transform",
+            }}
+            className="text-center shrink-0 z-20 max-w-4xl mx-auto px-4 mb-8 md:mb-12 transition-transform duration-75 ease-out"
+          >
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-[var(--text-primary)] font-bold mb-3 tracking-tight">
               The Invictus Way
             </h2>
-            <p className="font-body text-[var(--text-muted)]">
+            <p className="font-body text-[var(--text-muted)] text-base md:text-lg">
               We’re a performance marketing engine built on three core pillars:
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          {/* Three Cards Container: Staggered sequential entrance, settle side-by-side */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-[1500px] w-full mx-auto my-auto items-stretch">
+            {pillars.map((pillar, idx) => {
+              const { translateY, opacity } = cardTransforms[idx];
+
+              return (
+                <div
+                  key={idx}
+                  style={{
+                    transform: `translate3d(0, ${translateY}px, 0)`,
+                    opacity,
+                    willChange: "transform, opacity",
+                    pointerEvents: opacity === 0 ? "none" : "auto",
+                  }}
+                  className="p-8 border border-[var(--border-subtle)] rounded-2xl bg-[var(--bg-card)]/50 hover:border-[#2AB182] transition-all duration-300 flex flex-col justify-between shadow-[0_12px_32px_rgba(0,0,0,0.4)]"
+                >
+                  <div>
+                    <h3 className="font-display text-2xl text-[#2AB182] font-bold mb-5 tracking-tight">
+                      {pillar.title}
+                    </h3>
+                    <p className="font-body text-[var(--text-secondary)] leading-relaxed mb-4 text-base">
+                      {pillar.desc}
+                    </p>
+                  </div>
+                  {pillar.extra && (
+                    <p className="font-body text-[var(--text-primary)] font-medium italic border-t border-[var(--border-subtle)] pt-4 mt-2 text-sm">
+                      {pillar.extra}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile / Reduced-Motion Fallback (Natural Stacked Layout) */}
+        <div className="md:hidden motion-reduce:block py-16 px-6">
+          <div className="text-center mb-10 max-w-xl mx-auto">
+            <h2 className="font-display text-3xl sm:text-4xl text-[var(--text-primary)] font-bold mb-3">
+              The Invictus Way
+            </h2>
+            <p className="font-body text-[var(--text-muted)] text-sm">
+              We’re a performance marketing engine built on three core pillars:
+            </p>
+          </div>
+
+          <div className="space-y-6 max-w-lg mx-auto">
             {pillars.map((pillar, idx) => (
               <div
                 key={idx}
-                className="p-8 border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-primary)] hover:border-[#2AB182] active:border-[#2AB182] transition-colors duration-500 group"
+                className="p-7 border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)]/40 shadow-lg"
               >
-                <h3 className="font-display text-2xl text-[#2AB182] font-bold mb-6">
+                <h3 className="font-display text-xl text-[#2AB182] font-bold mb-3">
                   {pillar.title}
                 </h3>
-                <p className="font-body text-[var(--text-secondary)] leading-relaxed mb-4">
+                <p className="font-body text-[var(--text-secondary)] leading-relaxed text-sm mb-3">
                   {pillar.desc}
                 </p>
                 {pillar.extra && (
-                  <p className="font-body text-[var(--text-primary)] font-medium italic border-t border-[var(--border-subtle)] pt-4">
+                  <p className="font-body text-[var(--text-primary)] font-medium italic border-t border-[var(--border-subtle)] pt-3 text-xs">
                     {pillar.extra}
                   </p>
                 )}
@@ -378,66 +580,159 @@ const AboutPage = ({ onContactClick }) => {
         </div>
       </section>
 
-      {/* Our Story (Detailed) */}
-      <section className="py-16 md:py-24 px-6 md:px-12 border-t border-[var(--border-subtle)] bg-[var(--bg-primary)]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-4xl text-[var(--text-primary)] font-bold mb-8">
-            Our Story
-          </h2>
-          <div className="font-body text-[var(--text-secondary)] text-lg leading-relaxed space-y-6 text-left md:text-center">
-            <p>
-              Invictus Global Tech Pvt Ltd began as a small team helping a few brands
-              scale through paid ads and automation. What we noticed early was
-              that most “digital marketing agencies” were selling posters,
-              reels, and vanity metrics.
-            </p>
-            <div className="py-6">
-              <p className="mb-4 font-bold text-[var(--text-primary)]">
-                Businesses weren't getting:
+      {/* 7. WE WORK ONLY WITH PEOPLE WHO ARE SERIOUS ABOUT GROWTH (Storytelling Scroll Animation) */}
+      <section
+        ref={growthStoryRef}
+        id="who-we-work-with"
+        className="relative min-h-0 lg:min-h-[420vh] bg-transparent"
+      >
+        {/* Desktop Sticky Viewport */}
+        <div className="hidden lg:flex motion-reduce:hidden sticky top-0 h-screen w-full items-center justify-center px-6 md:px-12 overflow-hidden">
+          <div className="max-w-[1500px] w-full mx-auto relative flex items-center justify-between min-h-[480px]">
+            {/* Left Column (Heading + Description) */}
+            <div
+              style={{
+                transform: `translate3d(${leftGroupShiftX}%, ${growthHeadingY}px, 0)`,
+                opacity: leftGroupOpacity,
+                willChange: "transform, opacity",
+                pointerEvents: leftGroupOpacity === 0 ? "none" : "auto",
+              }}
+              className="w-1/2 pr-8 shrink-0 z-10 transition-transform duration-75 ease-out"
+            >
+              <h2
+                style={{ opacity: growthHeadingOpacity }}
+                className="font-display text-4xl sm:text-5xl md:text-6xl text-[var(--text-primary)] font-bold leading-tight mb-8"
+              >
+                We Work Only With People Who Are{" "}
+                <span className="text-[#2AB182]">Serious About Growth.</span>
+              </h2>
+              <p
+                style={{
+                  opacity: growthDescOpacity,
+                  transform: `translate3d(0, ${growthDescY}px, 0)`,
+                }}
+                className="font-body text-[var(--text-muted)] text-base sm:text-lg mb-8 leading-relaxed transition-all duration-75 ease-out"
+              >
+                We don&apos;t work with everyone intentionally. If you want an agency
+                that posts random reels and sends &ldquo;engagement reports&rdquo;, we’re not
+                for you.
               </p>
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 font-display text-sm uppercase tracking-widest text-[#2AB182]">
-                <span>Clarity</span>/<span>Proper Tracking</span>/
-                <span>Quality Leads</span>/<span>ROI</span>/
-                <span>Accountability</span>
+            </div>
+
+            {/* Right Column (Partnership Box) */}
+            <div
+              style={{
+                transform: `translate3d(0, ${partnerY}px, 0)`,
+                opacity: partnerTotalOpacity,
+                willChange: "transform, opacity",
+                pointerEvents: partnerTotalOpacity === 0 ? "none" : "auto",
+              }}
+              className="w-1/2 pl-8 shrink-0 z-10 transition-transform duration-75 ease-out"
+            >
+              <div className="bg-[var(--bg-card)]/30 p-8 md:p-12 border border-[var(--border-subtle)] rounded-2xl shadow-[0_12px_32px_rgba(0,0,0,0.3)]">
+                <h3 className="font-display text-xl sm:text-2xl text-[var(--text-primary)] font-bold mb-6 uppercase tracking-wide">
+                  We partner with founders who:
+                </h3>
+                <ul className="space-y-4 font-body text-[var(--text-secondary)] text-base">
+                  {[
+                    "Treat marketing as an investment, not an expense",
+                    "Want full visibility on numbers, tracking, and ROI",
+                    "Expect accountability, speed, and high standards",
+                    "Are willing to fix sales processes, not blame ads",
+                    "Value clarity over fluff, performance over vanity",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0 mt-2" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <p>
-              So we built the opposite model—a performance-first, data-backed,
-              AI-integrated engine that focuses on one thing: actual business
-              outcomes.
-            </p>
-            <p className="pt-4">
-              Today, we partner with brands across{" "}
-              <strong>Healthcare, EdTech, E-commerce, and Automotive</strong>.
-              Across all these industries, our approach stays the same:{" "}
-              <span className="text-[var(--text-primary)] font-bold">
-                Test fast, scale what works, cut what doesn’t.
-              </span>
-            </p>
+
+            {/* Stage 6: Quote in the Center */}
+            <div
+              style={{
+                transform: `translate3d(0, ${quoteY}px, 0)`,
+                opacity: quoteOpacity,
+                willChange: "transform, opacity",
+                pointerEvents: quoteOpacity === 0 ? "none" : "auto",
+              }}
+              className="absolute inset-0 flex items-center justify-center z-20 transition-all duration-75 ease-out"
+            >
+              <div className="p-8 md:p-14 border border-[#2AB182]/40 bg-[var(--bg-card)]/70 backdrop-blur-md rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-3xl w-full text-center">
+                <p className="text-[var(--text-primary)] font-bold font-display italic text-2xl sm:text-3xl md:text-4xl leading-relaxed">
+                  &ldquo;If you want a partner who owns the numbers with you, we fit
+                  perfectly.&rdquo;
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile / Tablet / Reduced-Motion Fallback (Natural Stacked Layout) */}
+        <div className="lg:hidden motion-reduce:block py-16 md:py-24 px-6 md:px-12">
+          <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[var(--text-primary)] font-bold leading-tight mb-8">
+                We Work Only With People Who Are{" "}
+                <span className="text-[#2AB182]">Serious About Growth.</span>
+              </h2>
+              <p className="font-body text-[var(--text-muted)] text-base sm:text-lg mb-8 leading-relaxed">
+                We don&apos;t work with everyone intentionally. If you want an agency
+                that posts random reels and sends &ldquo;engagement reports&rdquo;, we’re not
+                for you.
+              </p>
+              <div className="p-6 border border-[var(--border-subtle)] bg-[var(--bg-card)]/30 rounded-xl">
+                <p className="text-[var(--text-primary)] font-bold font-display italic text-lg">
+                  &ldquo;If you want a partner who owns the numbers with you, we fit
+                  perfectly.&rdquo;
+                </p>
+              </div>
+            </div>
+            <div className="bg-[var(--bg-card)]/30 p-8 md:p-12 border border-[var(--border-subtle)] rounded-2xl">
+              <h3 className="font-display text-xl sm:text-2xl text-[var(--text-primary)] font-bold mb-6 uppercase tracking-wide">
+                We partner with founders who:
+              </h3>
+              <ul className="space-y-4 font-body text-[var(--text-secondary)] text-base">
+                {[
+                  "Treat marketing as an investment, not an expense",
+                  "Want full visibility on numbers, tracking, and ROI",
+                  "Expect accountability, speed, and high standards",
+                  "Are willing to fix sales processes, not blame ads",
+                  "Value clarity over fluff, performance over vanity",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0 mt-2" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-
-
-      {/* Final CTA */}
-      <section className="py-16 md:py-32 border-t border-[var(--border-subtle)] text-center px-6 bg-[var(--bg-card)]/30">
+      {/* 8. IF YOU ARE SERIOUS ABOUT GROWTH, LET'S TALK (Final CTA Section) */}
+      <section
+        id="about-cta"
+        className="py-20 md:py-32 text-center px-6 bg-[var(--bg-card)]/20"
+      >
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl md:text-6xl text-[var(--text-primary)] font-bold mb-8 leading-tight">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-[var(--text-primary)] font-bold mb-8 leading-tight tracking-tight">
             If You’re Serious About{" "}
             <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
           </h2>
-          <p className="font-body text-[var(--text-muted)] text-xl mb-12">
+          <p className="font-body text-[var(--text-muted)] text-lg sm:text-xl mb-12 leading-relaxed">
             We don’t take on every project. We take on the right ones.{" "}
             <br className="hidden md:block" />
-            <span className="text-[var(--text-primary)]">
-              If you’re growth-ready and want a partner who owns the numbers
-              with you:
+            <span className="text-[var(--text-primary)] font-medium">
+              If you’re growth-ready and want a partner who owns the numbers with you:
             </span>
           </p>
           <button
             onClick={onContactClick}
-            className="bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300"
+            className="bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-10 py-5 rounded hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 shadow-[0_8px_25px_rgba(42,177,130,0.3)] hover:shadow-[0_12px_30px_rgba(42,177,130,0.4)] hover:-translate-y-0.5"
           >
             Book a Discovery Call
           </button>

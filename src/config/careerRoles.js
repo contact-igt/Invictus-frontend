@@ -906,7 +906,7 @@ const telecallingExecutive = {
 
 const socialMediaManager = {
   slug: "social-media-manager",
-  title: "Social Media & Operations Manager",
+  title: "Social Media Manager",
   department: "Marketing & Content",
   location: "Chennai (Hybrid)",
   salary: "",
@@ -1258,7 +1258,7 @@ const businessDevelopmentExecutive = {
 
 const googleAdsExpert = {
   slug: "google-ads-expert",
-  title: "Google Ads Expert",
+  title: "Google Ads & PPC Expert",
   department: "Performance Marketing",
   location: "Hybrid",
   employmentType: "Full-Time",
@@ -1426,6 +1426,7 @@ export const careerRoles = {
   "business-development-executive": businessDevelopmentExecutive,
   "graphic-designer": designer,
   "video-editor": videoEditor,
+  "hr-operations-associate": hrOperationsExecutive,
   "hr-operations-executive": hrOperationsExecutive,
   "hr-operations-intern": hrOperationsIntern,
   "social-media-manager": socialMediaManager,

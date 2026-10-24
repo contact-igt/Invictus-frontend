@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { getApiBaseUrl } from "@/config/api";
 import { HONEYPOT_FIELD_NAME } from "@/lib/careersSpamGuards";
 
@@ -139,7 +140,7 @@ export default function ConversationalApplicationForm({ role }) {
       if (field.type === "multiselect") {
         const arr = Array.isArray(value) ? value : [];
         if (field.required && arr.length === 0) {
-          screenErrors[field.id] = `${fieldLabel} is required — select at least one option`;
+          screenErrors[field.id] = `${fieldLabel} is required: please select at least one option`;
         }
       } else {
         const str = typeof value === "string" ? value.trim() : "";
@@ -446,12 +447,12 @@ export default function ConversationalApplicationForm({ role }) {
             <span className="font-mono font-bold text-[var(--text-primary,#E0E0E0)]">{applicationRef}</span>
           </div>
         </div>
-        <a
+        <Link
           href="/careers"
           className="inline-block bg-[#2AB182] text-black px-8 py-4 font-display font-bold uppercase tracking-wider hover:bg-[#22956d] transition-colors duration-150 ease-out rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182]"
         >
           Return to Careers
-        </a>
+        </Link>
       </div>
     );
   }
@@ -610,6 +611,9 @@ export default function ConversationalApplicationForm({ role }) {
               {isSubmitting ? "Submitting Application" : "Submit Application"}
             </button>
           </div>
+          <p className="text-xs text-[var(--text-muted,#666)] font-body mt-4 text-center">
+            By submitting, you acknowledge our <Link href="/privacy" target="_blank" className="underline hover:text-[#2AB182] transition-colors">Privacy Policy</Link> regarding the processing of applicant data.
+          </p>
         </div>
       )}
     </div>

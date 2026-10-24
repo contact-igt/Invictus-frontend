@@ -28,13 +28,14 @@ export default function HrOperationsInternPage() {
       <Head>
         <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
+        <link rel="canonical" href="https://www.invictusglobaltech.com/careers/hr-operations-intern" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
 
-      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-24">
           <Link
             href="/careers"
@@ -72,19 +73,19 @@ export default function HrOperationsInternPage() {
             <div className="bg-[var(--bg-secondary,#151515)] border border-[var(--border-subtle,#333)] p-6 md:p-8 rounded-sm mb-12">
               <ul className="space-y-3 font-body">
                 <li className="leading-relaxed flex gap-3 font-body">
-                  <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                  <span className="text-[#2AB182] font-bold shrink-0">•</span>
                   <span className="font-body"><strong>Month 1:</strong> Unpaid Training & Evaluation.</span>
                 </li>
                 <li className="leading-relaxed flex gap-3 font-body">
-                  <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                  <span className="text-[#2AB182] font-bold shrink-0">•</span>
                   <span className="font-body"><strong>Months 2 & 3:</strong> Performance-based stipend (amount decided based on individual performance and management evaluation).</span>
                 </li>
                 <li className="leading-relaxed flex gap-3 font-body">
-                  <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                  <span className="text-[#2AB182] font-bold shrink-0">•</span>
                   <span className="font-body"><strong>PPO Opportunity:</strong> High-performing interns may receive a Pre-Placement Offer (PPO) for a full-time HR & Operations Executive role.</span>
                 </li>
                 <li className="leading-relaxed flex gap-3 font-body">
-                  <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                  <span className="text-[#2AB182] font-bold shrink-0">•</span>
                   <span className="font-body"><strong>Minimum Commitment:</strong> 6–12 months (including internship and full-time employment if selected through PPO).</span>
                 </li>
               </ul>
@@ -125,7 +126,7 @@ export default function HrOperationsInternPage() {
             <div className="text-center mb-12">
               <h2 className="font-display font-bold text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">Apply for this internship</h2>
               <p className="text-[var(--text-secondary,#A0A0A0)] max-w-xl mx-auto">
-                Complete the form below in about {role.estimatedMinutes}. Direct application — no account required.
+                Complete the form below in about {role.estimatedMinutes}. Direct application: no account required.
               </p>
             </div>
 

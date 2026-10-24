@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Facebook, Linkedin, Instagram, MapPin, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
@@ -44,11 +45,11 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs opacity-40 gap-4">
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs opacity-70 gap-4">
                     <p>© 2025 Blueray International. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <span>Privacy Policy</span>
-                        <span>Terms of Service</span>
+                        <Link href="/privacy" className="hover:text-gold transition-colors duration-150">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-gold transition-colors duration-150">Terms of Service</Link>
                     </div>
                 </div>
             </div>

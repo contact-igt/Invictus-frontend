@@ -10,7 +10,7 @@ const ThankYouPage = () => {
     const isCareer = type === 'career' || type === 'careers' || source === 'careers';
 
     return (
-        <div className="pt-32 min-h-screen flex flex-col justify-center items-center px-6 md:px-12 bg-[var(--bg-primary)] relative overflow-hidden">
+        <div className="pt-32 min-h-screen flex flex-col justify-center items-center px-6 md:px-12 bg-transparent relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#2AB182]/10 rounded-full blur-[120px]"></div>
@@ -94,7 +94,7 @@ const ThankYouPage = () => {
                                 className="group flex items-center gap-3 border border-[var(--border-subtle)] text-[var(--text-primary)] px-8 py-4 font-display font-bold uppercase tracking-widest hover:border-[#2AB182] hover:text-[#2AB182] transition-all duration-300 rounded-sm"
                             >
                                 Explore Services
-                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                <ArrowRight size={18} />
                             </Link>
                         </>
                     )}

@@ -28,13 +28,14 @@ export default function HrOperationsExecutivePage() {
       <Head>
         <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
+        <link rel="canonical" href="https://www.invictusglobaltech.com/careers/hr-operations-associate" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
 
-      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-24">
           <Link
             href="/careers"
@@ -102,7 +103,7 @@ export default function HrOperationsExecutivePage() {
             <div className="text-center mb-12">
               <h2 className="font-display font-bold text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">Apply for this role</h2>
               <p className="text-[var(--text-secondary,#A0A0A0)] max-w-xl mx-auto">
-                Complete the form below in about {role.estimatedMinutes}. Direct application — no account required.
+                Complete the form below in about {role.estimatedMinutes}. Direct application: no account required.
               </p>
             </div>
 

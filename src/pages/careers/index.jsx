@@ -1,12 +1,32 @@
 import Head from "next/head";
 import Link from "next/link";
-import CareersHero from "@/components/careers/CareersHero";
-import CultureSection from "@/components/careers/CultureSection";
+import CareersInteractiveSequence from "@/components/careers/CareersInteractiveSequence";
 import { careerRoles } from "@/config/careerRoles";
 
-const roles = Object.values(careerRoles);
+const roles = Object.values(careerRoles).filter(
+  (role, index, self) => index === self.findIndex((r) => r.slug === role.slug)
+);
 
 export default function CareersPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.invictusglobaltech.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Careers',
+        item: 'https://www.invictusglobaltech.com/careers',
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
@@ -15,31 +35,20 @@ export default function CareersPage() {
           name="description"
           content="Join a multidisciplinary team working across creativity, technology, marketing and AI-assisted execution to solve meaningful business problems."
         />
+        <link rel="canonical" href="https://www.invictusglobaltech.com/careers" />
+        <script
+          type="application/ld+json"
+          key="breadcrumb-jsonld"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
       </Head>
-      <div className="w-full relative pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
-        <CareersHero />
-
-        {/* What Invictus stands for */}
-        <section className="py-20 border-b border-[var(--border-subtle,#333)] transition-colors duration-300">
-          <div className="max-w-[1240px] mx-auto px-6 md:px-12 font-body">
-            <p className="font-body text-[#2AB182] text-sm uppercase tracking-widest font-bold mb-4">
-              (02) — WHAT INVICTUS STANDS FOR
-            </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-6xl uppercase mb-6 text-[var(--text-primary,#E0E0E0)] max-w-4xl">
-              IDEAS MATTER. EXECUTION MATTERS MORE.
-            </h2>
-            <p className="font-body text-[var(--text-secondary,#A0A0A0)] text-lg max-w-2xl">
-              We value clear thinking, professional craft, accountability and work that supports real business outcomes.
-            </p>
-          </div>
-        </section>
-
-        <CultureSection />
+      <div className="w-full relative bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
+        <CareersInteractiveSequence />
 
         {/* Open roles */}
         <section id="open-roles" className="py-20 border-b border-[var(--border-subtle,#333)] transition-colors duration-300">
           <div className="max-w-[1240px] mx-auto px-6 md:px-12 font-body">
-            <p className="font-body text-[#2AB182] text-sm uppercase tracking-widest font-bold mb-4">(04) — OPEN ROLES</p>
+            <p className="font-body text-[#2AB182] text-sm uppercase tracking-widest font-bold mb-4">(04) / OPEN ROLES</p>
             <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl uppercase text-[var(--text-primary,#E0E0E0)] mb-12">
               CURRENT OPPORTUNITIES
             </h2>
@@ -55,7 +64,7 @@ export default function CareersPage() {
                     <div className="flex-1 font-body">
                       <div className="flex items-center gap-3 mb-3 font-body">
                         <span className="text-[#2AB182] font-bold text-xs tracking-widest font-body">{sequenceNumber}</span>
-                        <span className="text-[var(--text-muted,#666)] text-xs uppercase tracking-widest font-bold font-body">— {role.department}</span>
+                        <span className="text-[var(--text-muted,#666)] text-xs uppercase tracking-widest font-bold font-body">/ {role.department}</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-bold uppercase mb-2 text-[var(--text-primary,#E0E0E0)]">{role.title}</h3>
                       <p className="text-[var(--text-secondary,#A0A0A0)] text-sm max-w-2xl mb-3 font-body">{role.summary}</p>

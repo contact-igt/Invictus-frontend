@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MessageCircle, Sparkle } from 'lucide-react';
+import { Mail, Phone, MessageCircle } from 'lucide-react';
 
 const Navbar = () => {
     return (
@@ -28,17 +28,11 @@ const Navbar = () => {
             <header className="bg-white sticky top-0 z-50 shadow-md py-4 font-montserrat">
                 <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
                     <div className="relative mb-4 md:mb-0">
-                        {/* Logo with Ray */}
+                        {/* Logo */}
                         <div
                             className="relative inline-block cursor-pointer"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
-                            <svg className="absolute -top-[12px] left-[20px] w-[80px] h-[20px] stroke-navy-deep stroke-[1.5] fill-none" viewBox="0 0 100 20">
-                                <path d="M5,15 Q50,0 90,10" strokeDasharray="200" strokeDashoffset="0" />
-                            </svg>
-                            <div className="absolute -top-[18px] left-[95px] text-navy-deep drop-shadow-[0_0_5px_rgba(0,0,0,0.2)]">
-                                <Sparkle className="w-4 h-4 fill-navy-deep" />
-                            </div>
                             <h1 className="text-3xl font-light tracking-[0.3em] text-black font-montserrat">BLUERAY</h1>
                             <p className="text-[10px] tracking-[0.6em] text-black font-bold mt-[-4px]">INTERNATIONAL</p>
                         </div>

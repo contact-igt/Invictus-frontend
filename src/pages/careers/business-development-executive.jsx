@@ -26,15 +26,16 @@ export default function BusinessDevelopmentExecutivePage() {
   return (
     <>
       <Head>
-        <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
-        <meta name="description" content={role.summary} />
+        <title>Business Development Executive | Invictus Careers</title>
+        <meta name="description" content="Join Invictus Global Tech as Business Development Executive. Lead client acquisition and digital marketing sales. Apply today!" />
+        <link rel="canonical" href="https://www.invictusglobaltech.com/careers/business-development-executive" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
 
-      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-[var(--bg-primary,#0E0E0E)] text-[var(--text-primary,#E0E0E0)] font-body">
+      <div className="w-full relative min-h-screen pt-20 md:pt-24 bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 py-12 md:py-24">
           <Link
             href="/careers"
@@ -105,7 +106,7 @@ export default function BusinessDevelopmentExecutivePage() {
               <ul className="space-y-3 font-body">
                 {role.positioning.map((item) => (
                   <li key={item} className="leading-relaxed flex gap-3 font-body">
-                    <span className="text-[#2AB182] font-bold shrink-0">—</span>
+                    <span className="text-[#2AB182] font-bold shrink-0">•</span>
                     <span className="font-body">{item}</span>
                   </li>
                 ))}
@@ -120,7 +121,7 @@ export default function BusinessDevelopmentExecutivePage() {
             <div className="text-center mb-12">
               <h2 className="font-display font-bold text-3xl uppercase text-[var(--text-primary,#E0E0E0)] mb-4">Apply for this role</h2>
               <p className="text-[var(--text-secondary,#A0A0A0)] max-w-xl mx-auto">
-                Complete the form below in about {role.estimatedMinutes}. Direct application — no account required.
+                Complete the form below in about {role.estimatedMinutes}. Direct application: no account required.
               </p>
             </div>
 

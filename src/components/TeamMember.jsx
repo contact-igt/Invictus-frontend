@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamMember = ({ name, image, rotation = 0, className = "", onClick }) => {
+const TeamMember = ({ name, image, rotation = 0, className = "", onClick, alt }) => {
     return (
         <div
             className={`inline-block transform cursor-pointer group hover:z-[50] transition-all duration-500 ${className}`}
@@ -13,7 +13,10 @@ const TeamMember = ({ name, image, rotation = 0, className = "", onClick }) => {
             <div className="w-full  overflow-hidden relative shadow-2xl transition-all duration-500 group-hover:shadow-4xl group-hover:-translate-y-4 group-hover:scale-125">
                 <img
                     src={image}
-                    alt={name}
+                    alt={alt || name}
+                    width={200}
+                    height={230}
+                    decoding="async"
                     className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 ease-in-out"
                 />
 
