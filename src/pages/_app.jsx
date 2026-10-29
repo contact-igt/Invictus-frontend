@@ -22,6 +22,9 @@ const organizationSchema = {
   "name": "Invictus Global Tech Pvt Ltd",
   "url": "https://www.invictusglobaltech.com",
   "logo": "https://www.invictusglobaltech.com/assets/logo_6.webp",
+  "image": "https://www.invictusglobaltech.com/assets/logo_6.webp",
+  "telephone": "+916369757054",
+  "email": "contact@invictusglobaltech.com",
   "description": "A performance marketing agency built on data, accountability, and clear numbers.",
   "sameAs": [
     "https://www.linkedin.com/company/invictus-global-tech/",
@@ -31,6 +34,10 @@ const organizationSchema = {
   ],
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "5/9, Deena Dayalu St, Pondy Bazaar, T. Nagar",
+    "addressLocality": "Chennai",
+    "addressRegion": "Tamil Nadu",
+    "postalCode": "600017",
     "addressCountry": "IN"
   }
 };
@@ -42,6 +49,12 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:site_name" content="Invictus Global Tech" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.invictusglobaltech.com/assets/logo_6.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://www.invictusglobaltech.com/assets/logo_6.webp" />
         <script
           type="application/ld+json"
           key="organization-jsonld"

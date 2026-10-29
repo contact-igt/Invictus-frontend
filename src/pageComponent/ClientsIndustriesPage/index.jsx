@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ArrowRight, MapPin } from 'lucide-react';
@@ -31,30 +32,30 @@ const clientIndustries = [
 ];
 
 const clientList = [
-    { name: "Pixel Eye Hospital", logoLight: "/client_logo/pixeleye-logo-white.png", logoDark: "/client_logo/pixeleye-logo-dark.png", logoClass: "max-h-[100px] md:max-h-[220px] max-w-[98%]" },
-    { name: "Antardrashti Netralaya", logoLight: "/client_logo/antardarshti-netralaya-logo-light.png", logoDark: "/client_logo/antardarshti-netralaya-logo-dark.png", logoClass: "max-h-14 md:max-h-20 max-w-[80%]" },
-    { name: "Naitrika Eye Care", logoLight: "/client_logo/naitrika-logo-light.png", logoDark: "/client_logo/naitrika-logo-dark.png", logoClass: "max-h-[100px] md:max-h-20 max-w-[82%]" },
-    { name: "Dr. Senthil Ophthall", logoLight: "/client_logo/ophthall-logo-light.png", logoDark: "/client_logo/ophthall-logo-dark.png", logoClass: "max-h-[90px] md:max-h-[160px] max-w-[90%]" },
-    { name: "HealthPilot.ai", logoLight: "/client_logo/healthpilot-logo-light.png", logoDark: "/client_logo/healthpilot-logo-dark.png", logoClass: "max-h-[120px] md:max-h-[130px] max-w-[95%]" },
-    { name: "Rio", logoLight: "/client_logo/rio-logo-light.png", logoDark: "/client_logo/rio-logo-dark.png", logoClass: "max-h-16 md:max-h-[75px] max-w-[88%]" },
-    { name: "NextLevel.in", logoLight: "/client_logo/nextlevel-logo-light.png", logoDark: "/client_logo/nextlevel-logo-dark.png", logoClass: "max-h-[85px] md:max-h-[90px] max-w-[90%]" },
-    { name: "777 Hosting", logoLight: "/client_logo/777hosting-logo-light.png", logoDark: "/client_logo/777hosting-logo-dark.png", logoClass: "max-h-[90px] md:max-h-[90px] max-w-[88%]" },
-    { name: "VLS Law Academy", logoLight: "/client_logo/vls-logo-light.png", logoDark: "/client_logo/vls-logo-dark.png", logoClass: "max-h-[80px] md:max-h-[85px] max-w-[80%]" },
-    { name: "KR Institute", logoLight: "/client_logo/krinstitute-logo-light.png", logoDark: "/client_logo/krinstitute-logo-dark.png", logoClass: "max-h-[90px] md:max-h-20 max-w-[85%]" },
-    { name: "Wellinit (USA)", logoLight: "/client_logo/wellinit-logo-white.png", logoDark: "/client_logo/wellinit-logo-dark.png", logoClass: "max-h-[50px] md:max-h-20 max-w-[85%]" },
-    { name: "Wild Funk", logoLight: "/client_logo/wildfunk-logo-light.png", logoDark: "/client_logo/wildfunk-logo-dark-new.png", logoClass: "max-h-[80px] md:max-h-20 max-w-[80%]" },
-    { name: "Sri Krish Mirra Builders", logoLight: "/client_logo/skmb-logo-light.png", logoDark: "/client_logo/skmb-logo-dark.png", logoClass: "max-h-[100px] md:max-h-[160px] max-w-[96%]" },
-    { name: "Phoenix Fitness", logoLight: "/client_logo/phoenix-fitness-logo-light.png", logoDark: "/client_logo/phoenix-fitness-logo-dark.png", logoClass: "max-h-[90px] md:max-h-20 max-w-[92%]" },
-    { name: "Dhiren Eye Care", logoLight: "/client_logo/dhiren-logo-light.png", logoDark: "/client_logo/dhiren-logo-dark.png", logoClass: "max-h-[90px] md:max-h-22 max-w-[92%]" },
-    { name: "RR Constructions", logoLight: "/client_logo/rr-construction-logo-light.png", logoDark: "/client_logo/rrconstruction-logo-dark.png", logoClass: "max-h-[95px] md:max-h-[110px] max-w-[92%]" },
-    { name: "Blueray International", logoLight: "/client_logo/blueray-logo-ligh.png", logoDark: "/client_logo/blueray-logo-dark.png", logoClass: "max-h-[80px] md:max-h-20 max-w-[88%]" },
-    { name: "Pulz Care", logoLight: "/client_logo/pulzcare-logo-light.png", logoDark: "/client_logo/pulzcare-logo-dark.png", logoClass: "max-h-[100px] md:max-h-[110px] max-w-[95%]" },
-    { name: "Sky Thru Restaurant", logoLight: "/client_logo/skythru-logo-light.png", logoDark: "/client_logo/skythru-logo-dark.png", logoClass: "max-h-[100px] md:max-h-[140px] max-w-[88%]" },
-    { name: "Global Uninexus", logoLight: "/client_logo/globaluninexus-logo-light.png", logoDark: "/client_logo/globaluninexus-logo-dark.png", logoClass: "max-h-[80px] md:max-h-22 max-w-[88%]" },
-    { name: "Mahimy Foods", logoLight: "/client_logo/mahimy-foods-logo-light.png", logoDark: "/client_logo/mahimy-foods-logo-dark.png", logoClass: "max-h-[100px] md:max-h-[140px] max-w-[92%]" },
-    { name: "Lydia Binil", logoLight: "/client_logo/lydia-binil-logo-light.png", logoDark: "/client_logo/lydiabinil-logo-dark.png", logoClass: "max-h-[65px] md:max-h-[70px] max-w-[85%]" },
-    { name: "Ramanan Financial", logoLight: "/client_logo/ramanan-financial-logo-light.png", logoDark: "/client_logo/ramanan-financial-logo-dark.png", logoClass: "max-h-[80px] md:max-h-22 max-w-[88%]" },
-    { name: "Triumph Vetrivel Motors", logoLight: "/client_logo/triumph-logo-light.png", logoDark: "/client_logo/triumph-logo-dark.png", logoClass: "max-h-[80px] md:max-h-[95px] max-w-[80%]" }
+    { name: "Pixel Eye Hospital", logoLight: "/client_logo/pixeleye-logo-white.webp", logoDark: "/client_logo/pixeleye-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-[220px] max-w-[98%]" },
+    { name: "Antardrashti Netralaya", logoLight: "/client_logo/antardarshti-netralaya-logo-light.webp", logoDark: "/client_logo/antardarshti-netralaya-logo-dark.webp", logoClass: "max-h-14 md:max-h-20 max-w-[80%]" },
+    { name: "Naitrika Eye Care", logoLight: "/client_logo/naitrika-logo-light.webp", logoDark: "/client_logo/naitrika-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-20 max-w-[82%]" },
+    { name: "Dr. Senthil Ophthall", logoLight: "/client_logo/ophthall-logo-light.webp", logoDark: "/client_logo/ophthall-logo-dark.webp", logoClass: "max-h-[90px] md:max-h-[160px] max-w-[90%]" },
+    { name: "HealthPilot.ai", logoLight: "/client_logo/healthpilot-logo-light.webp", logoDark: "/client_logo/healthpilot-logo-dark.webp", logoClass: "max-h-[120px] md:max-h-[130px] max-w-[95%]" },
+    { name: "Rio", logoLight: "/client_logo/rio-logo-light.webp", logoDark: "/client_logo/rio-logo-dark.webp", logoClass: "max-h-16 md:max-h-[75px] max-w-[88%]" },
+    { name: "NextLevel.in", logoLight: "/client_logo/nextlevel-logo-light.webp", logoDark: "/client_logo/nextlevel-logo-dark.webp", logoClass: "max-h-[85px] md:max-h-[90px] max-w-[90%]" },
+    { name: "777 Hosting", logoLight: "/client_logo/777hosting-logo-light.webp", logoDark: "/client_logo/777hosting-logo-dark.webp", logoClass: "max-h-[90px] md:max-h-[90px] max-w-[88%]" },
+    { name: "VLS Law Academy", logoLight: "/client_logo/vls-logo-light.webp", logoDark: "/client_logo/vls-logo-dark.webp", logoClass: "max-h-[80px] md:max-h-[85px] max-w-[80%]" },
+    { name: "KR Institute", logoLight: "/client_logo/krinstitute-logo-light.webp", logoDark: "/client_logo/krinstitute-logo-dark.webp", logoClass: "max-h-[90px] md:max-h-20 max-w-[85%]" },
+    { name: "Wellinit (USA)", logoLight: "/client_logo/wellinit-logo-white.webp", logoDark: "/client_logo/wellinit-logo-dark.webp", logoClass: "max-h-[50px] md:max-h-20 max-w-[85%]" },
+    { name: "Wild Funk", logoLight: "/client_logo/wildfunk-logo-light.webp", logoDark: "/client_logo/wildfunk-logo-dark-new.webp", logoClass: "max-h-[80px] md:max-h-20 max-w-[80%]" },
+    { name: "Sri Krish Mirra Builders", logoLight: "/client_logo/skmb-logo-light.webp", logoDark: "/client_logo/skmb-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-[160px] max-w-[96%]" },
+    { name: "Phoenix Fitness", logoLight: "/client_logo/phoenix-fitness-logo-light.webp", logoDark: "/client_logo/phoenix-fitness-logo-dark.webp", logoClass: "max-h-[90px] md:max-h-20 max-w-[92%]" },
+    { name: "Dhiren Eye Care", logoLight: "/client_logo/dhiren-logo-light.webp", logoDark: "/client_logo/dhiren-logo-dark.webp", logoClass: "max-h-[90px] md:max-h-22 max-w-[92%]" },
+    { name: "RR Constructions", logoLight: "/client_logo/rr-construction-logo-light.webp", logoDark: "/client_logo/rrconstruction-logo-dark.webp", logoClass: "max-h-[95px] md:max-h-[110px] max-w-[92%]" },
+    { name: "Blueray International", logoLight: "/client_logo/blueray-logo-ligh.webp", logoDark: "/client_logo/blueray-logo-dark.webp", logoClass: "max-h-[80px] md:max-h-20 max-w-[88%]" },
+    { name: "Pulz Care", logoLight: "/client_logo/pulzcare-logo-light.webp", logoDark: "/client_logo/pulzcare-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-[110px] max-w-[95%]" },
+    { name: "Sky Thru Restaurant", logoLight: "/client_logo/skythru-logo-light.webp", logoDark: "/client_logo/skythru-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-[140px] max-w-[88%]" },
+    { name: "Global Uninexus", logoLight: "/client_logo/globaluninexus-logo-light.webp", logoDark: "/client_logo/globaluninexus-logo-dark.webp", logoClass: "max-h-[80px] md:max-h-22 max-w-[88%]" },
+    { name: "Mahimy Foods", logoLight: "/client_logo/mahimy-foods-logo-light.webp", logoDark: "/client_logo/mahimy-foods-logo-dark.webp", logoClass: "max-h-[100px] md:max-h-[140px] max-w-[92%]" },
+    { name: "Lydia Binil", logoLight: "/client_logo/lydia-binil-logo-light.webp", logoDark: "/client_logo/lydiabinil-logo-dark.webp", logoClass: "max-h-[65px] md:max-h-[70px] max-w-[85%]" },
+    { name: "Ramanan Financial", logoLight: "/client_logo/ramanan-financial-logo-light.webp", logoDark: "/client_logo/ramanan-financial-logo-dark.webp", logoClass: "max-h-[80px] md:max-h-22 max-w-[88%]" },
+    { name: "Triumph Vetrivel Motors", logoLight: "/client_logo/triumph-logo-light.webp", logoDark: "/client_logo/triumph-logo-dark.webp", logoClass: "max-h-[80px] md:max-h-[95px] max-w-[80%]" }
 ];
 
 const getClientInitials = (name) => (
@@ -478,9 +479,9 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                 {/* Mobile Presentation & Reduced-Motion Interactive List */}
                 <div className="md:hidden motion-reduce:block py-16 px-6">
                     <div className="text-center mb-10 max-w-xl mx-auto flex flex-col items-center">
-                        <h2 className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
+                        <p role="heading" aria-level="2" className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
                             Core Industries We <span className="text-[#2AB182]">Serve</span>
-                        </h2>
+                        </p>
                         {/* Glowing Green Vertical Timeline Connector for Mobile */}
                         <div className="flex flex-col items-center mt-3">
                             <div
@@ -701,7 +702,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                                             {lightLogo && (
                                                 <Image
                                                     src={lightLogo}
-                                                    alt=""
+                                                    alt={`${client.name} partner logo`}
                                                     width={240}
                                                     height={100}
                                                     decoding="async"
@@ -713,7 +714,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                                             {darkLogo && (
                                                 <Image
                                                     src={darkLogo}
-                                                    alt=""
+                                                    alt={`${client.name} partner logo`}
                                                     width={240}
                                                     height={100}
                                                     decoding="async"
@@ -745,13 +746,13 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                     <p className="font-body text-[var(--text-muted)] text-xl mb-12">
                         We know the numbers. We know the bottlenecks. We know how to build predictable, profitable growth.
                     </p>
-                    <button
-                        onClick={onContactClick}
-                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300"
+                    <Link
+                        href="/contact"
+                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 rounded-sm"
                     >
                         Book a Discovery Call
                         <ArrowRight size={20} />
-                    </button>
+                    </Link>
                 </div>
             </section>
         </div>

@@ -28,6 +28,7 @@ export default function HrOperationsExecutivePage() {
       <Head>
         <title>{`${role.title} | Invictus Global Tech Pvt Ltd`}</title>
         <meta name="description" content={role.summary} />
+        <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://www.invictusglobaltech.com/careers/hr-operations-associate" />
         <script
           type="application/ld+json"

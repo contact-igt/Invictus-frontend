@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import { Globe, ArrowRight } from 'lucide-react';
 import LocationCard from '@/common/LocationCard';
@@ -242,7 +243,7 @@ const WhereWeArePage = ({ onContactClick }) => {
                                             >
                                                 GLOBAL
                                             </span>
-                                        </div>
+                                        </div>{' '}
                                         <div>
                                             <span
                                                 ref={footprintWordRef}
@@ -370,12 +371,12 @@ const WhereWeArePage = ({ onContactClick }) => {
                         </p>
 
                         {/* Mobile Heading */}
-                        <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[0.94] tracking-tight text-[var(--text-primary)] uppercase mb-6">
+                        <p role="heading" aria-level="1" className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[0.94] tracking-tight text-[var(--text-primary)] uppercase mb-6">
                             GLOBAL <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-400">
                                 FOOTPRINT.
                             </span>
-                        </h1>
+                        </p>
 
                         {/* Mobile Description */}
                         <p className="font-body text-base text-[var(--text-muted)] max-w-2xl mb-10 leading-relaxed">
@@ -414,13 +415,13 @@ const WhereWeArePage = ({ onContactClick }) => {
                             <span>UAE</span> / <span>Malaysia</span>
                         </div>
                     </div>
-                    <button
-                        onClick={onContactClick}
-                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300"
+                    <Link
+                        href="/contact"
+                        className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 rounded-sm"
                     >
                         Book a Strategy Call
                         <ArrowRight size={20} />
-                    </button>
+                    </Link>
                 </div>
             </section>
         </div>

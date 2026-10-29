@@ -6,6 +6,8 @@ const TeamCard = ({ name, role, isSlider = false }) => {
     const nameMap = {
         "naveen raj": "naveen",
         "alam": "aalam",
+        "vignesh rajan": "vignesh rajan",
+        "aiswarya": "aishwarya",
     };
     const fileName = nameMap[cleanName] || cleanName;
     const imagePath = `/assets/team/teamscroll/${fileName}.webp`;

@@ -9,6 +9,10 @@ const Footer = () => {
         <span>© 2026 Invictus Global Tech Pvt Ltd</span>
         <span className="hidden sm:inline text-[var(--border-subtle)]">|</span>
         <div className="flex gap-4">
+          <Link href="/whatsnexus" className="hover:text-[#2AB182] transition-colors duration-150">
+            WhatsNexus
+          </Link>
+          <span className="text-[var(--border-subtle)]">•</span>
           <Link href="/privacy" className="hover:text-[#2AB182] transition-colors duration-150">
             Privacy Policy
           </Link>

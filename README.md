@@ -16,6 +16,12 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Access from another device on your network
+
+The development server listens on all network interfaces. Start it with `npm run dev`, then find this computer's IPv4 address with `ipconfig` on Windows. On another device connected to the same network, open `http://<IPv4-address>:3000` (for example, `http://192.168.1.25:3000`).
+
+If the connection is blocked, allow Node.js or port 3000 through Windows Defender Firewall on your private network. This makes the development server available on your local network; it does not expose it to the internet.
+
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

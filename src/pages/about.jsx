@@ -29,9 +29,14 @@ const About = () => {
     return (
         <>
             <Head>
-                <title>About Us | Invictus Global Tech Pvt Ltd</title>
-                <meta name="description" content="We are not an agency. We are a growth partner obsessed with data, accountability, and clear numbers." />
+                <title>About Us | Performance Marketing & Growth Partner | Invictus Global Tech</title>
+                <meta name="description" content="Learn about Invictus Global Tech, an ROI-obsessed performance marketing team and growth partner based in Chennai, delivering measurable business outcomes." />
                 <link rel="canonical" href="https://www.invictusglobaltech.com/about" />
+        <meta property="og:title" content="About Us | Performance Marketing &amp; Growth Partner | Invictus Global Tech" />
+        <meta property="og:description" content="Learn about Invictus Global Tech, an ROI-obsessed performance marketing team and growth partner based in Chennai, delivering measurable business outcomes." />
+        <meta property="og:url" content="https://www.invictusglobaltech.com/about" />
+        <meta name="twitter:title" content="About Us | Performance Marketing &amp; Growth Partner | Invictus Global Tech" />
+        <meta name="twitter:description" content="Learn about Invictus Global Tech, an ROI-obsessed performance marketing team and growth partner based in Chennai, delivering measurable business outcomes." />
                 <script
                     type="application/ld+json"
                     key="breadcrumb-jsonld"

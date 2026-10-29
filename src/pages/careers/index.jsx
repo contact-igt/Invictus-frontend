@@ -30,12 +30,17 @@ export default function CareersPage() {
   return (
     <>
       <Head>
-        <title>Careers | Invictus Global Tech Pvt Ltd</title>
+        <title>Careers at Invictus Global Tech | Performance Marketing & Tech Jobs</title>
         <meta
           name="description"
-          content="Join a multidisciplinary team working across creativity, technology, marketing and AI-assisted execution to solve meaningful business problems."
+          content="Explore high-growth careers at Invictus Global Tech Chennai. Open roles in performance marketing, Google & Meta Ads, design, video editing, and HR."
         />
         <link rel="canonical" href="https://www.invictusglobaltech.com/careers" />
+        <meta property="og:title" content="Careers at Invictus Global Tech | Performance Marketing &amp; Tech Jobs" />
+        <meta property="og:description" content="Explore high-growth careers at Invictus Global Tech Chennai. Open roles in performance marketing, Google &amp; Meta Ads, design, video editing, and HR." />
+        <meta property="og:url" content="https://www.invictusglobaltech.com/careers" />
+        <meta name="twitter:title" content="Careers at Invictus Global Tech | Performance Marketing &amp; Tech Jobs" />
+        <meta name="twitter:description" content="Explore high-growth careers at Invictus Global Tech Chennai. Open roles in performance marketing, Google &amp; Meta Ads, design, video editing, and HR." />
         <script
           type="application/ld+json"
           key="breadcrumb-jsonld"

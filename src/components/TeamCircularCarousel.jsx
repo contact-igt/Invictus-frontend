@@ -10,6 +10,8 @@ const cleanImageName = (name) => {
   const nameMap = {
     "naveen raj": "naveen",
     "alam": "aalam",
+    "vignesh rajan": "vignesh rajan",
+    "aiswarya": "aishwarya",
   };
   return nameMap[clean] || clean;
 };

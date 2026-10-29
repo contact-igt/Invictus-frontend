@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Minus, Plus } from 'lucide-react';
 import CountUp from 'react-countup';
@@ -319,7 +320,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             <div className="mb-6 md:mb-8">
               <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
                 <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
-                Performance-Driven Growth for Serious Brands
+                Performance Marketing Agency • Chennai HQ & Global Clients
               </p>
 
               <div className="relative min-h-[150px] sm:min-h-[190px] md:min-h-[235px] lg:min-h-[275px] flex items-end">
@@ -353,20 +354,20 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             {/* Supporting Description without horizontal divider */}
             <div className="w-full max-w-xl transition-all duration-700 ease-out pt-3">
               <p className="font-body text-[var(--text-muted)] text-sm md:text-lg leading-relaxed">
-                We don’t sell clicks or impressions. We build scalable growth systems powered by ads, data, and AI.
+                We don’t sell clicks or vanity impressions. We build revenue-focused acquisition systems powered by Meta Ads, Google Ads, and custom conversion funnels.
               </p>
             </div>
           </div>
 
           {/* Start Project button anchored to the hero section's bottom-right area */}
           <div className="absolute bottom-8 md:bottom-12 right-6 md:right-12 z-20 pointer-events-auto">
-            <button
-              onClick={() => router.push('/contact')}
+            <Link
+              href="/contact"
               className="group flex items-center gap-4 bg-[#2AB182] text-black px-8 py-4 rounded-none font-bold text-sm uppercase tracking-wider hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-colors duration-300 font-body shadow-lg"
             >
               Start Project
               <ArrowRight size={20} />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -406,7 +407,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                   }`}
                 >
                   <p className="font-body text-base md:text-lg lg:text-xl text-[var(--text-muted)] leading-relaxed max-w-xl">
-                    Most agencies sell &ldquo;branding&rdquo; and &ldquo;reach&rdquo;. We work on data, accountability, and clear numbers. If it doesn&apos;t drive revenue, we don&apos;t do it.
+                    Most agencies report on impressions and reach. We manage paid acquisition with strict accountability to pipeline, customer acquisition cost (CAC), and revenue.
                   </p>
                 </div>
 
@@ -422,7 +423,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 >
                   <span className="w-3.5 h-3.5 rounded-full bg-[#2AB182] shrink-0 shadow-[0_0_12px_rgba(42,177,130,0.6)]" />
                   <span className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-                    Quality leads, not random enquiries
+                    Qualified customer leads, not random enquiries
                   </span>
                 </div>
 
@@ -438,7 +439,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 >
                   <span className="w-3.5 h-3.5 rounded-full bg-[#2AB182] shrink-0 shadow-[0_0_12px_rgba(42,177,130,0.6)]" />
                   <span className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-                    Full-funnel tracking (Impression &rarr; Sale)
+                    Full-funnel tracking (Ad Click &rarr; CRM &rarr; Sale)
                   </span>
                 </div>
 
@@ -452,7 +453,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 >
                   <span className="w-3.5 h-3.5 rounded-full bg-[#2AB182] shrink-0 shadow-[0_0_12px_rgba(42,177,130,0.6)]" />
                   <span className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
-                    Transparent dashboards
+                    Live reporting dashboards & weekly data reviews
                   </span>
                 </div>
               </div>
@@ -461,7 +462,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             {/* Right Column — Mobile Natural Stacked Presentation */}
             <div className="md:hidden p-8 flex flex-col justify-center bg-[var(--navbar-bg)]/60 backdrop-blur-sm">
               <p className="font-body text-base text-[var(--text-muted)] leading-relaxed mb-8">
-                Most agencies sell &ldquo;branding&rdquo; and &ldquo;reach&rdquo;. We work on data, accountability, and clear numbers. If it doesn&apos;t drive revenue, we don&apos;t do it.
+                Most agencies report on impressions and reach. We manage paid acquisition with strict accountability to pipeline, customer acquisition cost (CAC), and revenue.
               </p>
               <ul className="space-y-5 font-display text-lg">
                 {[
@@ -518,9 +519,9 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                   key={index}
                   className="shrink-0 w-[84vw] max-w-[720px]"
                 >
-                  <div
-                    onClick={() => handleNavClick('/services')}
-                    className="w-full rounded-2xl bg-[#151515] border border-[#2E2E2E] hover:border-[#2AB182]/50 p-8 md:p-12 lg:p-14 flex flex-col justify-between min-h-[320px] md:min-h-[380px] transition-all duration-300 ease-out hover:scale-[1.04] hover:-translate-y-1.5 hover:shadow-[0_12px_32px_rgba(0,0,0,0.6)] motion-reduce:hover:transform-none cursor-pointer group"
+                  <Link
+                    href="/services"
+                    className="w-full rounded-2xl bg-[#151515] border border-[#2E2E2E] hover:border-[#2AB182]/50 p-8 md:p-12 lg:p-14 flex flex-col justify-between min-h-[320px] md:min-h-[380px] transition-all duration-300 ease-out hover:scale-[1.04] hover:-translate-y-1.5 hover:shadow-[0_12px_32px_rgba(0,0,0,0.6)] motion-reduce:hover:transform-none cursor-pointer group block"
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs md:text-sm tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/15 border border-[#2AB182]/30 px-3.5 py-1.5 rounded-full font-semibold">
@@ -544,7 +545,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                         <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -574,17 +575,17 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
         {/* Mobile Presentation & Reduced-Motion Alternative — Natural Stacked Scroll */}
         <div className="md:hidden motion-reduce:block py-16 px-6">
           <div className="text-center mb-10">
-            <h2 className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
+            <p role="heading" aria-level="2" className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
               Our Core <span className="text-[#2AB182]">Capabilities</span>
-            </h2>
+            </p>
           </div>
 
           <div className="space-y-4 max-w-lg mx-auto">
             {coreCapabilitiesData.map((service, index) => (
-              <div
+              <Link
                 key={index}
-                onClick={() => handleNavClick('/services')}
-                className="p-6 rounded-2xl bg-[#151515] border border-[#2A2A2A] hover:border-[#2AB182] transition-colors cursor-pointer group"
+                href="/services"
+                className="p-6 rounded-2xl bg-[#151515] border border-[#2A2A2A] hover:border-[#2AB182] transition-colors cursor-pointer group block"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono text-xs text-[#2AB182] tracking-widest font-semibold">
@@ -597,7 +598,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 <h3 className="font-display text-xl font-bold uppercase text-white group-hover:text-[#2AB182] transition-colors">
                   {service.title}
                 </h3>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -624,7 +625,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
               Industries We <span className="text-[#2AB182]">Transform</span>
             </h2>
             <p className="font-body text-sm md:text-base text-[var(--text-muted)] mt-2.5 max-w-2xl mx-auto">
-              We go deep into niches where performance truly matters, from Healthcare to E-commerce.
+              We engineer paid campaigns for high-intent industries where customer acquisition economics and lead quality directly dictate profitability.
             </p>
           </div>
 
@@ -647,18 +648,10 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                   }}
                   className="absolute left-0 right-0 mx-auto w-full max-w-[800px]"
                 >
-                  <div
-                    role="link"
-                    tabIndex={0}
+                  <Link
+                    href="/clients"
                     aria-label={`Explore ${industry.name} industry client results`}
-                    onClick={() => handleNavClick('/clients')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleNavClick('/clients');
-                      }
-                    }}
-                    className="rounded-2xl md:rounded-3xl bg-[#141414] border border-[#262626] p-6 sm:p-8 md:p-10 min-h-[190px] md:min-h-[210px] flex flex-col justify-between shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#2AB182] hover:shadow-[0_16px_40px_rgba(42,177,130,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:border-[#2AB182] motion-reduce:hover:transform-none cursor-pointer group select-none"
+                    className="rounded-2xl md:rounded-3xl bg-[#141414] border border-[#262626] p-6 sm:p-8 md:p-10 min-h-[190px] md:min-h-[210px] flex flex-col justify-between shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#2AB182] hover:shadow-[0_16px_40px_rgba(42,177,130,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:border-[#2AB182] motion-reduce:hover:transform-none cursor-pointer group select-none block"
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs md:text-sm tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-1 rounded-full font-semibold group-hover:bg-[#2AB182]/20 transition-colors">
@@ -675,7 +668,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                         {industry.name}
                       </h3>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               );
             })}
@@ -685,29 +678,21 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
         {/* Mobile Presentation & Reduced Motion Fallback */}
         <div className="md:hidden motion-reduce:block py-16 px-6">
           <div className="text-center mb-10 max-w-xl mx-auto">
-            <h2 className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
+            <p role="heading" aria-level="2" className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
               Industries We <span className="text-[#2AB182]">Transform</span>
-            </h2>
+            </p>
             <p className="font-body text-sm text-[var(--text-muted)] mt-3">
-              We go deep into niches where performance truly matters, from Healthcare to E-commerce.
+              We engineer paid campaigns for high-intent industries where customer acquisition economics and lead quality directly dictate profitability.
             </p>
           </div>
 
           <div className="space-y-4 max-w-lg mx-auto">
             {industriesData.map((industry) => (
-              <div
+              <Link
                 key={industry.id}
-                role="link"
-                tabIndex={0}
+                href="/clients"
                 aria-label={`Explore ${industry.name} industry client results`}
-                onClick={() => handleNavClick('/clients')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleNavClick('/clients');
-                  }
-                }}
-                className="rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#2AB182] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] p-6 flex flex-col justify-between shadow-lg cursor-pointer transition-colors group"
+                className="rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#2AB182] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] p-6 flex flex-col justify-between shadow-lg cursor-pointer transition-colors group block"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono text-xs tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-1 rounded-full font-semibold">
@@ -721,7 +706,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 <h3 className="font-display text-2xl font-bold uppercase text-white group-hover:text-[#2AB182] transition-colors">
                   {industry.name}
                 </h3>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -856,9 +841,9 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             <span className="text-[#2AB182] font-body text-xs tracking-[0.2em] uppercase font-bold mb-3 block">
               OUR METHODOLOGY
             </span>
-            <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] leading-tight">
+            <p role="heading" aria-level="2" className="font-display text-3xl font-bold text-[var(--text-primary)] leading-tight">
               The 4-Step <span className="text-[#2AB182]">Performance</span> Engine
-            </h2>
+            </p>
             <p className="font-body text-sm text-[var(--text-muted)] mt-2">
               Performance is engineered, not guessed.
             </p>
@@ -894,9 +879,10 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           <h2 className="font-display text-4xl font-bold uppercase mb-14 text-[var(--text-primary)] text-center">FAQ</h2>
           <div className="space-y-6">
             {[
-              { q: "Do you work on performance-based pricing?", a: "We primarily work on a retainer + performance structure. Pure performance deals are evaluated on a case-by-case basis depending on your margins and historical data." },
-              { q: "What is the minimum budget?", a: "We typically recommend a minimum monthly ad spend that ensures statistical significance for testing and scaling (usually $2k+)." },
-              { q: "How soon can we see results?", a: "For lead-gen campaigns, we usually start seeing data in the first 7–10 days, and meaningful optimisation from week 3 onwards." }
+              { q: "How does your pricing and engagement model work?", a: "We work on a transparent monthly retainer + performance structure. Performance-sharing arrangements are evaluated based on your historical conversion data, margins, and sales capacity." },
+              { q: "What advertising budget do we need to start?", a: "We typically recommend a minimum monthly advertising spend of $2,000+. This ensures sufficient conversion data for statistical testing and algorithmic learning." },
+              { q: "How quickly do campaigns show measurable results?", a: "Initial tracking validation and baseline audience response occur within the first 7–10 days. Campaign optimization, creative iteration, and cost-per-lead improvements compound from week 3 onward." },
+              { q: "Do you create the ad visuals and copywriting or do we provide them?", a: "Our in-house creative team produces direct-response ad copy, static graphic assets, and short-form video ads (Reels). You simply provide raw brand assets and approve the creative before launch." }
             ].map((item, index) => (
               <div key={index} className="group cursor-pointer" onClick={() => toggleFaq(index)}>
                 <div className={`flex justify-between items-center border-b border-[var(--border-subtle)] pb-4 transition-colors ${activeFaq === index ? 'border-[#2AB182]' : ''}`}>
@@ -928,18 +914,18 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             If You’re Serious About <span className="text-[#2AB182]">Growth</span>, Let’s Talk.
           </h2>
           <p className="font-body text-[var(--text-muted)] text-lg md:text-xl mb-3">
-            We don’t take on every project. We take on the right ones.
+            Headquartered in Chennai, India, partnering with ambitious brands across India, the US, UK, and Singapore.
           </p>
           <p className="font-body text-[var(--text-primary)] text-base md:text-lg mb-10 max-w-2xl mx-auto">
             If you’re growth-ready and want a partner who owns the numbers with you:
           </p>
-          <button
-            onClick={() => router.push('/contact')}
-            className="group inline-flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-10 md:px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 shadow-[0_4px_25px_rgba(42,177,130,0.3)] hover:shadow-[0_0_30px_rgba(42,177,130,0.5)] cursor-pointer text-sm md:text-base"
+          <Link
+            href="/contact"
+            className="group inline-flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-10 md:px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 shadow-[0_4px_25px_rgba(42,177,130,0.3)] hover:shadow-[0_0_30px_rgba(42,177,130,0.5)] cursor-pointer text-sm md:text-base rounded-sm"
           >
             <span>BOOK A DISCOVERY CALL</span>
             <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
-          </button>
+          </Link>
         </div>
       </section>
     </div>

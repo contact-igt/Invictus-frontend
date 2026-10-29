@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import WhatsNexusPopup from '@/components/WhatsNexusPopup';
@@ -12,8 +13,12 @@ const WhatsNexus = () => {
     return (
         <div className="min-h-screen bg-transparent font-jakarta text-[var(--text-primary)] pt-20 px-6 md:px-12 relative overflow-hidden">
             <Head>
-                <title>WhatsNexus | Invictus Global Tech Pvt Ltd</title>
-                <meta name="description" content="Discover WhatsNexus - Our latest product." />
+                <title>WhatsNexus | AI WhatsApp Receptionist & Lead Automation | Invictus Global Tech</title>
+                <meta name="description" content="WhatsNexus by Invictus Global Tech transforms customer support with an AI WhatsApp receptionist, automated 24/7 lead capture, and a shared team inbox." />
+                <link rel="canonical" href="https://www.invictusglobaltech.com/whatsnexus" />
+                <meta property="og:title" content="WhatsNexus | AI WhatsApp Receptionist & Lead Automation" />
+                <meta property="og:description" content="WhatsNexus by Invictus Global Tech transforms customer support with an AI WhatsApp receptionist, automated 24/7 lead capture, and a shared team inbox." />
+                <meta property="og:url" content="https://www.invictusglobaltech.com/whatsnexus" />
             </Head>
 
             {/* Product Announcement Popup */}
@@ -207,6 +212,16 @@ const WhatsNexus = () => {
                         <span>Launch WhatsNexus</span>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </a>
+                    <p className="text-[var(--text-muted)] text-sm mt-8 max-w-xl mx-auto">
+                        Need custom enterprise CRM routing, Meta Ads integration, or multi-channel acquisition funnels? Explore our{' '}
+                        <Link href="/services" className="text-[#2AB182] underline underline-offset-4 hover:text-[var(--text-primary)]">
+                            AI & Lead Automation Services
+                        </Link>{' '}
+                        or{' '}
+                        <Link href="/contact" className="text-[#2AB182] underline underline-offset-4 hover:text-[var(--text-primary)]">
+                            Contact Our Strategy Team
+                        </Link>.
+                    </p>
                 </div>
 
             </div>

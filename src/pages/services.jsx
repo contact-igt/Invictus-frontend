@@ -34,7 +34,7 @@ const Services = () => {
                 '@type': 'Service',
                 position: 1,
                 name: 'Performance Marketing',
-                description: 'Data-driven campaigns that maximize ROI across Meta, Google, and LinkedIn.',
+                description: 'Paid acquisition across Meta Ads, Google Search & Performance Max, and LinkedIn structured to improve CAC and scale pipeline.',
                 provider: {
                     '@id': 'https://www.invictusglobaltech.com/#organization',
                 },
@@ -43,8 +43,8 @@ const Services = () => {
             {
                 '@type': 'Service',
                 position: 2,
-                name: 'Social Media Management',
-                description: 'Building brand authority and community through engaging content and strategic management.',
+                name: 'Social Media & Creative Direction',
+                description: 'High-impact short-form video production and visual content designed to build brand authority and fuel paid campaigns.',
                 provider: {
                     '@id': 'https://www.invictusglobaltech.com/#organization',
                 },
@@ -53,8 +53,8 @@ const Services = () => {
             {
                 '@type': 'Service',
                 position: 3,
-                name: 'Web & App Development',
-                description: 'Creating high-performance, scalable, and user-centric digital experiences.',
+                name: 'Web & Conversion Engineering',
+                description: 'High-converting landing pages and modern web platforms engineered for fast loading and conversion rate optimization.',
                 provider: {
                     '@id': 'https://www.invictusglobaltech.com/#organization',
                 },
@@ -63,8 +63,8 @@ const Services = () => {
             {
                 '@type': 'Service',
                 position: 4,
-                name: 'AI & Automation',
-                description: 'Streamlining operations and enhancing customer experiences with cutting-edge AI solutions.',
+                name: 'AI & Lead Automation',
+                description: 'WhatsApp lead automation, automated CRM routing, and workflow triggers ensuring prompt follow-up for every inbound enquiry.',
                 provider: {
                     '@id': 'https://www.invictusglobaltech.com/#organization',
                 },
@@ -73,8 +73,8 @@ const Services = () => {
             {
                 '@type': 'Service',
                 position: 5,
-                name: 'ChatGPT Ads',
-                description: 'First-to-market conversational advertising in ChatGPT to reach high-intent users.',
+                name: 'Conversational Search & AI Discovery',
+                description: 'Strategic positioning for brands across conversational AI and emerging AI search channels.',
                 provider: {
                     '@id': 'https://www.invictusglobaltech.com/#organization',
                 },
@@ -86,9 +86,14 @@ const Services = () => {
     return (
         <>
             <Head>
-                <title>Performance Marketing &amp; AI Growth Services | Invictus Global Tech</title>
-                <meta name="description" content="Explore ChatGPT Ads, performance marketing, web development, and AI automation with Invictus Global Tech. Scale your business with proven ROI." />
+                <title>Performance Marketing, Meta Ads & AI Web Services | Invictus Global Tech</title>
+                <meta name="description" content="Explore Invictus Global Tech services: Meta & Google Ads performance marketing, conversational AI search strategy, lead automation, and conversion web engineering." />
                 <link rel="canonical" href="https://www.invictusglobaltech.com/services" />
+        <meta property="og:title" content="Performance Marketing, Meta Ads &amp; AI Web Services | Invictus Global Tech" />
+        <meta property="og:description" content="Explore Invictus Global Tech services: Meta &amp; Google Ads performance marketing, conversational AI search strategy, lead automation, and conversion web engineering." />
+        <meta property="og:url" content="https://www.invictusglobaltech.com/services" />
+        <meta name="twitter:title" content="Performance Marketing, Meta Ads &amp; AI Web Services | Invictus Global Tech" />
+        <meta name="twitter:description" content="Explore Invictus Global Tech services: Meta &amp; Google Ads performance marketing, conversational AI search strategy, lead automation, and conversion web engineering." />
                 <script
                     type="application/ld+json"
                     key="breadcrumb-jsonld"

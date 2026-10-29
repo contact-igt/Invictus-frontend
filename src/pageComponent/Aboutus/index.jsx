@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import TeamCircularCarousel from "@/components/TeamCircularCarousel";
 import TeamModal from "../../components/TeamModal";
@@ -37,11 +38,12 @@ const AboutPage = ({ onContactClick }) => {
     { name: "AALAM", role: "Operations" },
     { name: "SUSHIL", role: "CEO" },
     { name: "VEERAVEL", role: "Web Developer" },
-    { name: "CREATIVE", role: "Generalist" },
+    { name: "VIGNESH RAJAN", role: "creative head" },
     { name: "ANITHA", role: "Operations Head" },
     { name: "ABHILASH", role: "HR & Ops" },
     { name: "NAVEEN RAJ", role: "Web Developer" },
     { name: "RUTUJA", role: "Operations" },
+    { name: "AISHWARYA", role: "performance marketer" },
   ];
 
   const handleMemberClick = (index) => {
@@ -52,31 +54,31 @@ const AboutPage = ({ onContactClick }) => {
   const values = [
     {
       title: "Data over Opinions",
-      desc: "We don't guess. We test, track, and optimize based on hard numbers and unit economics.",
+      desc: "We do not guess. We test, track, and optimize based on hard conversion numbers and verified unit economics.",
     },
     {
       title: "Clarity over Confusion",
-      desc: "No marketing jargon. Just clear reporting on leads, bookings, and revenue.",
+      desc: "No marketing jargon. Just transparent reporting on qualified leads, pipeline, and customer acquisition cost.",
     },
     {
       title: "Performance over Vanity",
-      desc: "Likes and impressions don't pay bills. We focus entirely on ROI and Growth.",
+      desc: "We do not report on reach or superficial impressions. If an activity does not advance pipeline revenue or customer acquisition, we don't celebrate it.",
     },
     {
-      title: "Partnership over Service",
-      desc: "We integrate directly with your team as an embedded growth partner to resolve sales funnels and bottlenecks.",
+      title: "Complete Data Ownership",
+      desc: "You retain 100% ownership of your ad accounts, analytics data, and creative assets. No hidden fees, no opaque numbers.",
     },
   ];
 
-  const pillars = [
+    const pillars = [
     {
       title: "01. Extreme Accountability",
       desc: "We take responsibility for the numbers, from lead volume and quality to final booked appointments or revenue. No excuses. No stories. Only outcomes.",
     },
     {
-      title: "02. Obsession With Data",
-      desc: "Every click, lead, call, and conversion is tracked. Every campaign decision is backed by real numbers, not “gut feel”. You’ll always know what’s working, what’s wasting money, and what needs to change.",
-      extra: "We provide clean dashboards, not confusing spreadsheets.",
+      title: "02. Obsession With Data & Technical Infrastructure",
+      desc: "From high-speed landing pages to server-side tracking (CAPI) and lead automations, every click, lead, and conversion is tracked. Every campaign decision is backed by real numbers, not guesswork.",
+      extra: "We provide live dashboards and weekly reviews, not confusing spreadsheets.",
     },
     {
       title: "03. AI in Every Layer",
@@ -273,7 +275,12 @@ const AboutPage = ({ onContactClick }) => {
               {/* Arrow image below PEOPLE - theme conditional */}
               <img
                 src={theme === "light" ? "/assets/arrowblack.png" : "/assets/arrow1.png"}
-                alt="arrow"
+                alt=""
+                aria-hidden="true"
+                width={420}
+                height={35}
+                loading="lazy"
+                decoding="async"
                 className="w-full max-w-[420px] mx-auto lg:mx-0 mt-2"
                 style={{ height: "auto", maxHeight: "35px", objectFit: "contain" }}
               />
@@ -322,7 +329,7 @@ const AboutPage = ({ onContactClick }) => {
         >
           <p className="font-body text-[#2AB182] mb-6 tracking-[0.2em] text-sm uppercase font-semibold flex items-center gap-3">
             <span className="w-2 h-2 bg-[#2AB182] rounded-full animate-pulse"></span>
-            Who We Are
+            Who We Are • Invictus Global Tech
           </p>
           <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight text-[var(--text-primary)] uppercase mb-6">
             Built On <br />
@@ -364,14 +371,11 @@ const AboutPage = ({ onContactClick }) => {
               }}
               className="font-body text-[var(--text-secondary)] text-base sm:text-lg leading-relaxed space-y-6 transition-all duration-75 ease-out"
             >
-              <p>
-                Invictus Global Tech Pvt Ltd started with a simple frustration: most
-                agencies focus on vanity metrics. Likes, impressions, and clicks
-                mean nothing if they don’t turn into pipeline and revenue.
+                            <p>
+                Invictus Global Tech was founded with a singular purpose: to replace vanity metrics with accountable revenue growth. Impressions, follower counts, and clicks mean nothing if they do not turn into qualified leads and revenue.
               </p>
               <p className="font-body text-[var(--text-muted)] text-base md:text-lg leading-relaxed">
-                We built this company to be different. Every strategy we deploy,
-                every campaign we run, and every line of code we write is tied directly to measurable business outcomes.
+                We operate as an embedded growth partner, not an outsourced vendor. Every paid campaign, creative asset, and automation workflow we build is tied directly to measurable business outcomes.
               </p>
             </div>
           </div>
@@ -397,17 +401,13 @@ const AboutPage = ({ onContactClick }) => {
                   OUR ORIGIN
                 </span>
                 <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[var(--text-primary)] font-bold mb-6 uppercase leading-tight group-hover:text-white transition-colors duration-300">
-                  FROM A BOLD IDEA TO A GLOBAL PARTNER.
+                  FROM CHENNAI FOUNDATION TO GLOBAL PARTNER.
                 </h3>
                 <p className="font-body text-[var(--text-muted)] text-base leading-relaxed mb-5">
-                  Invictus Global Tech Pvt Ltd began as a small team helping a few brands. We come from a background of working closely with founders,
-                  doctors, educators, and brand owners. We’ve seen first-hand where
-                  money is wasted in ads, and where it compounds into real growth.
+                  Headquartered in Chennai, Invictus Global Tech began by working directly with founders, healthcare providers, educators, and brand owners. We saw first-hand where advertising budgets are wasted on disconnected tactics, and where systematic execution creates compounding revenue.
                 </p>
                 <p className="font-body text-[var(--text-secondary)] text-base leading-relaxed">
-                  Today, we operate as a performance marketing engine for businesses
-                  that are ready to scale. We stay lean, focused, and obsessed with
-                  one thing: making your numbers better month after month.
+                  Today, we operate as a full-funnel performance marketing engine for businesses ready to scale. We remain lean, agile, and disciplined—focused on improving customer acquisition efficiency month after month.
                 </p>
               </div>
             </div>
@@ -427,10 +427,7 @@ const AboutPage = ({ onContactClick }) => {
                   BUILT FOR ACTUAL BUSINESS OUTCOMES.
                 </h3>
                 <p className="font-body text-[var(--text-secondary)] text-base leading-relaxed mb-4">
-                  Invictus Global Tech Pvt Ltd began as a small team helping a few brands
-                  scale through paid ads and automation. What we noticed early was
-                  that most “digital marketing agencies” were selling posters,
-                  reels, and vanity metrics.
+                  Across the digital marketing landscape, we observed that high-growth businesses consistently faced four fundamental gaps in their agency relationships:
                 </p>
                 <div className="py-3 mb-4 border-y border-[var(--border-subtle)]">
                   <p className="mb-2 text-xs uppercase tracking-wider font-bold text-[var(--text-muted)]">
@@ -549,9 +546,9 @@ const AboutPage = ({ onContactClick }) => {
         {/* Mobile / Reduced-Motion Fallback (Natural Stacked Layout) */}
         <div className="md:hidden motion-reduce:block py-16 px-6">
           <div className="text-center mb-10 max-w-xl mx-auto">
-            <h2 className="font-display text-3xl sm:text-4xl text-[var(--text-primary)] font-bold mb-3">
+            <p role="heading" aria-level="2" className="font-display text-3xl sm:text-4xl text-[var(--text-primary)] font-bold mb-3">
               The Invictus Way
-            </h2>
+            </p>
             <p className="font-body text-[var(--text-muted)] text-sm">
               We’re a performance marketing engine built on three core pillars:
             </p>
@@ -730,12 +727,12 @@ const AboutPage = ({ onContactClick }) => {
               If you’re growth-ready and want a partner who owns the numbers with you:
             </span>
           </p>
-          <button
-            onClick={onContactClick}
-            className="bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-10 py-5 rounded hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 shadow-[0_8px_25px_rgba(42,177,130,0.3)] hover:shadow-[0_12px_30px_rgba(42,177,130,0.4)] hover:-translate-y-0.5"
+          <Link
+            href="/contact"
+            className="inline-block bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-10 py-5 rounded hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 shadow-[0_8px_25px_rgba(42,177,130,0.3)] hover:shadow-[0_12px_30px_rgba(42,177,130,0.4)] hover:-translate-y-0.5"
           >
             Book a Discovery Call
-          </button>
+          </Link>
         </div>
       </section>
     </div>

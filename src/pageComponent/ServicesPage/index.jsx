@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
@@ -15,50 +16,50 @@ const serviceDetails = [
   {
     icon: Target,
     title: "Performance Marketing",
-    desc: "Data-driven campaigns that maximize ROI across Meta, Google, and LinkedIn.",
+    desc: "Paid acquisition across Meta Ads (Facebook & Instagram), Google Search & Performance Max, and LinkedIn. Structured to improve CAC and scale qualified pipeline.",
     features: [
-      "Campaign Strategy & Setup",
-      "Ad Creative Production",
-      "A/B Testing & Optimization",
-      "Detailed Analytics & Reporting",
+      "Campaign Strategy & Architecture",
+      "In-House Ad Copy & Video Creative",
+      "Audience & Creative A/B Testing",
+      "Transparent ROAS & Pipeline Reporting",
     ],
-    outcome: "Predictable lead generation and sales growth.",
+    outcome: "Predictable customer acquisition and measurable revenue growth.",
   },
   {
     icon: Share2,
-    title: "Social Media Management",
-    desc: "Building brand authority and community through engaging content and strategic management.",
+    title: "Social Media & Creative Direction",
+    desc: "High-impact short-form video production and content designed to build brand authority, engage high-intent buyers, and fuel paid performance campaigns.",
     features: [
-      "Content Calendar & Strategy",
-      "Community Management",
-      "Influencer Collaboration",
-      "Trend Analysis",
+      "Content Strategy & Visual Direction",
+      "Short-Form Video Production (Reels)",
+      "Performance Ad Creative Direction",
+      "Community Engagement & Positioning",
     ],
-    outcome: "Increased brand awareness and customer loyalty.",
+    outcome: "Stronger brand authority that actively supports paid campaign conversion.",
   },
   {
     icon: Code,
-    title: "Web & App Development",
-    desc: "Creating high-performance, scalable, and user-centric digital experiences.",
+    title: "Web & Conversion Engineering",
+    desc: "High-converting landing pages and modern web platforms built with Next.js and React. Engineered for fast mobile loading and conversion rate optimization (CRO).",
     features: [
-      "Custom Website Design",
-      "E-commerce Development",
-      "Mobile App Development",
-      "SEO Optimization",
+      "High-Converting Landing Pages",
+      "Next.js & React Web Development",
+      "Conversion Rate Optimization (CRO)",
+      "Technical SEO & Speed Optimization",
     ],
-    outcome: "A robust digital presence that converts visitors into customers.",
+    outcome: "An ultra-fast digital foundation engineered to turn advertising traffic into conversions.",
   },
   {
     icon: Bot,
-    title: "AI & Automation",
-    desc: "Streamlining operations and enhancing customer experiences with cutting‑edge AI solutions.",
+    title: "AI & Lead Automation",
+    desc: "WhatsApp lead automation, automated CRM routing, and workflow triggers that ensure prompt follow-up for every inbound customer enquiry.",
     features: [
-      "Chatbot Implementation",
-      "Workflow Automation",
-      "CRM Integration",
-      "Data Analysis",
+      "WhatsApp Business Lead Automation",
+      "Automated CRM Routing & Instant Alerts",
+      "Automated Lead Nurturing Workflows",
+      "Lead Qualification & Scheduling Support",
     ],
-    outcome: "Improved efficiency and reduced operational costs.",
+    outcome: "Faster lead response times and streamlined customer qualification.",
   },
 ];
 
@@ -77,8 +78,8 @@ const antiAgencyValues = [
     desc: "Direct access to the expert managing your growth, not a support ticket.",
   },
   {
-    title: "Focus on ROI",
-    desc: "We focus on unit economics and bottom-line revenue rather than vanity metrics.",
+    title: "Focus on Unit Economics",
+    desc: "We evaluate campaigns against your customer acquisition cost (CAC), lifetime value (LTV), and real profit margins—not superficial platform metrics.",
   },
   {
     title: "Agile Methodology",
@@ -230,7 +231,7 @@ const ServicesPage = ({ onContactClick }) => {
             }`}
           >
             Performance-Driven
-          </span>
+          </span>{" "}
           <span
             className={`block text-transparent bg-clip-text bg-gradient-to-r from-[#2AB182] to-emerald-600 transition-all duration-700 delay-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:transform-none ${
               heroAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -245,18 +246,18 @@ const ServicesPage = ({ onContactClick }) => {
             heroAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          We build scalable, performance-driven growth systems powered by ads, data, and AI.
+          We build full-funnel acquisition systems combining Meta & Google Ads, high-converting web experiences, and intelligent lead automations to scale your business.
         </p>
       </section>
 
       <section id="chatgpt-ads" aria-labelledby="chatgpt-service-title" className="font-body scroll-mt-28 px-6 md:px-12 pb-16 md:pb-24">
         <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 rounded-2xl border border-[#2AB182]/40 bg-gradient-to-br from-[#2AB182]/10 to-[var(--bg-card)] p-6 md:p-12">
           <div>
-            <p className="mb-5 flex items-center gap-2 text-[#2AB182] text-xs font-bold uppercase tracking-[0.2em]"><span className="h-2 w-2 rounded-full bg-[#2AB182]" /> Now live in India</p>
-            <h2 id="chatgpt-service-title" className="font-display text-4xl md:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight">ChatGPT Ads.<br /><span className="text-[#2AB182]">Be part of the discovery.</span></h2>
-            <p className="font-body mt-6 text-lg text-[var(--text-muted)] leading-relaxed">Connect with potential customers as they research products, compare options, and explore their next purchase in ChatGPT.</p>
-            <p className="font-body mt-4 text-[var(--text-secondary)] leading-relaxed">Specialist ChatGPT Ads management by Invictus. We bring campaign strategy, creative execution, and a focus on measurable growth to this new advertising channel.</p>
-            <button onClick={onContactClick} className="mt-8 inline-flex items-center justify-center gap-3 rounded-lg bg-[#2AB182] px-6 py-4 font-bold text-black hover:bg-[#35c795] cursor-pointer">Plan Your ChatGPT Ads Campaign <ArrowRight size={20} className="shrink-0" /></button>
+            <p className="mb-5 flex items-center gap-2 text-[#2AB182] text-xs font-bold uppercase tracking-[0.2em]"><span className="h-2 w-2 rounded-full bg-[#2AB182]" /> Emerging AI Search</p>
+            <h2 id="chatgpt-service-title" className="font-display text-4xl md:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight">Conversational Search.<br /><span className="text-[#2AB182]">Be part of the discovery.</span></h2>
+            <p className="font-body mt-6 text-lg text-[var(--text-muted)] leading-relaxed">Connect with potential customers as they research products, compare solutions, and explore buying decisions across conversational AI and modern search platforms.</p>
+            <p className="font-body mt-4 text-[var(--text-secondary)] leading-relaxed">Strategic AI search optimization by Invictus. We help forward-thinking brands position their content, offers, and value propositions for the next generation of AI-assisted discovery.</p>
+            <Link href="/contact" className="mt-8 inline-flex items-center justify-center gap-3 rounded-lg bg-[#2AB182] px-6 py-4 font-bold text-black hover:bg-[#35c795] cursor-pointer">Explore AI Search Strategy <ArrowRight size={20} className="shrink-0" /></Link>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 content-center">
             {[
@@ -270,7 +271,7 @@ const ServicesPage = ({ onContactClick }) => {
                 <p className="font-body text-sm leading-relaxed text-[var(--text-muted)]">{item.desc}</p>
               </div>
             ))}
-            <p className="sm:col-span-2 text-xs leading-relaxed text-[var(--text-muted)]">ChatGPT ads are labelled paid placements, separate from its answers. Advertising does not influence ChatGPT responses. <a href="https://openai.com/index/expanding-access-to-ai-with-chatgpt-ads/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-[#2AB182]">Read the launch announcement</a>.</p>
+            <p className="sm:col-span-2 text-xs leading-relaxed text-[var(--text-muted)]">Conversational discovery ecosystems are evolving rapidly. We monitor AI search developments and help brands optimize their digital footprint for emerging search channels.</p>
           </div>
         </div>
       </section>
@@ -546,15 +547,15 @@ const ServicesPage = ({ onContactClick }) => {
             Ready to Build Your <span className="text-[#2AB182]">Growth System?</span>
           </h2>
           <p className="font-body text-[var(--text-muted)] text-xl mb-12">
-            Let&apos;s talk about your goals and how we can help you achieve them.
+            Let&apos;s talk about your goals and how we can help you achieve them. Explore our <Link href="/clients" className="text-[#2AB182] underline underline-offset-4 hover:text-[var(--text-primary)]">client case studies</Link> to see how these systems perform in practice.
           </p>
-          <button
-            onClick={onContactClick}
-            className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300"
+          <Link
+            href="/contact"
+            className="group flex items-center justify-center mx-auto gap-4 bg-[#2AB182] text-black font-display font-bold uppercase tracking-widest px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:bg-[var(--text-primary)] active:text-[var(--bg-primary)] transition-all duration-300 rounded-sm"
           >
             Get Started
             <ArrowRight size={20} />
-          </button>
+          </Link>
         </div>
       </section>
     </div>

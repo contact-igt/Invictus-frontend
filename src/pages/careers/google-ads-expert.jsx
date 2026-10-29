@@ -19,7 +19,7 @@ export default function GoogleAdsExpertPage() {
     },
     jobLocation: {
       "@type": "Place",
-      address: { "@type": "PostalAddress", addressCountry: "IN" },
+      address: { "@type": "PostalAddress", addressLocality: "Chennai", addressCountry: "IN" },
     },
   };
 

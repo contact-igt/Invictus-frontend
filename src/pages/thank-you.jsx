@@ -24,6 +24,7 @@ export default function ThankYou() {
                             : 'Thank you for contacting Invictus Global Tech Pvt Ltd. We have received your message and will get back to you shortly.'
                     }
                 />
+                <meta name="robots" content="noindex, follow" />
             </Head>
             <ThankYouPage />
         </>

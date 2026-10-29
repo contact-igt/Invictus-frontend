@@ -303,11 +303,11 @@ export default function CareersInteractiveSequence() {
             <p className="font-body text-[var(--accent,#2AB182)] text-sm uppercase tracking-widest font-bold mb-6">
               (01) / CAREERS AT INVICTUS
             </p>
-            <h1 className="font-display font-bold text-4xl sm:text-5xl leading-tight uppercase text-[var(--text-primary,#E0E0E0)] mb-8">
+            <p role="heading" aria-level="1" className="font-display font-bold text-4xl sm:text-5xl leading-tight uppercase text-[var(--text-primary,#E0E0E0)] mb-8">
               BUILD WORK THAT <br />{" "}
               <span className="text-[#2AB182]">MOVES BUSINESSES</span> <br />{" "}
               FORWARD.
-            </h1>
+            </p>
             <p className="font-body text-[var(--text-secondary,#A0A0A0)] text-base sm:text-lg leading-relaxed">
               Join a multidisciplinary team working across creativity, technology, marketing and AI-assisted execution to solve meaningful business problems.
             </p>
