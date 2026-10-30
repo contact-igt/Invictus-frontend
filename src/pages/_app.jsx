@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import BackgroundAnimation from '@/common/BackgroundAnimation';
 import { ThemeProvider } from '@/context/ThemeContext';
 import ThemeToggle from '@/components/ThemeToggle';
+import VelocityCursor from '@/common/Cursor';
 
 import Head from "next/head";
 
@@ -62,6 +63,7 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <div className={`min-h-screen ${jakarta.variable} ${!isBluerayPage ? 'font-sans selection:bg-[#2AB182] selection:text-black overflow-x-clip relative' : 'relative'} isolate`}>
+        <VelocityCursor />
         <BackgroundAnimation />
         {!isBluerayPage && (
           <>
