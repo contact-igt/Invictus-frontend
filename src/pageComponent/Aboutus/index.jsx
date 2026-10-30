@@ -44,9 +44,9 @@ const AboutPage = ({ onContactClick }) => {
     { name: "NAVEEN RAJ", role: "Web Developer" },
     { name: "RUTUJA", role: "Operations" },
     { name: "AISHWARYA", role: "performance marketer" },
-    { name: "ABI", role: "" },
-    { name: "KOUSHIK", role: "" },
-    { name: "ASWATHY", role: "" },
+    { name: "ABHI", role: "Editor" },
+    { name: "KOUSHIK", role: "Social Media" },
+    { name: "ASWATHY", role: "Intern Developer" },
   ];
 
   const handleMemberClick = (index) => {
