@@ -26,6 +26,8 @@ export default function TeamCircularCarousel({
   teamMembers = [],
   onCardClick,
   className = "",
+  initialMemberName = "SUSHIL",
+  initialIndex,
 }) {
   const rootRef = useRef(null);
   const cameraRef = useRef(null);
@@ -36,7 +38,30 @@ export default function TeamCircularCarousel({
   const count = teamMembers.length;
   const step = 360 / Math.max(count, 1);
 
-  const [active, setActive] = useState(0);
+  // Dynamically resolve initial active index based on member name (defaults to SUSHIL)
+  const resolveInitialIndex = useCallback(
+    (members = teamMembers) => {
+      if (!members || members.length === 0) return 0;
+      if (
+        typeof initialIndex === "number" &&
+        initialIndex >= 0 &&
+        initialIndex < members.length
+      ) {
+        return initialIndex;
+      }
+      const targetName = (initialMemberName || "SUSHIL").toUpperCase().trim();
+      const idx = members.findIndex(
+        (m) => m?.name && m.name.toUpperCase().trim() === targetName
+      );
+      return idx !== -1 ? idx : 0;
+    },
+    [teamMembers, initialMemberName, initialIndex]
+  );
+
+  const initialIdx = resolveInitialIndex();
+  const initialAngle = -initialIdx * step;
+
+  const [active, setActive] = useState(initialIdx);
   const [dimensions, setDimensions] = useState({
     cardWidth: 220,
     cardHeight: 480,
@@ -45,8 +70,8 @@ export default function TeamCircularCarousel({
   });
 
   const stateRef = useRef({
-    angle: 0,
-    target: 0,
+    angle: initialAngle,
+    target: null,
     velocity: 0,
     yaw: 0,
     pitch: 0,
@@ -57,6 +82,23 @@ export default function TeamCircularCarousel({
     last: 0,
     holdUntil: 0,
   });
+
+  // Re-apply initial position if team members data loads or changes dynamically
+  const prevMembersKeyRef = useRef(teamMembers.map((m) => m?.name || "").join(","));
+  useEffect(() => {
+    const currentKey = teamMembers.map((m) => m?.name || "").join(",");
+    if (teamMembers.length > 0 && prevMembersKeyRef.current !== currentKey) {
+      prevMembersKeyRef.current = currentKey;
+      const idx = resolveInitialIndex(teamMembers);
+      const newStep = 360 / Math.max(teamMembers.length, 1);
+      const targetAngle = -idx * newStep;
+      stateRef.current.angle = targetAngle;
+      stateRef.current.target = null;
+      stateRef.current.velocity = 0;
+      setActive(idx);
+      wakeRef.current();
+    }
+  }, [teamMembers, resolveInitialIndex]);
 
   // Calculate responsive sizing based on container width
   const updateDimensions = useCallback(() => {
@@ -400,12 +442,21 @@ export default function TeamCircularCarousel({
         <div
           ref={ringRef}
           className="absolute left-0 top-0 w-0 h-0"
-          style={{ transformStyle: "preserve-3d" }}
+          style={{
+            transformStyle: "preserve-3d",
+            transform: `rotateY(${initialAngle}deg)`,
+          }}
         >
           {teamMembers.map((member, index) => {
             const fileName = cleanImageName(member.name);
             const imagePath = `/assets/team/teamscroll/${fileName}.webp`;
             const isActive = index === active;
+            const base = index * step;
+            const world = wrap(base + initialAngle);
+            const facing = Math.cos(world * TO_RAD);
+            const depth = Math.max(0.15, (facing + 1) / 2);
+            const opacity = (0.25 + 0.75 * Math.pow(depth, 1.3)).toFixed(3);
+            const scale = (0.75 + 0.25 * depth).toFixed(3);
 
             return (
               <div
@@ -418,6 +469,10 @@ export default function TeamCircularCarousel({
                   transformStyle: "preserve-3d",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
+                  opacity,
+                  transform: `rotateY(${base}deg) translateZ(${dimensions.radius}px) scale(${scale})`,
+                  zIndex: Math.round((facing + 1) * 50),
+                  pointerEvents: facing > 0.1 ? 'auto' : 'none',
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -425,7 +480,7 @@ export default function TeamCircularCarousel({
                 }}
                 role="button"
                 tabIndex={0}
-                aria-label={`${member.name} - ${member.role}`}
+                aria-label={member.role ? `${member.name} - ${member.role}` : member.name}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     handleCardClick(index);

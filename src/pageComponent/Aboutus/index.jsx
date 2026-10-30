@@ -33,8 +33,8 @@ const AboutPage = ({ onContactClick }) => {
     { name: "IYYAPPAN", role: "Web Developer" },
     { name: "DR. SENTHIL", role: "Strategist & Advisor" },
     { name: "THARIQ", role: "CTO" },
-    { name: "ANJU", role: "Performance Marketing" },
-    { name: "DIKSHITA", role: "Performance Marketing Executive" },
+    { name: "ANJU", role: "performance marketer" },
+    { name: "DIKSHITA", role: "performance marketer" },
     { name: "AALAM", role: "Operations" },
     { name: "SUSHIL", role: "CEO" },
     { name: "VEERAVEL", role: "Web Developer" },
@@ -44,6 +44,9 @@ const AboutPage = ({ onContactClick }) => {
     { name: "NAVEEN RAJ", role: "Web Developer" },
     { name: "RUTUJA", role: "Operations" },
     { name: "AISHWARYA", role: "performance marketer" },
+    { name: "ABI", role: "" },
+    { name: "KOUSHIK", role: "" },
+    { name: "ASWATHY", role: "" },
   ];
 
   const handleMemberClick = (index) => {
@@ -304,7 +307,7 @@ const AboutPage = ({ onContactClick }) => {
 
           {/* Right: 3D Circular Carousel */}
           <div className="w-full lg:w-7/12 relative min-h-[520px] md:min-h-[580px] lg:min-h-[660px] flex items-center justify-center mt-8 lg:mt-0">
-            <TeamCircularCarousel teamMembers={teamMembers} />
+            <TeamCircularCarousel teamMembers={teamMembers} initialMemberName="SUSHIL" />
           </div>
         </div>
 

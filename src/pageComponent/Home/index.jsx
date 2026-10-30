@@ -98,6 +98,33 @@ const getCarouselFloatIndex = (p) => {
   return 3;
 };
 
+const getMethodologyFloatIndex = (p) => {
+  const clampedP = Math.max(0, Math.min(1, p));
+  // Step 0: DISCOVERY settles at [0.00, 0.15]
+  if (clampedP <= 0.15) return 0;
+  // Smooth transition DISCOVERY -> STRATEGY
+  if (clampedP < 0.32) {
+    const t = (clampedP - 0.15) / (0.32 - 0.15);
+    return t * t * (3 - 2 * t);
+  }
+  // Step 1: STRATEGY settles at [0.32, 0.48]
+  if (clampedP <= 0.48) return 1;
+  // Smooth transition STRATEGY -> EXECUTION
+  if (clampedP < 0.65) {
+    const t = (clampedP - 0.48) / (0.65 - 0.48);
+    return 1 + t * t * (3 - 2 * t);
+  }
+  // Step 2: EXECUTION settles at [0.65, 0.80]
+  if (clampedP <= 0.80) return 2;
+  // Smooth transition EXECUTION -> GROWTH
+  if (clampedP < 0.95) {
+    const t = (clampedP - 0.80) / (0.95 - 0.80);
+    return 2 + t * t * (3 - 2 * t);
+  }
+  // Step 3: GROWTH settles at [0.95, 1.00]
+  return 3;
+};
+
 const industriesData = [
   { id: "01", name: "HEALTHCARE" },
   { id: "02", name: "EDTECH" },
@@ -106,83 +133,103 @@ const industriesData = [
 ];
 
 const getIndustryCardTransform = (index, p) => {
+  // Smoothstep easing helper: 3x^2 - 2x^3 for zero-velocity start and end
+  const smoothstep = (min, max, val) => {
+    const x = Math.max(0, Math.min(1, (val - min) / (max - min)));
+    return x * x * (3 - 2 * x);
+  };
+
   let translateYPercent = 0;
   let opacity = 1;
   let scale = 1;
-  const topOffset = index * 24;
+
+  // Carefully balanced phase sequence:
+  // Card 0: active [0.00, 0.15], exits (0.15, 0.32)
+  // Card 1: enters (0.15, 0.32), active [0.32, 0.48], exits (0.48, 0.65)
+  // Card 2: enters (0.48, 0.65), active [0.65, 0.80], exits (0.80, 0.95)
+  // Card 3: enters (0.80, 0.95), active [0.95, 1.00]
 
   if (index === 0) {
     if (p <= 0.15) {
+      translateYPercent = 0;
       scale = 1;
-    } else if (p < 0.40) {
-      const t = (p - 0.15) / 0.25;
-      scale = 1 - t * 0.04;
-    } else if (p < 0.65) {
-      const t = (p - 0.40) / 0.25;
-      scale = 0.96 - t * 0.04;
+      opacity = 1;
+    } else if (p < 0.32) {
+      const t = smoothstep(0.15, 0.32, p);
+      translateYPercent = -t * 20;
+      scale = 1 - t * 0.08;
+      opacity = 1 - t;
     } else {
-      const t = Math.min(1, Math.max(0, (p - 0.65) / 0.25));
-      scale = 0.92 - t * 0.04;
+      translateYPercent = -20;
+      scale = 0.92;
+      opacity = 0;
     }
-    opacity = 1;
   } else if (index === 1) {
     if (p < 0.15) {
-      translateYPercent = 350;
+      translateYPercent = 100;
+      scale = 0.94;
       opacity = 0;
+    } else if (p < 0.32) {
+      const t = smoothstep(0.15, 0.32, p);
+      translateYPercent = (1 - t) * 100;
+      scale = 0.94 + t * 0.06;
+      opacity = t;
+    } else if (p <= 0.48) {
+      translateYPercent = 0;
       scale = 1;
-    } else if (p <= 0.40) {
-      const t = (p - 0.15) / 0.25;
-      const smoothT = t * t * (3 - 2 * t);
-      translateYPercent = (1 - smoothT) * 350;
       opacity = 1;
-      scale = 1;
     } else if (p < 0.65) {
-      const t = (p - 0.40) / 0.25;
-      translateYPercent = 0;
-      scale = 1 - t * 0.04;
-      opacity = 1;
+      const t = smoothstep(0.48, 0.65, p);
+      translateYPercent = -t * 20;
+      scale = 1 - t * 0.08;
+      opacity = 1 - t;
     } else {
-      const t = Math.min(1, Math.max(0, (p - 0.65) / 0.25));
-      translateYPercent = 0;
-      scale = 0.96 - t * 0.04;
-      opacity = 1;
+      translateYPercent = -20;
+      scale = 0.92;
+      opacity = 0;
     }
   } else if (index === 2) {
-    if (p < 0.40) {
-      translateYPercent = 350;
+    if (p < 0.48) {
+      translateYPercent = 100;
+      scale = 0.94;
       opacity = 0;
-      scale = 1;
-    } else if (p <= 0.65) {
-      const t = (p - 0.40) / 0.25;
-      const smoothT = t * t * (3 - 2 * t);
-      translateYPercent = (1 - smoothT) * 350;
-      opacity = 1;
-      scale = 1;
-    } else {
-      const t = Math.min(1, Math.max(0, (p - 0.65) / 0.25));
+    } else if (p < 0.65) {
+      const t = smoothstep(0.48, 0.65, p);
+      translateYPercent = (1 - t) * 100;
+      scale = 0.94 + t * 0.06;
+      opacity = t;
+    } else if (p <= 0.80) {
       translateYPercent = 0;
-      scale = 1 - t * 0.04;
+      scale = 1;
       opacity = 1;
+    } else if (p < 0.95) {
+      const t = smoothstep(0.80, 0.95, p);
+      translateYPercent = -t * 20;
+      scale = 1 - t * 0.08;
+      opacity = 1 - t;
+    } else {
+      translateYPercent = -20;
+      scale = 0.92;
+      opacity = 0;
     }
   } else if (index === 3) {
-    if (p < 0.65) {
-      translateYPercent = 350;
+    if (p < 0.80) {
+      translateYPercent = 100;
+      scale = 0.94;
       opacity = 0;
-      scale = 1;
-    } else if (p <= 0.90) {
-      const t = (p - 0.65) / 0.25;
-      const smoothT = t * t * (3 - 2 * t);
-      translateYPercent = (1 - smoothT) * 350;
-      opacity = 1;
-      scale = 1;
+    } else if (p < 0.95) {
+      const t = smoothstep(0.80, 0.95, p);
+      translateYPercent = (1 - t) * 100;
+      scale = 0.94 + t * 0.06;
+      opacity = t;
     } else {
       translateYPercent = 0;
-      opacity = 1;
       scale = 1;
+      opacity = 1;
     }
   }
 
-  return { translateYPercent, opacity, scale, topOffset };
+  return { translateYPercent, opacity, scale };
 };
 
 const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq }) => {
@@ -306,7 +353,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
   const headingOffsetY = Math.max(0, (1 - capabilitiesProgress / 0.08)) * 24;
 
   const industriesHeadingOffsetY = Math.max(0, (1 - industriesProgress / 0.10)) * 20;
-  const processFloatIndex = processProgress * 3;
+  const processFloatIndex = getMethodologyFloatIndex(processProgress);
 
   return (
     <div className="relative">
@@ -609,17 +656,17 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       <section
         ref={industriesRef}
         id="industries"
-        className="relative min-h-0 md:min-h-[250vh] z-10 bg-transparent"
+        className="relative min-h-0 md:min-h-[280vh] z-10 bg-transparent"
       >
         {/* Desktop Sticky Container */}
-        <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-28 md:pt-36 lg:pt-40 pb-12 px-6 md:px-12 overflow-hidden">
+        <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-24 md:pt-28 lg:pt-32 pb-8 px-6 md:px-12 overflow-hidden">
           {/* Sticky Centered Heading with generous clearance below navbar */}
           <div
             style={{
               transform: `translate3d(0, ${industriesHeadingOffsetY}px, 0)`,
               willChange: 'transform',
             }}
-            className="text-center shrink-0 z-20 max-w-4xl mx-auto px-4 mb-8 md:mb-12"
+            className="text-center shrink-0 z-20 max-w-4xl mx-auto px-4 mb-6 md:mb-8"
           >
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight tracking-tight">
               Industries We <span className="text-[#2AB182]">Transform</span>
@@ -630,9 +677,9 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           </div>
 
           {/* Stacked Cards Presentation Area */}
-          <div className="relative w-full max-w-[840px] mx-auto h-[300px] md:h-[320px] my-auto flex items-center justify-center">
+          <div className="relative w-full max-w-[500px] mx-auto h-[440px] md:h-[480px] my-auto flex items-center justify-center">
             {industriesData.map((industry, index) => {
-              const { translateYPercent, opacity, scale, topOffset } = getIndustryCardTransform(index, industriesProgress);
+              const { translateYPercent, opacity, scale } = getIndustryCardTransform(index, industriesProgress);
 
               return (
                 <div
@@ -640,34 +687,22 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                   style={{
                     transform: `translate3d(0, ${translateYPercent}%, 0) scale(${scale})`,
                     opacity,
-                    top: `${topOffset}px`,
                     zIndex: 10 + index * 10,
-                    transformOrigin: 'top center',
+                    transformOrigin: 'center center',
                     willChange: 'transform, opacity',
-                    pointerEvents: opacity === 0 ? 'none' : 'auto',
+                    pointerEvents: opacity < 0.1 ? 'none' : 'auto',
+                    transition: 'transform 0.18s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.18s ease-out',
                   }}
-                  className="absolute left-0 right-0 mx-auto w-full max-w-[800px]"
+                  className="absolute inset-0 m-auto w-[320px] sm:w-[360px] md:w-[380px] lg:w-[400px] aspect-square flex items-center justify-center"
                 >
                   <Link
                     href="/clients"
                     aria-label={`Explore ${industry.name} industry client results`}
-                    className="rounded-2xl md:rounded-3xl bg-[#141414] border border-[#262626] p-6 sm:p-8 md:p-10 min-h-[190px] md:min-h-[210px] flex flex-col justify-between shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#2AB182] hover:shadow-[0_16px_40px_rgba(42,177,130,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:border-[#2AB182] motion-reduce:hover:transform-none cursor-pointer group select-none block"
+                    className="w-full h-full aspect-square rounded-2xl md:rounded-3xl bg-[#141414] border border-[#262626] p-6 sm:p-8 md:p-10 flex items-center justify-center text-center shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#2AB182] hover:shadow-[0_16px_40px_rgba(42,177,130,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:border-[#2AB182] motion-reduce:hover:transform-none cursor-pointer group select-none"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs md:text-sm tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-1 rounded-full font-semibold group-hover:bg-[#2AB182]/20 transition-colors">
-                        {industry.id}
-                      </span>
-                      <span className="font-mono text-xs tracking-widest text-[var(--text-muted)] uppercase flex items-center gap-1.5 group-hover:text-[#2AB182] transition-colors">
-                        Industry Focus
-                        <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
-                      </span>
-                    </div>
-
-                    <div className="my-auto py-2 md:py-3">
-                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-white tracking-tight group-hover:text-[#2AB182] transition-colors">
-                        {industry.name}
-                      </h3>
-                    </div>
+                    <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight group-hover:text-[#2AB182] transition-colors text-center px-4">
+                      {industry.name}
+                    </h3>
                   </Link>
                 </div>
               );
@@ -686,24 +721,15 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             </p>
           </div>
 
-          <div className="space-y-4 max-w-lg mx-auto">
+          <div className="space-y-6 max-w-[280px] sm:max-w-[320px] mx-auto">
             {industriesData.map((industry) => (
               <Link
                 key={industry.id}
                 href="/clients"
                 aria-label={`Explore ${industry.name} industry client results`}
-                className="rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#2AB182] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] p-6 flex flex-col justify-between shadow-lg cursor-pointer transition-colors group block"
+                className="w-full aspect-square rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#2AB182] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] p-6 flex items-center justify-center text-center shadow-lg cursor-pointer transition-colors group"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-xs tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-1 rounded-full font-semibold">
-                    {industry.id}
-                  </span>
-                  <span className="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1 group-hover:text-[#2AB182] transition-colors">
-                    Industry Focus
-                    <ArrowRight size={12} />
-                  </span>
-                </div>
-                <h3 className="font-display text-2xl font-bold uppercase text-white group-hover:text-[#2AB182] transition-colors">
+                <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase text-white group-hover:text-[#2AB182] transition-colors px-2">
                   {industry.name}
                 </h3>
               </Link>
@@ -713,7 +739,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
       {/* Stats Section — Divider lines removed */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-[var(--bg-card)]/60 backdrop-blur-sm relative z-10">
+      <section className="mt-20 md:mt-32 lg:mt-40 py-16 md:py-24 px-6 md:px-12 bg-[var(--bg-card)]/60 backdrop-blur-sm relative z-10">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-30">
           <div>
             <div className="font-display text-6xl md:text-7xl lg:text-9xl font-bold text-[#2AB182] mb-2">
@@ -736,7 +762,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       <section
         ref={processRef}
         id="process"
-        className="relative min-h-0 md:min-h-[250vh] border-b border-[var(--border-subtle)] z-10 bg-transparent"
+        className="relative min-h-0 md:min-h-[280vh] border-b border-[var(--border-subtle)] z-10 bg-transparent"
       >
         {/* Desktop Sticky Container */}
         <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-28 md:pt-32 pb-12 px-6 md:px-12 overflow-hidden">
@@ -764,21 +790,21 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                 transform: `translate3d(0, ${112 - processFloatIndex * 96}px, 0)`,
                 willChange: 'transform',
               }}
-              className="relative flex flex-col transition-transform duration-75 ease-out z-10 w-fit mx-auto"
+              className="relative flex flex-col transition-transform duration-200 ease-out z-10 w-fit mx-auto"
             >
-              {/* Vertical Thread Background */}
+              {/* Vertical Thread Background - Perfectly Straight & Centered through 48px dots */}
               <div
                 style={{ top: '24px', height: `${3 * 96}px` }}
-                className="absolute left-[23px] w-[2px] bg-[#222222] z-0"
+                className="absolute left-6 -translate-x-1/2 w-[2px] bg-[#222222] z-0"
               />
 
-              {/* Vertical Thread Progress Fill */}
+              {/* Vertical Thread Progress Fill - Perfectly Straight & Centered */}
               <div
                 style={{
                   top: '24px',
-                  height: `${Math.min(3 * 96, processProgress * (3 * 96))}px`,
+                  height: `${Math.min(3 * 96, processFloatIndex * 96)}px`,
                 }}
-                className="absolute left-[23px] w-[2px] bg-[#2AB182] shadow-[0_0_8px_rgba(42,177,130,0.6)] z-0 transition-[height] duration-75 ease-out"
+                className="absolute left-6 -translate-x-1/2 w-[2px] bg-[#2AB182] shadow-[0_0_8px_rgba(42,177,130,0.6)] z-0 transition-[height] duration-200 ease-out"
               />
 
               {processStepsData.map((step, index) => {
@@ -792,7 +818,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                     style={{ height: '96px' }}
                     className="relative z-10 flex items-center gap-6 md:gap-8 group select-none"
                   >
-                    {/* Step Connected Dot */}
+                    {/* Step Connected Dot - 48px width, perfectly centered on the line at x = 24px */}
                     <div
                       className={`w-12 h-12 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 ${
                         isActive
@@ -813,19 +839,16 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                       />
                     </div>
 
-                    {/* Step Title Only */}
+                    {/* Step Title Only - Numerical labels removed */}
                     <h3
-                      className={`font-display font-bold uppercase transition-all duration-300 tracking-tight ${
+                      className={`font-display font-bold uppercase transition-all duration-300 tracking-tight select-none ${
                         isActive
                           ? 'text-white text-3xl sm:text-4xl md:text-5xl scale-100 opacity-100'
                           : isPast
-                            ? 'text-[var(--text-secondary)] text-2xl sm:text-3xl md:text-4xl scale-95 opacity-50'
-                            : 'text-[var(--text-muted)] text-xl sm:text-2xl md:text-3xl scale-90 opacity-25'
+                            ? 'text-[var(--text-secondary)] text-2xl sm:text-3xl md:text-4xl scale-95 opacity-60'
+                            : 'text-[var(--text-muted)] text-2xl sm:text-3xl md:text-4xl scale-95 opacity-60'
                       }`}
                     >
-                      <span className={isActive ? 'text-[#2AB182] mr-3 font-mono font-semibold' : 'text-[var(--text-muted)] mr-3 font-mono'}>
-                        {step.id}
-                      </span>
                       {step.title}
                     </h3>
                   </div>
@@ -850,10 +873,10 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
           </div>
 
           <div className="relative max-w-sm mx-auto pl-2">
-            {/* Continuous Thread Line */}
+            {/* Continuous Thread Line - Perfectly Straight & Centered through 48px dots */}
             <div
               style={{ top: '24px', bottom: '24px' }}
-              className="absolute left-[29px] w-[2px] bg-[#2AB182]/30"
+              className="absolute left-8 -translate-x-1/2 w-[2px] bg-[#2AB182]/40"
             />
 
             <div className="space-y-8 relative z-10">
@@ -863,7 +886,6 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
                     <div className="w-3.5 h-3.5 rounded-full bg-[#2AB182]" />
                   </div>
                   <h3 className="font-display text-2xl font-bold uppercase text-white tracking-tight">
-                    <span className="text-[#2AB182] mr-2 font-mono">{step.id}</span>
                     {step.title}
                   </h3>
                 </div>
