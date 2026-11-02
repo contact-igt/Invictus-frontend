@@ -98,138 +98,265 @@ const getCarouselFloatIndex = (p) => {
   return 3;
 };
 
-const getMethodologyFloatIndex = (p) => {
-  const clampedP = Math.max(0, Math.min(1, p));
-  // Step 0: DISCOVERY settles at [0.00, 0.15]
-  if (clampedP <= 0.15) return 0;
-  // Smooth transition DISCOVERY -> STRATEGY
-  if (clampedP < 0.32) {
-    const t = (clampedP - 0.15) / (0.32 - 0.15);
-    return t * t * (3 - 2 * t);
-  }
-  // Step 1: STRATEGY settles at [0.32, 0.48]
-  if (clampedP <= 0.48) return 1;
-  // Smooth transition STRATEGY -> EXECUTION
-  if (clampedP < 0.65) {
-    const t = (clampedP - 0.48) / (0.65 - 0.48);
-    return 1 + t * t * (3 - 2 * t);
-  }
-  // Step 2: EXECUTION settles at [0.65, 0.80]
-  if (clampedP <= 0.80) return 2;
-  // Smooth transition EXECUTION -> GROWTH
-  if (clampedP < 0.95) {
-    const t = (clampedP - 0.80) / (0.95 - 0.80);
-    return 2 + t * t * (3 - 2 * t);
-  }
-  // Step 3: GROWTH settles at [0.95, 1.00]
-  return 3;
-};
 
 const industriesData = [
-  { id: "01", name: "HEALTHCARE" },
-  { id: "02", name: "EDTECH" },
-  { id: "03", name: "E-COMMERCE" },
-  { id: "04", name: "AUTOMOBILE" },
+  { id: "01", name: "HEALTHCARE", subtitle: "Healthcare & Medical", tagline: "Patient Acquisition & ROAS", slug: "healthcare" },
+  { id: "02", name: "EDTECH", subtitle: "Education & EdTech", tagline: "Student Enrollment & Scale", slug: "edtech" },
+  { id: "03", name: "E-COMMERCE", subtitle: "E-commerce & D2C", tagline: "High-ROAS D2C Scaling", slug: "ecommerce" },
+  { id: "04", name: "REAL ESTATE", subtitle: "Real Estate & Construction", tagline: "High-Intent Buyer Pipeline", slug: "real-estate" },
+  { id: "05", name: "AUTOMOBILE", subtitle: "Automotive & Dealerships", tagline: "Dealership Volume & Demand", slug: "automobile" },
+  { id: "06", name: "B2B & CONSULTING", subtitle: "B2B & Corporate Services", tagline: "Enterprise Pipeline Growth", slug: "b2b-consulting" },
 ];
 
-const getIndustryCardTransform = (index, p) => {
-  // Smoothstep easing helper: 3x^2 - 2x^3 for zero-velocity start and end
-  const smoothstep = (min, max, val) => {
-    const x = Math.max(0, Math.min(1, (val - min) / (max - min)));
-    return x * x * (3 - 2 * x);
+
+
+const InteractiveMethodologyWave = () => {
+  const steps = [
+    { id: 0, title: "DISCOVERY", labelSide: -1 },
+    { id: 1, title: "STRATEGY", labelSide: 1 },
+    { id: 2, title: "EXECUTION", labelSide: -1 },
+    { id: 3, title: "GROWTH", labelSide: 1 },
+  ];
+
+  const initialPoints = [
+    { x: 30,  y: 190 },
+    { x: 160, y: 150 },
+    { x: 400, y: 270 },
+    { x: 640, y: 140 },
+    { x: 860, y: 260 },
+    { x: 970, y: 210 },
+  ];
+
+  const [points, setPoints] = useState(initialPoints);
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef({
+    isDragging: false,
+    dragIndex: -1,
+    lastPointerY: 0,
+    pointerId: null,
+  });
+  const svgRef = useRef(null);
+
+  const getSplinePath = (pts) => {
+    if (pts.length < 2) return "";
+    let d = `M ${pts[0].x},${pts[0].y}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = i > 0 ? pts[i - 1] : pts[i];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = i < pts.length - 2 ? pts[i + 2] : p2;
+
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+      d += ` C ${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+    }
+    return d;
   };
 
-  let translateYPercent = 0;
-  let opacity = 1;
-  let scale = 1;
+  const getSvgCoords = (e) => {
+    if (!svgRef.current) return { x: 0, y: 0 };
+    const rect = svgRef.current.getBoundingClientRect();
+    const scaleX = 1000 / rect.width;
+    const scaleY = 400 / rect.height;
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY,
+    };
+  };
 
-  // Carefully balanced phase sequence:
-  // Card 0: active [0.00, 0.15], exits (0.15, 0.32)
-  // Card 1: enters (0.15, 0.32), active [0.32, 0.48], exits (0.48, 0.65)
-  // Card 2: enters (0.48, 0.65), active [0.65, 0.80], exits (0.80, 0.95)
-  // Card 3: enters (0.80, 0.95), active [0.95, 1.00]
+  const handlePointerDown = (e) => {
+    const coords = getSvgCoords(e);
+    let bestDist = Infinity;
+    let bestIdx = -1;
 
-  if (index === 0) {
-    if (p <= 0.15) {
-      translateYPercent = 0;
-      scale = 1;
-      opacity = 1;
-    } else if (p < 0.32) {
-      const t = smoothstep(0.15, 0.32, p);
-      translateYPercent = -t * 20;
-      scale = 1 - t * 0.08;
-      opacity = 1 - t;
-    } else {
-      translateYPercent = -20;
-      scale = 0.92;
-      opacity = 0;
-    }
-  } else if (index === 1) {
-    if (p < 0.15) {
-      translateYPercent = 100;
-      scale = 0.94;
-      opacity = 0;
-    } else if (p < 0.32) {
-      const t = smoothstep(0.15, 0.32, p);
-      translateYPercent = (1 - t) * 100;
-      scale = 0.94 + t * 0.06;
-      opacity = t;
-    } else if (p <= 0.48) {
-      translateYPercent = 0;
-      scale = 1;
-      opacity = 1;
-    } else if (p < 0.65) {
-      const t = smoothstep(0.48, 0.65, p);
-      translateYPercent = -t * 20;
-      scale = 1 - t * 0.08;
-      opacity = 1 - t;
-    } else {
-      translateYPercent = -20;
-      scale = 0.92;
-      opacity = 0;
-    }
-  } else if (index === 2) {
-    if (p < 0.48) {
-      translateYPercent = 100;
-      scale = 0.94;
-      opacity = 0;
-    } else if (p < 0.65) {
-      const t = smoothstep(0.48, 0.65, p);
-      translateYPercent = (1 - t) * 100;
-      scale = 0.94 + t * 0.06;
-      opacity = t;
-    } else if (p <= 0.80) {
-      translateYPercent = 0;
-      scale = 1;
-      opacity = 1;
-    } else if (p < 0.95) {
-      const t = smoothstep(0.80, 0.95, p);
-      translateYPercent = -t * 20;
-      scale = 1 - t * 0.08;
-      opacity = 1 - t;
-    } else {
-      translateYPercent = -20;
-      scale = 0.92;
-      opacity = 0;
-    }
-  } else if (index === 3) {
-    if (p < 0.80) {
-      translateYPercent = 100;
-      scale = 0.94;
-      opacity = 0;
-    } else if (p < 0.95) {
-      const t = smoothstep(0.80, 0.95, p);
-      translateYPercent = (1 - t) * 100;
-      scale = 0.94 + t * 0.06;
-      opacity = t;
-    } else {
-      translateYPercent = 0;
-      scale = 1;
-      opacity = 1;
-    }
-  }
+    points.forEach((p, idx) => {
+      const dx = Math.abs(p.x - coords.x);
+      if (dx < bestDist) {
+        bestDist = dx;
+        bestIdx = idx;
+      }
+    });
 
-  return { translateYPercent, opacity, scale };
+    if (bestDist < 220) {
+      dragRef.current = {
+        isDragging: true,
+        dragIndex: bestIdx,
+        lastPointerY: coords.y,
+        pointerId: e.pointerId,
+      };
+      setIsDragging(true);
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+  };
+
+  const handlePointerMove = (e) => {
+    if (!dragRef.current.isDragging || dragRef.current.dragIndex === -1) return;
+    const coords = getSvgCoords(e);
+    const dy = coords.y - dragRef.current.lastPointerY;
+    dragRef.current.lastPointerY = coords.y;
+
+    const sigma = 220;
+    const draggedX = points[dragRef.current.dragIndex].x;
+
+    setPoints((prev) =>
+      prev.map((p) => {
+        const dist = Math.abs(p.x - draggedX);
+        const influence = Math.exp(-(dist * dist) / (2 * sigma * sigma));
+        const newY = Math.max(50, Math.min(350, p.y + dy * influence));
+        return { ...p, y: newY };
+      })
+    );
+  };
+
+  const handlePointerUp = (e) => {
+    if (dragRef.current.isDragging) {
+      dragRef.current.isDragging = false;
+      dragRef.current.dragIndex = -1;
+      setIsDragging(false);
+      try {
+        if (dragRef.current.pointerId !== null) {
+          e.currentTarget.releasePointerCapture(dragRef.current.pointerId);
+        }
+      } catch (err) {}
+    }
+  };
+
+  const pathD = getSplinePath(points);
+
+  return (
+    <div className="w-full max-w-5xl mx-auto relative select-none touch-none py-6">
+      <svg
+        ref={svgRef}
+        viewBox="0 0 1000 400"
+        preserveAspectRatio="xMidYMid meet"
+        className="w-full h-auto overflow-visible"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+      >
+        <defs>
+          <filter id="engineGreenGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Outer Glow Path */}
+        <path
+          d={pathD}
+          fill="none"
+          stroke="#2AB182"
+          strokeWidth="8"
+          strokeOpacity="0.25"
+          strokeLinecap="round"
+        />
+
+        {/* Main Organic Green Wave */}
+        <path
+          d={pathD}
+          fill="none"
+          stroke="#2AB182"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          filter="url(#engineGreenGlow)"
+        />
+
+        {/* Invisible Wide Hit Area for Grabbing and Dragging */}
+        <path
+          d={pathD}
+          fill="none"
+          stroke="transparent"
+          strokeWidth="48"
+          strokeLinecap="round"
+          className={isDragging ? 'cursor-grabbing' : 'cursor-grab'}
+        />
+
+        {/* Step Nodes and Headings */}
+        {steps.map((step, i) => {
+          const pt = points[i + 1];
+          const isNodeHovered = hoveredNode === i;
+          const labelY = pt.y + step.labelSide * 46;
+          const lineY2 = pt.y + step.labelSide * 24;
+
+          return (
+            <g
+              key={step.id}
+              className="cursor-grab active:cursor-grabbing transition-transform duration-150"
+              onMouseEnter={() => setHoveredNode(i)}
+              onMouseLeave={() => setHoveredNode(null)}
+            >
+              {/* Connector stem */}
+              <line
+                x1={pt.x}
+                y1={pt.y}
+                x2={pt.x}
+                y2={lineY2}
+                stroke="#2AB182"
+                strokeWidth="1.5"
+                strokeDasharray="3 3"
+                opacity={isNodeHovered ? 0.9 : 0.4}
+                className="transition-opacity duration-200"
+              />
+
+              {/* Outer halo */}
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r={isNodeHovered ? 24 : 18}
+                fill="rgba(42, 177, 130, 0.12)"
+                stroke="rgba(42, 177, 130, 0.35)"
+                strokeWidth="1"
+                className="transition-all duration-300"
+              />
+
+              {/* Node border & center */}
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r="8"
+                fill="#0C100E"
+                stroke="#2AB182"
+                strokeWidth="2.5"
+              />
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r={isNodeHovered ? 4.5 : 3.5}
+                fill="#2AB182"
+                className="transition-all duration-200"
+              />
+
+              {/* Step Heading Label */}
+              <text
+                x={pt.x}
+                y={labelY}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontFamily="'Space Grotesk', -apple-system, sans-serif"
+                fontSize="25"
+                fontWeight="800"
+                letterSpacing="0.06em"
+                fill={isNodeHovered ? "#2AB182" : "#FFFFFF"}
+                className="select-none transition-colors duration-200"
+              >
+                {step.title}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
 };
 
 const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq }) => {
@@ -248,6 +375,7 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
   const [industriesProgress, setIndustriesProgress] = useState(0);
   const [processProgress, setProcessProgress] = useState(0);
   const [cardPitch, setCardPitch] = useState(0);
+  const [hoveredIndustry, setHoveredIndustry] = useState(null);
 
   useEffect(() => {
     const updatePitch = () => {
@@ -351,9 +479,6 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
 
   const carouselFloatIndex = getCarouselFloatIndex(capabilitiesProgress);
   const headingOffsetY = Math.max(0, (1 - capabilitiesProgress / 0.08)) * 24;
-
-  const industriesHeadingOffsetY = Math.max(0, (1 - industriesProgress / 0.10)) * 20;
-  const processFloatIndex = getMethodologyFloatIndex(processProgress);
 
   return (
     <div className="relative">
@@ -652,88 +777,381 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
       </section>
 
 
-      {/* Industries We Transform — Sticky Heading + Scroll-Driven Stacked Cards */}
+      {/* Industries We Transform — Connected Hexagonal Honeycomb Layout */}
       <section
-        ref={industriesRef}
         id="industries"
-        className="relative min-h-0 md:min-h-[280vh] z-10 bg-transparent"
+        className="relative z-10 bg-transparent py-20 md:py-28 lg:py-36 overflow-hidden"
       >
-        {/* Desktop Sticky Container */}
-        <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-24 md:pt-28 lg:pt-32 pb-8 px-6 md:px-12 overflow-hidden">
-          {/* Sticky Centered Heading with generous clearance below navbar */}
+        {/* Section Heading & Subtitle */}
+        <div className="text-center shrink-0 z-20 max-w-4xl mx-auto px-6 mb-12 md:mb-16">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight tracking-tight">
+            Industries We <span className="text-[#2AB182]">Transform</span>
+          </h2>
+          <p className="font-body text-sm md:text-base text-[var(--text-muted)] mt-2.5 max-w-2xl mx-auto">
+            We engineer paid campaigns for high-intent industries where customer acquisition economics and lead quality directly dictate profitability.
+          </p>
+        </div>
+
+        {/* Desktop & Tablet Connected Honeycomb (md and above) */}
+        <div className="hidden md:flex flex-col items-center justify-center relative max-w-6xl mx-auto px-4 select-none">
           <div
-            style={{
-              transform: `translate3d(0, ${industriesHeadingOffsetY}px, 0)`,
-              willChange: 'transform',
-            }}
-            className="text-center shrink-0 z-20 max-w-4xl mx-auto px-4 mb-6 md:mb-8"
+            className={`flex flex-col items-center relative transition-all duration-300 ${
+              hoveredIndustry !== null ? 'has-industry-hover' : ''
+            }`}
           >
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-[var(--text-primary)] leading-tight tracking-tight">
-              Industries We <span className="text-[#2AB182]">Transform</span>
-            </h2>
-            <p className="font-body text-sm md:text-base text-[var(--text-muted)] mt-2.5 max-w-2xl mx-auto">
-              We engineer paid campaigns for high-intent industries where customer acquisition economics and lead quality directly dictate profitability.
-            </p>
-          </div>
+            {/* Row 1: Sectors 01, 02, 03 */}
+            <div
+              className={`flex justify-center gap-4 relative transition-transform duration-300 ${
+                hoveredIndustry !== null && [0, 1, 2].includes(hoveredIndustry) ? 'z-30' : 'z-10'
+              }`}
+              style={{ transform: 'translateX(-66px)' }}
+            >
+              {industriesData.slice(0, 3).map((industry, index) => {
+                const isHovered = hoveredIndustry === index;
+                const isDimmed = hoveredIndustry !== null && !isHovered;
 
-          {/* Stacked Cards Presentation Area */}
-          <div className="relative w-full max-w-[500px] mx-auto h-[440px] md:h-[480px] my-auto flex items-center justify-center">
-            {industriesData.map((industry, index) => {
-              const { translateYPercent, opacity, scale } = getIndustryCardTransform(index, industriesProgress);
-
-              return (
-                <div
-                  key={industry.id}
-                  style={{
-                    transform: `translate3d(0, ${translateYPercent}%, 0) scale(${scale})`,
-                    opacity,
-                    zIndex: 10 + index * 10,
-                    transformOrigin: 'center center',
-                    willChange: 'transform, opacity',
-                    pointerEvents: opacity < 0.1 ? 'none' : 'auto',
-                    transition: 'transform 0.18s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.18s ease-out',
-                  }}
-                  className="absolute inset-0 m-auto w-[320px] sm:w-[360px] md:w-[380px] lg:w-[400px] aspect-square flex items-center justify-center"
-                >
+                return (
                   <Link
-                    href="/clients"
-                    aria-label={`Explore ${industry.name} industry client results`}
-                    className="w-full h-full aspect-square rounded-2xl md:rounded-3xl bg-[#141414] border border-[#262626] p-6 sm:p-8 md:p-10 flex items-center justify-center text-center shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#2AB182] hover:shadow-[0_16px_40px_rgba(42,177,130,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] focus-visible:border-[#2AB182] motion-reduce:hover:transform-none cursor-pointer group select-none"
+                    key={industry.id}
+                    href={`/clients?industry=${industry.slug}#core-industries`}
+                    onMouseEnter={() => setHoveredIndustry(index)}
+                    onMouseLeave={() => setHoveredIndustry(null)}
+                    aria-label={`Explore ${industry.name} industry`}
+                    className={`relative w-[250px] lg:w-[270px] h-[280px] lg:h-[300px] cursor-pointer block transition-all duration-300 ease-out will-change-transform ${
+                      isHovered
+                        ? 'scale-110 -translate-y-2 z-40'
+                        : isDimmed
+                        ? 'opacity-35 blur-[1.5px] scale-[0.97] z-10'
+                        : 'opacity-100 scale-100 z-10'
+                    }`}
+                    style={{
+                      transformOrigin: 'center center',
+                      filter: isHovered
+                        ? 'drop-shadow(0 14px 28px rgba(42, 177, 130, 0.45))'
+                        : undefined,
+                    }}
                   >
-                    <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight group-hover:text-[#2AB182] transition-colors text-center px-4">
-                      {industry.name}
-                    </h3>
+                    {/* SVG Vector Hexagon Border */}
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                      viewBox="0 0 100 115"
+                      preserveAspectRatio="none"
+                    >
+                      <polygon
+                        points="50,1 99,29.5 99,85.5 50,114 1,85.5 1,29.5"
+                        fill="none"
+                        stroke={isHovered ? '#2AB182' : 'rgba(255, 255, 255, 0.12)'}
+                        strokeWidth={isHovered ? '2.5' : '1.2'}
+                        vectorEffect="non-scaling-stroke"
+                        className="transition-all duration-300"
+                      />
+                    </svg>
+
+                    {/* Hexagon Body */}
+                    <div
+                      className={`w-full h-full flex flex-col items-center justify-center p-6 text-center relative transition-colors duration-300 ${
+                        isHovered
+                          ? 'bg-gradient-to-b from-[#1b2a24] via-[#131c19] to-[#0f1412]'
+                          : 'bg-gradient-to-b from-[#161a18] via-[#111413] to-[#0c0e0d]'
+                      }`}
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      {/* Ambient radial glow inside hexagon */}
+                      <div
+                        className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+                          isHovered ? 'opacity-100' : 'opacity-40'
+                        }`}
+                        style={{
+                          background: 'radial-gradient(circle at 50% 30%, rgba(42, 177, 130, 0.18) 0%, transparent 70%)',
+                        }}
+                      />
+
+                      {/* Sector Badge */}
+                      <span className="font-mono text-[11px] font-bold text-[#2AB182] bg-[#2AB182]/15 border border-[#2AB182]/35 px-3 py-1 rounded-full tracking-widest mb-3 relative z-10">
+                        SECTOR {industry.id}
+                      </span>
+
+                      {/* Industry Title */}
+                      <h3
+                        className={`font-display text-xl lg:text-2xl font-bold uppercase tracking-tight mb-2 relative z-10 transition-colors duration-300 ${
+                          isHovered ? 'text-[#2AB182]' : 'text-white'
+                        }`}
+                      >
+                        {industry.name}
+                      </h3>
+
+                      {/* Industry Tagline */}
+                      <p className="font-body text-[11px] lg:text-xs text-[#7e8f88] uppercase tracking-wider max-w-[170px] leading-relaxed mb-3 relative z-10">
+                        {industry.tagline}
+                      </p>
+
+                      {/* Explore CTA */}
+                      <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-[#2AB182] font-semibold relative z-10 group">
+                        <span>Explore Sector</span>
+                        <ArrowRight size={13} className={`transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                      </div>
+                    </div>
                   </Link>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            {/* Row 2: Sectors 04, 05, 06 (Interlocking into Row 1) */}
+            <div
+              className={`flex justify-center gap-4 relative -mt-[65px] lg:-mt-[70px] transition-transform duration-300 ${
+                hoveredIndustry !== null && [3, 4, 5].includes(hoveredIndustry) ? 'z-30' : 'z-10'
+              }`}
+              style={{ transform: 'translateX(67px)' }}
+            >
+              {industriesData.slice(3, 6).map((industry, index) => {
+                const actualIndex = index + 3;
+                const isHovered = hoveredIndustry === actualIndex;
+                const isDimmed = hoveredIndustry !== null && !isHovered;
+
+                return (
+                  <Link
+                    key={industry.id}
+                    href={`/clients?industry=${industry.slug}#core-industries`}
+                    onMouseEnter={() => setHoveredIndustry(actualIndex)}
+                    onMouseLeave={() => setHoveredIndustry(null)}
+                    aria-label={`Explore ${industry.name} industry`}
+                    className={`relative w-[250px] lg:w-[270px] h-[280px] lg:h-[300px] cursor-pointer block transition-all duration-300 ease-out will-change-transform ${
+                      isHovered
+                        ? 'scale-110 -translate-y-2 z-40'
+                        : isDimmed
+                        ? 'opacity-35 blur-[1.5px] scale-[0.97] z-10'
+                        : 'opacity-100 scale-100 z-10'
+                    }`}
+                    style={{
+                      transformOrigin: 'center center',
+                      filter: isHovered
+                        ? 'drop-shadow(0 14px 28px rgba(42, 177, 130, 0.45))'
+                        : undefined,
+                    }}
+                  >
+                    {/* SVG Vector Hexagon Border */}
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                      viewBox="0 0 100 115"
+                      preserveAspectRatio="none"
+                    >
+                      <polygon
+                        points="50,1 99,29.5 99,85.5 50,114 1,85.5 1,29.5"
+                        fill="none"
+                        stroke={isHovered ? '#2AB182' : 'rgba(255, 255, 255, 0.12)'}
+                        strokeWidth={isHovered ? '2.5' : '1.2'}
+                        vectorEffect="non-scaling-stroke"
+                        className="transition-all duration-300"
+                      />
+                    </svg>
+
+                    {/* Hexagon Body */}
+                    <div
+                      className={`w-full h-full flex flex-col items-center justify-center p-6 text-center relative transition-colors duration-300 ${
+                        isHovered
+                          ? 'bg-gradient-to-b from-[#1b2a24] via-[#131c19] to-[#0f1412]'
+                          : 'bg-gradient-to-b from-[#161a18] via-[#111413] to-[#0c0e0d]'
+                      }`}
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      {/* Ambient radial glow inside hexagon */}
+                      <div
+                        className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+                          isHovered ? 'opacity-100' : 'opacity-40'
+                        }`}
+                        style={{
+                          background: 'radial-gradient(circle at 50% 30%, rgba(42, 177, 130, 0.18) 0%, transparent 70%)',
+                        }}
+                      />
+
+                      {/* Sector Badge */}
+                      <span className="font-mono text-[11px] font-bold text-[#2AB182] bg-[#2AB182]/15 border border-[#2AB182]/35 px-3 py-1 rounded-full tracking-widest mb-3 relative z-10">
+                        SECTOR {industry.id}
+                      </span>
+
+                      {/* Industry Title */}
+                      <h3
+                        className={`font-display text-xl lg:text-2xl font-bold uppercase tracking-tight mb-2 relative z-10 transition-colors duration-300 ${
+                          isHovered ? 'text-[#2AB182]' : 'text-white'
+                        }`}
+                      >
+                        {industry.name}
+                      </h3>
+
+                      {/* Industry Tagline */}
+                      <p className="font-body text-[11px] lg:text-xs text-[#7e8f88] uppercase tracking-wider max-w-[170px] leading-relaxed mb-3 relative z-10">
+                        {industry.tagline}
+                      </p>
+
+                      {/* Explore CTA */}
+                      <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-[#2AB182] font-semibold relative z-10 group">
+                        <span>Explore Sector</span>
+                        <ArrowRight size={13} className={`transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Mobile Presentation & Reduced Motion Fallback */}
-        <div className="md:hidden motion-reduce:block py-16 px-6">
-          <div className="text-center mb-10 max-w-xl mx-auto">
-            <p role="heading" aria-level="2" className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
-              Industries We <span className="text-[#2AB182]">Transform</span>
-            </p>
-            <p className="font-body text-sm text-[var(--text-muted)] mt-3">
-              We engineer paid campaigns for high-intent industries where customer acquisition economics and lead quality directly dictate profitability.
-            </p>
-          </div>
+        {/* Mobile Responsive Interlocking Honeycomb (< md) */}
+        <div className="md:hidden px-4">
+          <div className="flex justify-center gap-2.5 max-w-[360px] mx-auto relative select-none">
+            {/* Column 1: Sectors 01, 03, 05 */}
+            <div className="flex flex-col gap-3">
+              {[0, 2, 4].map((idx) => {
+                const industry = industriesData[idx];
+                const isHovered = hoveredIndustry === idx;
+                const isDimmed = hoveredIndustry !== null && !isHovered;
 
-          <div className="space-y-6 max-w-[280px] sm:max-w-[320px] mx-auto">
-            {industriesData.map((industry) => (
-              <Link
-                key={industry.id}
-                href="/clients"
-                aria-label={`Explore ${industry.name} industry client results`}
-                className="w-full aspect-square rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#2AB182] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2AB182] p-6 flex items-center justify-center text-center shadow-lg cursor-pointer transition-colors group"
-              >
-                <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase text-white group-hover:text-[#2AB182] transition-colors px-2">
-                  {industry.name}
-                </h3>
-              </Link>
-            ))}
+                return (
+                  <Link
+                    key={industry.id}
+                    href={`/clients?industry=${industry.slug}#core-industries`}
+                    onTouchStart={() => setHoveredIndustry(idx)}
+                    onMouseEnter={() => setHoveredIndustry(idx)}
+                    onMouseLeave={() => setHoveredIndustry(null)}
+                    aria-label={`Explore ${industry.name} industry`}
+                    className={`relative w-[155px] h-[175px] cursor-pointer block transition-all duration-300 ease-out will-change-transform ${
+                      isHovered
+                        ? 'scale-105 z-20'
+                        : isDimmed
+                        ? 'opacity-40 blur-[1px]'
+                        : 'opacity-100 z-10'
+                    }`}
+                    style={{
+                      filter: isHovered
+                        ? 'drop-shadow(0 8px 20px rgba(42, 177, 130, 0.4))'
+                        : undefined,
+                    }}
+                  >
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                      viewBox="0 0 100 115"
+                      preserveAspectRatio="none"
+                    >
+                      <polygon
+                        points="50,1 99,29.5 99,85.5 50,114 1,85.5 1,29.5"
+                        fill="none"
+                        stroke={isHovered ? '#2AB182' : 'rgba(255, 255, 255, 0.14)'}
+                        strokeWidth={isHovered ? '2.2' : '1.2'}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+
+                    <div
+                      className={`w-full h-full flex flex-col items-center justify-center p-3 text-center relative ${
+                        isHovered
+                          ? 'bg-gradient-to-b from-[#1b2a24] to-[#0f1412]'
+                          : 'bg-gradient-to-b from-[#161a18] to-[#0c0e0d]'
+                      }`}
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      <span className="font-mono text-[9px] font-bold text-[#2AB182] bg-[#2AB182]/15 border border-[#2AB182]/30 px-2 py-0.5 rounded-full tracking-wider mb-1.5">
+                        {industry.id}
+                      </span>
+                      <h3
+                        className={`font-display text-xs font-bold uppercase tracking-tight mb-1 ${
+                          isHovered ? 'text-[#2AB182]' : 'text-white'
+                        }`}
+                      >
+                        {industry.name}
+                      </h3>
+                      <p className="font-body text-[9px] text-[#7e8f88] uppercase tracking-tight max-w-[120px] line-clamp-1 mb-1.5">
+                        {industry.tagline}
+                      </p>
+                      <div className="flex items-center gap-1 font-mono text-[9px] uppercase text-[#2AB182] font-semibold">
+                        <span>Explore</span>
+                        <ArrowRight size={10} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Column 2: Sectors 02, 04, 06 (Shifted down for honeycomb tessellation) */}
+            <div className="flex flex-col gap-3 mt-11">
+              {[1, 3, 5].map((idx) => {
+                const industry = industriesData[idx];
+                const isHovered = hoveredIndustry === idx;
+                const isDimmed = hoveredIndustry !== null && !isHovered;
+
+                return (
+                  <Link
+                    key={industry.id}
+                    href={`/clients?industry=${industry.slug}#core-industries`}
+                    onTouchStart={() => setHoveredIndustry(idx)}
+                    onMouseEnter={() => setHoveredIndustry(idx)}
+                    onMouseLeave={() => setHoveredIndustry(null)}
+                    aria-label={`Explore ${industry.name} industry`}
+                    className={`relative w-[155px] h-[175px] cursor-pointer block transition-all duration-300 ease-out will-change-transform ${
+                      isHovered
+                        ? 'scale-105 z-20'
+                        : isDimmed
+                        ? 'opacity-40 blur-[1px]'
+                        : 'opacity-100 z-10'
+                    }`}
+                    style={{
+                      filter: isHovered
+                        ? 'drop-shadow(0 8px 20px rgba(42, 177, 130, 0.4))'
+                        : undefined,
+                    }}
+                  >
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                      viewBox="0 0 100 115"
+                      preserveAspectRatio="none"
+                    >
+                      <polygon
+                        points="50,1 99,29.5 99,85.5 50,114 1,85.5 1,29.5"
+                        fill="none"
+                        stroke={isHovered ? '#2AB182' : 'rgba(255, 255, 255, 0.14)'}
+                        strokeWidth={isHovered ? '2.2' : '1.2'}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+
+                    <div
+                      className={`w-full h-full flex flex-col items-center justify-center p-3 text-center relative ${
+                        isHovered
+                          ? 'bg-gradient-to-b from-[#1b2a24] to-[#0f1412]'
+                          : 'bg-gradient-to-b from-[#161a18] to-[#0c0e0d]'
+                      }`}
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                      }}
+                    >
+                      <span className="font-mono text-[9px] font-bold text-[#2AB182] bg-[#2AB182]/15 border border-[#2AB182]/30 px-2 py-0.5 rounded-full tracking-wider mb-1.5">
+                        {industry.id}
+                      </span>
+                      <h3
+                        className={`font-display text-xs font-bold uppercase tracking-tight mb-1 ${
+                          isHovered ? 'text-[#2AB182]' : 'text-white'
+                        }`}
+                      >
+                        {industry.name}
+                      </h3>
+                      <p className="font-body text-[9px] text-[#7e8f88] uppercase tracking-tight max-w-[120px] line-clamp-1 mb-1.5">
+                        {industry.tagline}
+                      </p>
+                      <div className="flex items-center gap-1 font-mono text-[9px] uppercase text-[#2AB182] font-semibold">
+                        <span>Explore</span>
+                        <ArrowRight size={10} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -758,16 +1176,15 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
         </div>
       </section>
 
-      {/* SECTION 5 — Process Steps (Methodology) — Vertical Thread Timeline */}
+      {/* SECTION 5 — Process Steps (Methodology) — Freeform Interactive Wavy Line */}
       <section
         ref={processRef}
         id="process"
-        className="relative min-h-0 md:min-h-[280vh] border-b border-[var(--border-subtle)] z-10 bg-transparent"
+        className="relative py-20 md:py-28 lg:py-36 border-b border-[var(--border-subtle)] z-10 bg-transparent overflow-hidden"
       >
-        {/* Desktop Sticky Container */}
-        <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-28 md:pt-32 pb-12 px-6 md:px-12 overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-12">
           {/* Section Heading with proper top spacing */}
-          <div className="text-center shrink-0 z-20 max-w-4xl mx-auto px-6 mb-10 lg:mb-14">
+          <div className="text-center shrink-0 z-20 max-w-4xl mx-auto px-6 mb-12 lg:mb-16">
             <span className="text-[#2AB182] font-body text-xs md:text-sm tracking-[0.2em] uppercase font-bold mb-3 block">
               OUR METHODOLOGY
             </span>
@@ -779,119 +1196,8 @@ const HomePage = ({ activeStep, setActiveStep, stepRefs, activeFaq, toggleFaq })
             </p>
           </div>
 
-          {/* Vertical Thread Timeline Window */}
-          <div className="relative w-full max-w-xl mx-auto h-[320px] overflow-hidden my-auto flex items-center justify-center">
-            {/* Center Focal Indicator Band */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[96px] pointer-events-none rounded-xl bg-gradient-to-r from-transparent via-[#2AB182]/5 to-transparent border-y border-[#2AB182]/10 z-0" />
-
-            {/* Moving Reel that translates upward as user scrolls */}
-            <div
-              style={{
-                transform: `translate3d(0, ${112 - processFloatIndex * 96}px, 0)`,
-                willChange: 'transform',
-              }}
-              className="relative flex flex-col transition-transform duration-200 ease-out z-10 w-fit mx-auto"
-            >
-              {/* Vertical Thread Background - Perfectly Straight & Centered through 48px dots */}
-              <div
-                style={{ top: '24px', height: `${3 * 96}px` }}
-                className="absolute left-6 -translate-x-1/2 w-[2px] bg-[#222222] z-0"
-              />
-
-              {/* Vertical Thread Progress Fill - Perfectly Straight & Centered */}
-              <div
-                style={{
-                  top: '24px',
-                  height: `${Math.min(3 * 96, processFloatIndex * 96)}px`,
-                }}
-                className="absolute left-6 -translate-x-1/2 w-[2px] bg-[#2AB182] shadow-[0_0_8px_rgba(42,177,130,0.6)] z-0 transition-[height] duration-200 ease-out"
-              />
-
-              {processStepsData.map((step, index) => {
-                const diff = Math.abs(processFloatIndex - index);
-                const isActive = diff < 0.5;
-                const isPast = processFloatIndex >= index + 0.5;
-
-                return (
-                  <div
-                    key={index}
-                    style={{ height: '96px' }}
-                    className="relative z-10 flex items-center gap-6 md:gap-8 group select-none"
-                  >
-                    {/* Step Connected Dot - 48px width, perfectly centered on the line at x = 24px */}
-                    <div
-                      className={`w-12 h-12 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 ${
-                        isActive
-                          ? 'border-[#2AB182] bg-[var(--bg-primary)] shadow-[0_0_20px_rgba(42,177,130,0.5)] scale-110'
-                          : isPast
-                            ? 'border-[#2AB182]/60 bg-[#161616]'
-                            : 'border-[#333333] bg-[#141414]'
-                      }`}
-                    >
-                      <div
-                        className={`rounded-full transition-all duration-300 ${
-                          isActive
-                            ? 'w-4 h-4 bg-[#2AB182] shadow-[0_0_10px_#2AB182]'
-                            : isPast
-                              ? 'w-3 h-3 bg-[#2AB182]/60'
-                              : 'w-2.5 h-2.5 bg-[#444444]'
-                        }`}
-                      />
-                    </div>
-
-                    {/* Step Title Only - Numerical labels removed */}
-                    <h3
-                      className={`font-display font-bold uppercase transition-all duration-300 tracking-tight select-none ${
-                        isActive
-                          ? 'text-white text-3xl sm:text-4xl md:text-5xl scale-100 opacity-100'
-                          : isPast
-                            ? 'text-[var(--text-secondary)] text-2xl sm:text-3xl md:text-4xl scale-95 opacity-60'
-                            : 'text-[var(--text-muted)] text-2xl sm:text-3xl md:text-4xl scale-95 opacity-60'
-                      }`}
-                    >
-                      {step.title}
-                    </h3>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Presentation & Reduced-Motion Alternative */}
-        <div className="md:hidden motion-reduce:block py-16 px-6">
-          <div className="text-center mb-12">
-            <span className="text-[#2AB182] font-body text-xs tracking-[0.2em] uppercase font-bold mb-3 block">
-              OUR METHODOLOGY
-            </span>
-            <p role="heading" aria-level="2" className="font-display text-3xl font-bold text-[var(--text-primary)] leading-tight">
-              The 4-Step <span className="text-[#2AB182]">Performance</span> Engine
-            </p>
-            <p className="font-body text-sm text-[var(--text-muted)] mt-2">
-              Performance is engineered, not guessed.
-            </p>
-          </div>
-
-          <div className="relative max-w-sm mx-auto pl-2">
-            {/* Continuous Thread Line - Perfectly Straight & Centered through 48px dots */}
-            <div
-              style={{ top: '24px', bottom: '24px' }}
-              className="absolute left-8 -translate-x-1/2 w-[2px] bg-[#2AB182]/40"
-            />
-
-            <div className="space-y-8 relative z-10">
-              {processStepsData.map((step, index) => (
-                <div key={index} className="flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-full border border-[#2AB182] bg-[var(--bg-primary)] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(42,177,130,0.3)]">
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#2AB182]" />
-                  </div>
-                  <h3 className="font-display text-2xl font-bold uppercase text-white tracking-tight">
-                    {step.title}
-                  </h3>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Interactive Freeform Wavy Connecting Line */}
+          <InteractiveMethodologyWave />
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { ArrowRight, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const clientIndustries = [
     {
@@ -69,124 +69,35 @@ const getClientInitials = (name) => (
         .toUpperCase()
 );
 
-/**
- * Scroll progress intervals for the continuous sticky card chain.
- * p goes from 0 to 1 over the pinned section.
- */
-const LINE_RANGES = [
-    [0.00, 0.07], // Line 0: Heading -> Card 0
-    [0.16, 0.23], // Line 1: Card 0 -> Card 1
-    [0.34, 0.41], // Line 2: Card 1 -> Card 2
-    [0.52, 0.59], // Line 3: Card 2 -> Card 3
-    [0.70, 0.77], // Line 4: Card 3 -> Card 4
-];
-
-const CARD_RANGES = [
-    [0.04, 0.16], // Card 0: Healthcare & Medical
-    [0.21, 0.34], // Card 1: Education & EdTech
-    [0.39, 0.52], // Card 2: E-commerce & D2C
-    [0.57, 0.70], // Card 3: Real Estate & Construction
-    [0.75, 0.88], // Card 4: B2B & Consulting
-];
-
-const smoothstep = (t) => {
-    const clamped = Math.max(0, Math.min(1, t));
-    return clamped * clamped * (3 - 2 * clamped);
+const smoothstep = (min, max, val) => {
+    const x = Math.max(0, Math.min(1, (val - min) / (max - min)));
+    return x * x * (3 - 2 * x);
 };
 
-/**
- * Calculates glowing connector line animation state:
- * - Extends downward rapidly with a subtle stretch/overshoot (up to 1.15x)
- * - Bounces back and straightens smoothly to 1.00x
- * - Glowing dot tracks line tip exactly
- */
-const getLineState = (index, p) => {
-    const [start, end] = LINE_RANGES[index];
-    if (p < start) {
-        return { scaleY: 0, opacity: 0, isSettled: false };
-    }
-    if (p >= end) {
-        return { scaleY: 1, opacity: 1, isSettled: true };
-    }
-    const t = (p - start) / (end - start);
-    let scaleY = 0;
-    if (t <= 0.60) {
-        // Stretches quickly with bounce overshoot up to 1.15
-        const u = t / 0.60;
-        scaleY = (1 - Math.pow(1 - u, 2)) * 1.15;
-    } else {
-        // Rebounds smoothly and settles straight to 1.00
-        const u = (t - 0.60) / 0.40;
-        scaleY = 1.15 - 0.15 * Math.sin((u * Math.PI) / 2);
-    }
-    const opacity = Math.min(1, t * 4);
-    return { scaleY, opacity, isSettled: t >= 0.95 };
-};
-
-/**
- * Calculates card entrance from bottom of viewport:
- * - Glides upward smoothly with cubic deceleration
- * - Settles and docks cleanly onto the glowing connector dot
- * - Never fades out or vanishes once entered
- */
-const getCardState = (index, p) => {
-    const [start, end] = CARD_RANGES[index];
-    if (p < start) {
-        return { translateY: 380, opacity: 0, isDocked: false };
-    }
-    if (p >= end) {
-        return { translateY: 0, opacity: 1, isDocked: true };
-    }
-    const t = (p - start) / (end - start);
-    // Cubic ease-out
-    const ease = 1 - Math.pow(1 - t, 3);
-    const translateY = (1 - ease) * 380;
-    const opacity = Math.min(1, t * 2.5);
-    return { translateY, opacity, isDocked: false };
-};
-
-/**
- * Smoothly shifts the chain upward as new cards arrive,
- * ensuring the active card stays in view while all earlier cards
- * remain visible in the connected chain above it.
- */
-const getChainOffsetY = (p) => {
-    // Pitch between cards (height ~175px + connector ~36px = ~211px)
-    if (p <= 0.34) return 0;
-
-    // Card 2 entrance: gentle shift of 130px
-    if (p <= 0.52) {
-        return smoothstep((p - 0.34) / 0.18) * 130;
-    }
-
-    // Card 3 entrance: additional 210px shift
-    if (p <= 0.70) {
-        return 130 + smoothstep((p - 0.52) / 0.18) * 210;
-    }
-
-    // Card 4 entrance: additional 210px shift
-    if (p <= 0.88) {
-        return 340 + smoothstep((p - 0.70) / 0.18) * 210;
-    }
-
-    // Settle / natural upward scroll before unpinning
-    return 550 + smoothstep((p - 0.88) / 0.12) * 90;
-};
-
-const ClientsIndustriesPage = ({ onContactClick }) => {
+const ClientsIndustriesPage = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [scrollProgress, setScrollProgress] = useState(0);
-    const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
-    const [flippedIndex, setFlippedIndex] = useState(null);
+    const [reducedMotion, setReducedMotion] = useState(false);
     const sectionRef = useRef(null);
 
-    // Initial page load entrance trigger
+    // Initial page entrance animation & prefers-reduced-motion check
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoaded(true), 100);
+        const timer = setTimeout(() => setIsLoaded(true), 60);
+
+        if (typeof window !== 'undefined') {
+            const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+            setReducedMotion(mql.matches);
+            const handler = (e) => setReducedMotion(e.matches);
+            mql.addEventListener('change', handler);
+            return () => {
+                clearTimeout(timer);
+                mql.removeEventListener('change', handler);
+            };
+        }
         return () => clearTimeout(timer);
     }, []);
 
-    // Smooth scroll progress handler for card stack
+    // Passive scroll tracking for the desktop transition stage
     useEffect(() => {
         let ticking = false;
         const handleScroll = () => {
@@ -196,14 +107,9 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                         const rect = sectionRef.current.getBoundingClientRect();
                         const windowHeight = window.innerHeight || 800;
                         const totalDistance = rect.height - windowHeight;
-                        if (totalDistance > 100) {
-                            const rawProgress = Math.max(0, Math.min(1, -rect.top / totalDistance));
-                            // Comfort buffer so the final card rests before section releases
-                            const progress = Math.min(1, rawProgress / 0.90);
-                            setScrollProgress((prev) => {
-                                if (Math.abs(prev - progress) < 0.002) return prev;
-                                return progress;
-                            });
+                        if (totalDistance > 50) {
+                            const rawP = Math.max(0, Math.min(1, -rect.top / totalDistance));
+                            setScrollProgress((prev) => (Math.abs(prev - rawP) < 0.0008 ? prev : rawP));
                         }
                     }
                     ticking = false;
@@ -217,23 +123,166 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Card toggle handler (click / tap only - flips card)
-    const handleCardClick = (index, e) => {
-        if (e) e.stopPropagation();
-        setFlippedIndex((prev) => (prev === index ? null : index));
+    // Smooth scroll to target industry when user clicks a button in the left navigation
+    const scrollToIndustry = (index) => {
+        if (!sectionRef.current) return;
+        const rect = sectionRef.current.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const sectionTop = rect.top + scrollTop;
+        const windowHeight = window.innerHeight || 800;
+        const totalDistance = rect.height - windowHeight;
+        const totalSegments = clientIndustries.length - 1;
+        const targetScrollY = sectionTop + (index / totalSegments) * totalDistance;
+        window.scrollTo({
+            top: targetScrollY,
+            behavior: 'smooth'
+        });
     };
 
-    const handleKeyDown = (index, e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleCardClick(index, e);
-        }
+    // Transition Progress Calculations (4 segments between the 5 industries)
+    const totalSegments = clientIndustries.length - 1; // 4
+    const progressVal = scrollProgress * totalSegments;
+    const currIndex = Math.min(clientIndustries.length - 2, Math.max(0, Math.floor(progressVal)));
+    const nextIndex = currIndex + 1;
+    const rawFraction = progressVal - currIndex;
+    // Smoothstep transition curve with resting plateaus (0.12 to 0.88)
+    const transitionU = smoothstep(0.12, 0.88, rawFraction);
+    const activeSidebarIndex = Math.min(
+        clientIndustries.length - 1,
+        Math.max(0, Math.round(progressVal))
+    );
+
+    const currCard = clientIndustries[currIndex];
+    const nextCard = clientIndustries[nextIndex];
+    const curtainY = (1 - transitionU) * 100;
+
+    // Morph styles for Current Card (gently dissolves and moves upward behind curtain)
+    const currMorph = {
+        headingStyle: {
+            opacity: 1 - smoothstep(0.05, 0.45, transitionU),
+            transform: `translate3d(0, -${smoothstep(0.05, 0.45, transitionU) * 12}px, 0)`,
+        },
+        descStyle: {
+            opacity: 1 - smoothstep(0.08, 0.50, transitionU),
+            transform: `translate3d(0, -${smoothstep(0.08, 0.50, transitionU) * 12}px, 0)`,
+        },
+        capabilitiesStyle: {
+            opacity: 1 - smoothstep(0.12, 0.60, transitionU),
+            transform: `translate3d(0, -${smoothstep(0.12, 0.60, transitionU) * 10}px, 0)`,
+        },
+        actionStyle: {
+            opacity: 1 - smoothstep(0.18, 0.68, transitionU),
+        },
+    };
+
+    // Morph styles for Next Card (revealed from underneath: heading first, description shortly after)
+    const nextMorph = {
+        badgeStyle: {
+            opacity: smoothstep(0.15, 0.55, transitionU),
+            transform: `translate3d(0, ${(1 - smoothstep(0.15, 0.55, transitionU)) * 10}px, 0)`,
+        },
+        headingStyle: {
+            opacity: smoothstep(0.25, 0.65, transitionU),
+            transform: `translate3d(0, ${(1 - smoothstep(0.25, 0.65, transitionU)) * 14}px, 0)`,
+        },
+        descStyle: {
+            opacity: smoothstep(0.40, 0.80, transitionU),
+            transform: `translate3d(0, ${(1 - smoothstep(0.40, 0.80, transitionU)) * 14}px, 0)`,
+        },
+        capabilitiesStyle: {
+            opacity: smoothstep(0.50, 0.90, transitionU),
+            transform: `translate3d(0, ${(1 - smoothstep(0.50, 0.90, transitionU)) * 12}px, 0)`,
+        },
+        actionStyle: {
+            opacity: smoothstep(0.60, 0.95, transitionU),
+        },
+    };
+
+    const renderCardBody = (industry, index, morphState = {}) => {
+        const {
+            badgeStyle = {},
+            headingStyle = {},
+            descStyle = {},
+            capabilitiesStyle = {},
+            actionStyle = {},
+        } = morphState;
+
+        return (
+            <div className="flex flex-col justify-between h-full relative z-10 select-none">
+                {/* Corner ambient radial glow */}
+                <div className="absolute -top-24 -right-24 w-60 h-60 bg-[#2AB182]/10 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Card Top Meta */}
+                <div style={badgeStyle} className="flex items-center justify-between mb-5 transition-transform duration-75">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2AB182]/10 border border-[#2AB182]/30 text-[#2AB182] text-xs font-mono tracking-wider uppercase font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] animate-pulse" />
+                        Sector 0{index + 1}
+                    </div>
+                    <span className="text-white/40 text-xs font-mono tracking-widest">
+                        0{index + 1} / 0{clientIndustries.length}
+                    </span>
+                </div>
+
+                {/* Industry Heading */}
+                <h3
+                    style={headingStyle}
+                    className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold uppercase text-[var(--text-primary)] tracking-tight mb-2.5 transition-transform duration-75 leading-tight"
+                >
+                    {industry.name}
+                </h3>
+
+                {/* Industry Description / Who We Serve */}
+                <p
+                    style={descStyle}
+                    className="font-body text-[#2AB182] text-sm sm:text-base font-medium mb-6 leading-relaxed transition-transform duration-75"
+                >
+                    {industry.portfolio.join(" • ")}
+                </p>
+
+                {/* Divider */}
+                <div className="w-full h-px bg-white/10 mb-6" />
+
+                {/* Core Performance Capabilities */}
+                <div style={capabilitiesStyle} className="transition-transform duration-75">
+                    <h4 className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] mb-3">
+                        Core Performance Capabilities
+                    </h4>
+                    <div className="grid grid-cols-2 gap-2.5">
+                        {industry.services.map((service, sIdx) => (
+                            <div
+                                key={sIdx}
+                                className="flex items-center gap-2 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] hover:border-[#2AB182]/30 transition-colors"
+                            >
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0" />
+                                <span className="font-body text-xs sm:text-sm text-[var(--text-primary)] font-normal truncate">
+                                    {service}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Bottom Partner Action */}
+                <div style={actionStyle} className="mt-7 pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                    <span className="text-xs text-[var(--text-muted)]">
+                        Tailored Growth Framework
+                    </span>
+                    <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-2 text-xs font-display font-bold uppercase tracking-wider text-[#2AB182] hover:text-white transition-colors group"
+                    >
+                        Partner With Us
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+            </div>
+        );
     };
 
     return (
         <div className="pt-24 md:pt-28 min-h-screen">
-            {/* 1. Main Heading — Industries We Transform (Animated on load, scrolls away naturally) */}
-            <section className="px-6 md:px-12 pt-12 md:pt-20 pb-16 md:pb-24 text-center relative z-10">
+            {/* 1. Page Header — Industries We Transform */}
+            <section className="px-6 md:px-12 pt-12 md:pt-20 pb-12 md:pb-20 text-center relative z-10">
                 <div className="max-w-4xl mx-auto">
                     <p
                         className={`font-body text-[#2AB182] mb-5 tracking-[0.2em] text-xs md:text-sm uppercase font-semibold flex items-center justify-center gap-3 transition-all duration-700 ease-out ${
@@ -260,475 +309,189 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                 </div>
             </section>
 
-            {/* 2 & 3. Core Industries We Serve — Continuous Sticky Vertically Connected Card Chain */}
+            {/* 2. Core Industries We Serve — Desktop Vertical Curtain + Morphing Card Transition */}
             <section
                 ref={sectionRef}
                 id="core-industries"
-                className="relative min-h-[420vh] md:min-h-[460vh] z-10 bg-transparent"
+                className="hidden md:block motion-reduce:hidden relative z-10 bg-transparent h-[260vh]"
             >
-                {/* Desktop Sticky Viewport */}
-                <div className="hidden md:flex motion-reduce:hidden sticky top-0 h-screen w-full flex-col justify-start pt-20 md:pt-24 pb-8 px-6 md:px-12 overflow-hidden">
-                    {/* 1. Sticky Centered Heading — 100% Opacity throughout sequence, zero fade-out */}
-                    <div className="text-center shrink-0 z-30 max-w-4xl mx-auto px-4 pb-2 bg-gradient-to-b from-black/40 to-transparent w-full">
-                        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-[var(--text-primary)] tracking-tight">
+                <div className="sticky top-20 lg:top-24 h-[calc(100vh-5.5rem)] w-full flex flex-col justify-center px-6 md:px-12 lg:px-16 overflow-hidden">
+                    {/* Section Sub-heading */}
+                    <div className="text-center max-w-4xl mx-auto px-4 mb-6 lg:mb-8 shrink-0">
+                        <p className="font-body text-[#2AB182] mb-1.5 tracking-[0.2em] text-xs md:text-sm uppercase font-semibold flex items-center justify-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-[#2AB182] rounded-full animate-pulse" />
+                            Sector Specialization
+                        </p>
+                        <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold uppercase text-[var(--text-primary)] tracking-tight">
                             Core Industries We <span className="text-[#2AB182]">Serve</span>
                         </h2>
                     </div>
 
-                    {/* Connector 0: Thin glowing emerald vertical line from Heading Area to Card 0 */}
-                    {(() => {
-                        const line0 = getLineState(0, scrollProgress);
-                        return (
-                            <div className="flex flex-col items-center justify-center shrink-0 h-9 w-full relative z-20 my-1">
-                                <div
-                                    className="w-[2px] bg-gradient-to-b from-[#2AB182] to-[#2AB182] origin-top"
-                                    style={{
-                                        height: '32px',
-                                        transform: `scaleY(${line0.scaleY})`,
-                                        opacity: line0.opacity,
-                                        boxShadow: '0 0 10px rgba(42, 177, 130, 0.7), 0 0 20px rgba(42, 177, 130, 0.4)',
-                                    }}
-                                />
-                                <div
-                                    className="w-2.5 h-2.5 rounded-full bg-[#2AB182] border-2 border-[#121212] shrink-0 -mt-1"
-                                    style={{
-                                        opacity: line0.opacity,
-                                        transform: `translateY(${Math.max(0, (line0.scaleY - 1) * 32)}px)`,
-                                        boxShadow: '0 0 10px #2AB182, 0 0 20px rgba(42, 177, 130, 0.8)',
-                                    }}
-                                />
-                            </div>
-                        );
-                    })()}
-
-                    {/* Connected Card Chain Window */}
-                    <div className="relative w-full flex-1 overflow-hidden mt-1">
-                        <div
-                            style={{
-                                transform: `translate3d(0, ${-getChainOffsetY(scrollProgress)}px, 0)`,
-                                willChange: 'transform',
-                            }}
-                            className="w-full max-w-[820px] mx-auto px-4 flex flex-col items-center pb-24"
-                        >
-                            {clientIndustries.map((industry, index) => {
-                                const cardState = getCardState(index, scrollProgress);
-                                const nextLineState = index < clientIndustries.length - 1 ? getLineState(index + 1, scrollProgress) : null;
-                                const isFlipped = flippedIndex === index;
-                                const isHovered = hoveredCardIndex === index;
-                                const isWaiting = cardState.opacity === 0;
-
+                    {/* Main Two-Column Structure */}
+                    <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-14 items-center relative">
+                        {/* Left Column: Vertical Industry Navigation */}
+                        <div className="md:col-span-5 lg:col-span-4 space-y-2.5 lg:space-y-3 z-20">
+                            <span className="font-mono text-xs uppercase tracking-widest text-white/40 mb-1 px-4 block">
+                                Select Industry
+                            </span>
+                            {clientIndustries.map((ind, i) => {
+                                const isActive = activeSidebarIndex === i;
                                 return (
-                                    <React.Fragment key={index}>
-                                        {/* Card Container with Entrance Transform */}
+                                    <button
+                                        key={i}
+                                        type="button"
+                                        onClick={() => scrollToIndustry(i)}
+                                        aria-label={`Jump to ${ind.name}`}
+                                        className={`w-full group text-left flex items-center gap-3.5 py-3 px-4 rounded-xl transition-all duration-300 relative select-none cursor-pointer ${
+                                            isActive
+                                                ? 'bg-[#2AB182]/10 border border-[#2AB182]/50 shadow-[0_0_20px_rgba(42,177,130,0.18)] translate-x-2'
+                                                : 'hover:bg-white/[0.03] border border-transparent hover:border-white/10 opacity-45 hover:opacity-85'
+                                        }`}
+                                    >
+                                        {/* Active green accent indicator bar */}
                                         <div
-                                            style={{
-                                                transform: `translate3d(0, ${cardState.translateY}px, 0)`,
-                                                opacity: cardState.opacity,
-                                                willChange: 'transform, opacity',
-                                                pointerEvents: isWaiting ? 'none' : 'auto',
-                                            }}
-                                            className="w-full shrink-0"
+                                            className={`w-1 h-6 rounded-full transition-all duration-300 ${
+                                                isActive ? 'bg-[#2AB182] shadow-[0_0_10px_#2AB182]' : 'bg-transparent'
+                                            }`}
+                                        />
+                                        {/* Number label */}
+                                        <span
+                                            className={`font-mono text-xs tracking-wider transition-colors duration-300 ${
+                                                isActive ? 'text-[#2AB182] font-semibold' : 'text-white/40'
+                                            }`}
                                         >
-                                            {/* 3D Flip Card Container */}
-                                            <div
-                                                style={{
-                                                    perspective: '1200px',
-                                                    height: '175px',
-                                                    transform: isHovered ? 'translateY(-3px)' : 'translateY(0)',
-                                                    transition: 'transform 0.25s ease-out',
-                                                }}
-                                                className="w-full relative cursor-pointer"
-                                                onClick={(e) => handleCardClick(index, e)}
-                                                onKeyDown={(e) => handleKeyDown(index, e)}
-                                                onMouseEnter={() => setHoveredCardIndex(index)}
-                                                onMouseLeave={() => setHoveredCardIndex(null)}
-                                                role="button"
-                                                tabIndex={isWaiting ? -1 : 0}
-                                                aria-expanded={isFlipped}
-                                                aria-label={`${industry.name}. Click to view details.`}
-                                            >
-                                                <div
-                                                    className="w-full h-full relative transition-transform duration-500 ease-out select-none"
-                                                    style={{
-                                                        transformStyle: 'preserve-3d',
-                                                        transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                                                    }}
-                                                >
-                                                    {/* FRONT FACE: Badge, Industry Heading, and Sector Highlights */}
-                                                    <div
-                                                        style={{
-                                                            backfaceVisibility: 'hidden',
-                                                            WebkitBackfaceVisibility: 'hidden',
-                                                        }}
-                                                        className={`absolute inset-0 rounded-2xl md:rounded-3xl bg-[#141414] border px-6 py-5 md:px-8 md:py-5 flex flex-col justify-between shadow-[0_12px_32px_rgba(0,0,0,0.6)] transition-all duration-300 ${
-                                                            isHovered || isFlipped
-                                                                ? 'border-[#2AB182] shadow-[0_12px_36px_rgba(42,177,130,0.22)]'
-                                                                : 'border-[#262626]'
-                                                        }`}
-                                                    >
-                                                        <div className="flex items-center justify-between">
-                                                            <span className="font-mono text-xs tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-0.5 rounded-full font-semibold">
-                                                                0{index + 1}
-                                                            </span>
-                                                            <span className="font-mono text-[11px] text-[var(--text-muted)] tracking-wider uppercase opacity-80">
-                                                                Click to view details
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="my-auto py-1">
-                                                            <h3 className="font-display text-2xl sm:text-3xl md:text-3xl font-bold uppercase text-white tracking-tight leading-tight">
-                                                                {industry.name}
-                                                            </h3>
-                                                        </div>
-
-                                                        <div className="flex items-center gap-2 overflow-hidden text-[var(--text-muted)] text-xs font-body">
-                                                            <span className="truncate">
-                                                                {industry.portfolio.join(" • ")}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* BACK FACE: Preserved Portfolio Highlights & Delivered Services */}
-                                                    <div
-                                                        style={{
-                                                            backfaceVisibility: 'hidden',
-                                                            WebkitBackfaceVisibility: 'hidden',
-                                                            transform: 'rotateY(180deg)',
-                                                        }}
-                                                        className="absolute inset-0 rounded-2xl md:rounded-3xl bg-[#161616] border border-[#2AB182] px-6 py-4 md:px-7 md:py-4 flex flex-col justify-between shadow-[0_18px_45px_rgba(0,0,0,0.85)]"
-                                                    >
-                                                        <div className="flex items-center justify-between">
-                                                            <div className="flex items-center gap-2.5">
-                                                                <span className="font-mono text-xs text-[#2AB182] font-semibold bg-[#2AB182]/10 border border-[#2AB182]/30 px-2.5 py-0.5 rounded-full">
-                                                                    0{index + 1}
-                                                                </span>
-                                                                <h3 className="font-display text-base sm:text-lg font-bold uppercase text-white">
-                                                                    {industry.name}
-                                                                </h3>
-                                                            </div>
-                                                            <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider uppercase">
-                                                                Click to flip back
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="grid grid-cols-2 gap-4 my-auto py-1 text-xs">
-                                                            {/* Portfolio Highlights */}
-                                                            <div>
-                                                                <h4 className="font-body text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold mb-1 flex items-center gap-1">
-                                                                    Client Portfolio:
-                                                                </h4>
-                                                                <ul className="space-y-0.5 font-body text-[11px] md:text-xs text-[var(--text-primary)]">
-                                                                    {industry.portfolio.map((client, i) => (
-                                                                        <li key={i} className="flex items-center gap-1.5">
-                                                                            <MapPin className="w-3 h-3 shrink-0 text-[#2AB182]" />
-                                                                            <span className="truncate">{client}</span>
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            </div>
-
-                                                            {/* Services Delivered */}
-                                                            <div>
-                                                                <h4 className="font-body text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold mb-1 flex items-center gap-1">
-                                                                    Services Delivered:
-                                                                </h4>
-                                                                <div className="space-y-0.5 font-body text-[11px] md:text-xs text-[var(--text-primary)]">
-                                                                    {industry.services.map((service, i) => (
-                                                                        <p key={i} className="flex items-center gap-1.5">
-                                                                            <ArrowRight className="w-3 h-3 shrink-0 text-[#2AB182]" />
-                                                                            <span className="truncate">{service}</span>
-                                                                        </p>
-                                                                    ))}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Connector Line to Next Card: Extends with bounce, settles straight */}
-                                        {nextLineState && (
-                                            <div className="flex flex-col items-center justify-center shrink-0 h-9 w-full relative z-10 my-0.5">
-                                                <div
-                                                    className="w-[2px] bg-gradient-to-b from-[#2AB182] to-[#2AB182] origin-top"
-                                                    style={{
-                                                        height: '32px',
-                                                        transform: `scaleY(${nextLineState.scaleY})`,
-                                                        opacity: nextLineState.opacity,
-                                                        boxShadow: '0 0 10px rgba(42, 177, 130, 0.7), 0 0 20px rgba(42, 177, 130, 0.4)',
-                                                    }}
-                                                />
-                                                <div
-                                                    className="w-2.5 h-2.5 rounded-full bg-[#2AB182] border-2 border-[#121212] shrink-0 -mt-1"
-                                                    style={{
-                                                        opacity: nextLineState.opacity,
-                                                        transform: `translateY(${Math.max(0, (nextLineState.scaleY - 1) * 32)}px)`,
-                                                        boxShadow: '0 0 10px #2AB182, 0 0 20px rgba(42, 177, 130, 0.8)',
-                                                    }}
-                                                />
-                                            </div>
-                                        )}
-                                    </React.Fragment>
+                                            0{i + 1}
+                                        </span>
+                                        {/* Industry Title */}
+                                        <span
+                                            className={`font-display text-sm lg:text-base tracking-tight transition-all duration-300 ${
+                                                isActive
+                                                    ? 'text-white font-bold'
+                                                    : 'text-[var(--text-muted)] font-medium group-hover:text-white'
+                                            }`}
+                                        >
+                                            {ind.name}
+                                        </span>
+                                    </button>
                                 );
                             })}
                         </div>
-                    </div>
-                </div>
 
-                {/* Mobile Presentation & Reduced-Motion Interactive List */}
-                <div className="md:hidden motion-reduce:block py-16 px-6">
-                    <div className="text-center mb-10 max-w-xl mx-auto flex flex-col items-center">
-                        <p role="heading" aria-level="2" className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] leading-tight">
-                            Core Industries We <span className="text-[#2AB182]">Serve</span>
-                        </p>
-                        {/* Glowing Green Vertical Timeline Connector for Mobile */}
-                        <div className="flex flex-col items-center mt-3">
-                            <div
-                                className="w-[2px] h-7 bg-gradient-to-b from-[#2AB182]/30 via-[#2AB182] to-[#2AB182]"
-                                style={{
-                                    boxShadow: '0 0 8px rgba(42, 177, 130, 0.55)',
-                                }}
-                            />
-                            <div
-                                className="w-2.5 h-2.5 rounded-full bg-[#2AB182] border-2 border-[#121212] -mt-0.5"
-                                style={{
-                                    boxShadow: '0 0 8px #2AB182',
-                                }}
-                            />
-                        </div>
-                    </div>
+                        {/* Right Column: Vertical Curtain + Morphing Card Stage */}
+                        <div className="md:col-span-7 lg:col-span-8 flex justify-center items-center">
+                            <div className="relative w-full max-w-xl lg:max-w-2xl h-[490px] lg:h-[510px]">
+                                {/* Layer 1: Current Industry Card (Gracefully moves gently upward behind curtain) */}
+                                <div
+                                    style={{
+                                        transform: `translate3d(0, -${transitionU * 22}px, 0)`,
+                                        opacity: 1 - transitionU * 0.75,
+                                        zIndex: 10,
+                                        willChange: 'transform, opacity',
+                                    }}
+                                    className="absolute inset-0 w-full h-full bg-[#121212]/95 backdrop-blur-xl border border-[var(--border-subtle)] hover:border-[#2AB182]/50 rounded-2xl p-7 sm:p-9 lg:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.65)] overflow-hidden transition-colors duration-300"
+                                >
+                                    {renderCardBody(currCard, currIndex, currMorph)}
+                                </div>
 
-                    <div className="space-y-4 max-w-lg mx-auto flex flex-col items-center">
-                        {clientIndustries.map((industry, index) => {
-                            const isFlipped = flippedIndex === index;
+                                {/* Layer 2: Next Industry Card (Revealed from underneath via Vertical Curtain clip-path) */}
+                                <div
+                                    style={{
+                                        clipPath: `inset(${curtainY}% 0 0 0)`,
+                                        transform: `translate3d(0, ${(1 - transitionU) * 16}px, 0)`,
+                                        zIndex: 20,
+                                        willChange: 'transform, clip-path',
+                                    }}
+                                    className="absolute inset-0 w-full h-full bg-[#121212]/95 backdrop-blur-xl border border-[var(--border-subtle)] hover:border-[#2AB182]/50 rounded-2xl p-7 sm:p-9 lg:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.65)] overflow-hidden transition-colors duration-300"
+                                >
+                                    {renderCardBody(nextCard, nextIndex, nextMorph)}
+                                </div>
 
-                            return (
-                                <React.Fragment key={index}>
+                                {/* Vertical Curtain Luminous Laser Reveal Edge */}
+                                {transitionU > 0.02 && transitionU < 0.98 && (
                                     <div
-                                        style={{ perspective: '1000px', height: '240px' }}
-                                        className="relative w-full cursor-pointer select-none"
-                                        onClick={(e) => handleCardClick(index, e)}
-                                        onKeyDown={(e) => handleKeyDown(index, e)}
-                                        role="button"
-                                        tabIndex={0}
-                                        aria-expanded={isFlipped}
-                                        aria-label={`${industry.name}. Tap to view details.`}
-                                    >
-                                        <div
-                                            className="w-full h-full relative transition-transform duration-500 ease-out"
-                                            style={{
-                                                transformStyle: 'preserve-3d',
-                                                transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                                            }}
-                                        >
-                                            {/* Mobile Front Face */}
-                                            <div
-                                                style={{
-                                                    backfaceVisibility: 'hidden',
-                                                    WebkitBackfaceVisibility: 'hidden',
-                                                }}
-                                                className="absolute inset-0 rounded-2xl bg-[#141414] border border-[#262626] p-6 flex flex-col justify-between shadow-lg"
-                                            >
-                                                <div className="flex items-center justify-between">
-                                                    <span className="font-mono text-xs tracking-widest text-[#2AB182] uppercase bg-[#2AB182]/10 border border-[#2AB182]/30 px-3 py-1 rounded-full font-semibold">
-                                                        0{index + 1}
-                                                    </span>
-                                                    <span className="font-mono text-[10px] text-[var(--text-muted)] uppercase">
-                                                        Tap to view details
-                                                    </span>
-                                                </div>
-                                                <h3 className="font-display text-2xl font-bold uppercase text-white my-auto py-2">
-                                                    {industry.name}
-                                                </h3>
-                                                <p className="font-body text-xs text-[var(--text-muted)] truncate">
-                                                    {industry.portfolio.join(" • ")}
-                                                </p>
-                                            </div>
-
-                                            {/* Mobile Back Face */}
-                                            <div
-                                                style={{
-                                                    backfaceVisibility: 'hidden',
-                                                    WebkitBackfaceVisibility: 'hidden',
-                                                    transform: 'rotateY(180deg)',
-                                                }}
-                                                className="absolute inset-0 rounded-2xl bg-[#161616] border border-[#2AB182] p-5 flex flex-col justify-between shadow-xl overflow-y-auto"
-                                            >
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="font-mono text-xs text-[#2AB182] font-semibold bg-[#2AB182]/10 border border-[#2AB182]/30 px-2 py-0.5 rounded-full">
-                                                            0{index + 1}
-                                                        </span>
-                                                        <h3 className="font-display text-sm font-bold uppercase text-white">
-                                                            {industry.name}
-                                                        </h3>
-                                                    </div>
-                                                    <span className="font-mono text-[10px] text-[var(--text-muted)] uppercase">
-                                                        Tap to flip
-                                                    </span>
-                                                </div>
-
-                                                <div className="space-y-2.5 my-auto py-1">
-                                                    <div>
-                                                        <h4 className="font-body text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold mb-1">
-                                                            Client Portfolio Highlights:
-                                                        </h4>
-                                                        <ul className="space-y-1 font-body text-xs text-[var(--text-primary)]">
-                                                            {industry.portfolio.map((client, i) => (
-                                                                <li key={i} className="flex items-center gap-1.5">
-                                                                    <MapPin className="w-3 h-3 shrink-0 text-[#2AB182]" />
-                                                                    <span>{client}</span>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <h4 className="font-body text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold mb-1">
-                                                            Services delivered:
-                                                        </h4>
-                                                        <div className="grid grid-cols-2 gap-1 font-body text-xs text-[var(--text-primary)]">
-                                                            {industry.services.map((service, i) => (
-                                                                <p key={i} className="flex items-start gap-1 text-[11px]">
-                                                                    <ArrowRight className="w-3 h-3 shrink-0 mt-0.5 text-[#2AB182]" />
-                                                                    <span>{service}</span>
-                                                                </p>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Mobile Glowing Connector Line */}
-                                    {index < clientIndustries.length - 1 && (
-                                        <div className="flex flex-col items-center my-1">
-                                            <div
-                                                className="w-[2px] h-6 bg-gradient-to-b from-[#2AB182] to-[#2AB182]"
-                                                style={{ boxShadow: '0 0 8px rgba(42, 177, 130, 0.55)' }}
-                                            />
-                                            <div
-                                                className="w-2.5 h-2.5 rounded-full bg-[#2AB182] border-2 border-[#121212] -mt-0.5"
-                                                style={{ boxShadow: '0 0 8px #2AB182' }}
-                                            />
-                                        </div>
-                                    )}
-                                </React.Fragment>
-                            );
-                        })}
+                                        style={{
+                                            top: `${curtainY}%`,
+                                            transform: 'translateY(-50%)',
+                                        }}
+                                        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#2AB182] to-transparent shadow-[0_0_18px_rgba(42,177,130,0.9)] z-30 pointer-events-none"
+                                    />
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Client Logos Carousel — Highlighted Clients (Preserved exactly) */}
-            <section className="py-16 md:py-24 border-b border-[var(--border-subtle)] bg-transparent overflow-hidden">
-                <div className="max-w-[1600px] mx-auto px-4 md:px-12 mb-10 md:mb-14">
-                    <h2 className="font-display text-3xl md:text-4xl font-bold uppercase text-[var(--text-primary)] text-center tracking-tight">
-                        HIGHLIGHTED CLIENTS
+            {/* Mobile / Tablet / Reduced Motion Static Flow Presentation */}
+            <section className="md:hidden motion-reduce:block px-6 py-12 relative z-10 bg-transparent">
+                <div className="text-center max-w-xl mx-auto px-4 mb-10">
+                    <p className="font-body text-[#2AB182] mb-2 tracking-[0.2em] text-xs uppercase font-semibold flex items-center justify-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-[#2AB182] rounded-full animate-pulse" />
+                        Sector Specialization
+                    </p>
+                    <h2 className="font-display text-3xl font-bold uppercase text-[var(--text-primary)] tracking-tight">
+                        Core Industries We <span className="text-[#2AB182]">Serve</span>
                     </h2>
                 </div>
 
-                <div
-                    className="client-carousel-container relative w-full overflow-hidden border-y border-[var(--border-subtle)] select-none"
-                    aria-label="Highlighted clients carousel, moving continuously from left to right. Hover to pause."
-                >
-                    <div className="client-carousel-track flex w-max">
-                        {/* Primary Set */}
-                        <div className="flex shrink-0">
+                <div className="space-y-6 max-w-xl mx-auto">
+                    {clientIndustries.map((industry, index) => (
+                        <div
+                            key={index}
+                            className="w-full bg-[#121212]/95 backdrop-blur-xl border border-[var(--border-subtle)] hover:border-[#2AB182]/50 rounded-2xl p-6 sm:p-8 shadow-[0_15px_35px_rgba(0,0,0,0.6)] relative overflow-hidden transition-colors duration-300"
+                        >
+                            {renderCardBody(industry, index)}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* 3. Highlighted Clients — Restored Original Static Grid (6 columns x 4 rows) */}
+            <section className="py-16 md:py-24 px-4 md:px-12 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]">
+                <div className="max-w-[1600px] mx-auto">
+                    <h2 className="font-display text-3xl md:text-4xl font-bold uppercase text-[var(--text-primary)] text-center mb-10 md:mb-14 tracking-tight">
+                        HIGHLIGHTED CLIENTS
+                    </h2>
+                    <div className="border-t border-l border-[var(--border-subtle)]">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                             {clientList.map((client, index) => {
                                 const lightLogo = client.logoLight || client.logo;
                                 const darkLogo = client.logoDark || client.logo || client.logoLight;
 
                                 return (
                                     <div
-                                        key={`client-orig-${index}`}
-                                        role="group"
+                                        key={index}
                                         aria-label={client.name}
                                         title={client.name}
-                                        tabIndex={0}
-                                        className="client-logo-card border-r border-[var(--border-subtle)] w-52 sm:w-60 md:w-72 h-32 sm:h-36 md:h-40 flex items-center justify-center p-3 sm:p-4 md:p-5 transition-colors duration-150 group relative cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2AB182]"
+                                        className="client-logo-card border-r border-b border-[var(--border-subtle)] h-32 sm:h-36 md:h-40 flex items-center justify-center p-3 sm:p-4 md:p-5 transition-colors duration-300 group relative cursor-pointer"
                                     >
-                                        <div className="client-logo-item flex items-center justify-center w-full h-full pointer-events-none">
-                                            {lightLogo && (
-                                                <Image
-                                                    src={lightLogo}
-                                                    alt={`${client.name} logo`}
-                                                    width={240}
-                                                    height={100}
-                                                    decoding="async"
-                                                    className={`client-logo-light w-auto object-contain ${
-                                                        client.logoClass || 'max-h-14 md:max-h-20 max-w-[85%]'
-                                                    }`}
-                                                />
-                                            )}
-                                            {darkLogo && (
-                                                <Image
-                                                    src={darkLogo}
-                                                    alt={`${client.name} logo`}
-                                                    width={240}
-                                                    height={100}
-                                                    decoding="async"
-                                                    className={`client-logo-dark w-auto object-contain ${
-                                                        client.invertInDark ? 'logo-invert-dark' : ''
-                                                    } ${client.logoClass || 'max-h-14 md:max-h-20 max-w-[85%]'}`}
-                                                />
-                                            )}
-                                            {!lightLogo && !darkLogo && (
-                                                <span className="font-display text-lg md:text-xl font-bold tracking-widest text-[#2AB182]">
-                                                    {getClientInitials(client.name)}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                        {/* Duplicated Set for Seamless Infinite Looping */}
-                        <div className="flex shrink-0" aria-hidden="true">
-                            {clientList.map((client, index) => {
-                                const lightLogo = client.logoLight || client.logo;
-                                const darkLogo = client.logoDark || client.logo || client.logoLight;
-
-                                return (
-                                    <div
-                                        key={`client-dup-${index}`}
-                                        title={client.name}
-                                        tabIndex={-1}
-                                        className="client-logo-card border-r border-[var(--border-subtle)] w-52 sm:w-60 md:w-72 h-32 sm:h-36 md:h-40 flex items-center justify-center p-3 sm:p-4 md:p-5 transition-colors duration-150 group relative cursor-pointer shrink-0"
-                                    >
-                                        <div className="client-logo-item flex items-center justify-center w-full h-full pointer-events-none">
-                                            {lightLogo && (
-                                                <Image
-                                                    src={lightLogo}
-                                                    alt={`${client.name} partner logo`}
-                                                    width={240}
-                                                    height={100}
-                                                    decoding="async"
-                                                    className={`client-logo-light w-auto object-contain ${
-                                                        client.logoClass || 'max-h-14 md:max-h-20 max-w-[85%]'
-                                                    }`}
-                                                />
-                                            )}
-                                            {darkLogo && (
-                                                <Image
-                                                    src={darkLogo}
-                                                    alt={`${client.name} partner logo`}
-                                                    width={240}
-                                                    height={100}
-                                                    decoding="async"
-                                                    className={`client-logo-dark w-auto object-contain ${
-                                                        client.invertInDark ? 'logo-invert-dark' : ''
-                                                    } ${client.logoClass || 'max-h-14 md:max-h-20 max-w-[85%]'}`}
-                                                />
-                                            )}
-                                            {!lightLogo && !darkLogo && (
-                                                <span className="font-display text-lg md:text-xl font-bold tracking-widest text-[#2AB182]">
-                                                    {getClientInitials(client.name)}
-                                                </span>
-                                            )}
-                                        </div>
+                                        {lightLogo && (
+                                            <Image
+                                                src={lightLogo}
+                                                alt={`${client.name} logo`}
+                                                width={240}
+                                                height={100}
+                                                className={`client-logo-light w-auto object-contain transition-transform duration-300 group-hover:scale-105 ${
+                                                    client.logoClass || 'max-h-14 md:max-h-20 max-w-[80%]'
+                                                }`}
+                                            />
+                                        )}
+                                        {darkLogo && (
+                                            <Image
+                                                src={darkLogo}
+                                                alt={`${client.name} logo`}
+                                                width={240}
+                                                height={100}
+                                                className={`client-logo-dark w-auto object-contain transition-transform duration-300 group-hover:scale-105 ${
+                                                    client.logoClass || 'max-h-14 md:max-h-20 max-w-[80%]'
+                                                }`}
+                                            />
+                                        )}
+                                        {!lightLogo && !darkLogo && (
+                                            <span className="font-display text-lg md:text-xl font-bold tracking-widest text-[#2AB182]">
+                                                {getClientInitials(client.name)}
+                                            </span>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -737,7 +500,7 @@ const ClientsIndustriesPage = ({ onContactClick }) => {
                 </div>
             </section>
 
-            {/* Closing CTA (Preserved exactly) */}
+            {/* 4. Closing CTA (Preserved exactly) */}
             <section className="py-16 md:py-32 border-t border-[var(--border-subtle)] text-center px-6 bg-[var(--bg-card)]/30">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="font-display text-4xl md:text-6xl text-[var(--text-primary)] font-bold mb-8 leading-tight">

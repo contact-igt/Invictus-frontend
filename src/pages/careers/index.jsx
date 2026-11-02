@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import CareersInteractiveSequence from "@/components/careers/CareersInteractiveSequence";
+import CultureSection from "@/components/careers/CultureSection";
 import { careerRoles } from "@/config/careerRoles";
 
 const roles = Object.values(careerRoles).filter(
@@ -49,6 +50,7 @@ export default function CareersPage() {
       </Head>
       <div className="w-full relative bg-transparent text-[var(--text-primary,#E0E0E0)] font-body">
         <CareersInteractiveSequence />
+        <CultureSection />
 
         {/* Open roles */}
         <section id="open-roles" className="py-20 border-b border-[var(--border-subtle,#333)] transition-colors duration-300">

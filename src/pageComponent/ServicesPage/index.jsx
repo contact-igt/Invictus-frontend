@@ -92,17 +92,11 @@ const antiAgencyValues = [
 ];
 
 const ServicesPage = ({ onContactClick }) => {
-  const [activeServiceIndex, setActiveServiceIndex] = useState(null);
+  const [hoveredServiceIndex, setHoveredServiceIndex] = useState(null);
+  const [selectedServiceIndex, setSelectedServiceIndex] = useState(null);
   const [heroAnimated, setHeroAnimated] = useState(false);
   const [hasWhyChooseEntered, setHasWhyChooseEntered] = useState(false);
-  const [hasCoreServicesEntered, setHasCoreServicesEntered] = useState(false);
   const whyChooseRef = useRef(null);
-  const coreServicesRef = useRef(null);
-  const serviceCardRefs = useRef([]);
-
-  const toggleService = (index) => {
-    setActiveServiceIndex(activeServiceIndex === index ? null : index);
-  };
 
   // Hero page-load entrance trigger
   useEffect(() => {
@@ -112,55 +106,17 @@ const ServicesPage = ({ onContactClick }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Automatic scroll-triggered active service card reveal
+  // Close active expanded service card on Escape key
   useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const viewportHeight = window.innerHeight || 800;
-          // Target focal line in the comfortable eye-level reading zone (upper-middle viewport)
-          const focalY = viewportHeight * 0.44;
-
-          if (coreServicesRef.current) {
-            const sectionRect = coreServicesRef.current.getBoundingClientRect();
-            // If Core Services section is completely above or below the active focal zone:
-            if (sectionRect.bottom < focalY - 80 || sectionRect.top > focalY + 80) {
-              setActiveServiceIndex((prev) => (prev === null ? prev : null));
-              ticking = false;
-              return;
-            }
-          }
-
-          let closestIndex = null;
-          let minDistance = Infinity;
-
-          serviceCardRefs.current.forEach((el, index) => {
-            if (!el) return;
-            const rect = el.getBoundingClientRect();
-            const cardCenter = rect.top + rect.height / 2;
-            const distance = Math.abs(cardCenter - focalY);
-
-            // Card must be within active viewport range
-            const inRange = rect.top <= focalY + 140 && rect.bottom >= focalY - 140;
-            if (inRange && distance < minDistance) {
-              minDistance = distance;
-              closestIndex = index;
-            }
-          });
-
-          setActiveServiceIndex((prev) => (prev === closestIndex ? prev : closestIndex));
-          ticking = false;
-        });
-        ticking = true;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && selectedServiceIndex !== null) {
+        setSelectedServiceIndex(null);
+        setHoveredServiceIndex(null);
       }
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedServiceIndex]);
 
   // Why Brands Choose Invictus entrance trigger
   useEffect(() => {
@@ -181,35 +137,9 @@ const ServicesPage = ({ onContactClick }) => {
     return () => observer.disconnect();
   }, []);
 
-  // Scroll-entry trigger for Core Services section
-  useEffect(() => {
-    const node = coreServicesRef.current;
-    if (!node) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHasCoreServicesEntered(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
 
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
 
-  // Close active service card on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && activeServiceIndex !== null) {
-        setActiveServiceIndex(null);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeServiceIndex]);
 
   return (
     <div className="min-h-screen">
@@ -276,10 +206,10 @@ const ServicesPage = ({ onContactClick }) => {
         </div>
       </section>
 
-      {/* SECTION 2 – Core Services (Vertical List with Right-Side Description Panels) */}
-      <section id="services-details" className="border-t border-[var(--border-subtle)] bg-transparent relative z-10">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 md:py-24">
-          {/* Section Header: Minimal, no unrequested instruction paragraph */}
+      {/* SECTION 2 – Core Services (Horizontal Focus Carousel & Expanded View) */}
+      <section id="services-details" className="border-t border-[var(--border-subtle)] bg-transparent relative z-10 py-16 md:py-24">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+          {/* Section Header */}
           <div className="mb-10 md:mb-14">
             <p className="font-body text-[#2AB182] mb-3 tracking-[0.2em] text-xs uppercase font-semibold flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#2AB182] rounded-full animate-pulse" />
@@ -290,156 +220,216 @@ const ServicesPage = ({ onContactClick }) => {
             </h2>
           </div>
 
-          {/* Vertical Square Service Cards List with Paired Equal-Sized Square Description Panel */}
-          <div
-            ref={coreServicesRef}
-            className="flex flex-col gap-6 sm:gap-7 relative w-full max-w-[340px] sm:max-w-[360px] lg:max-w-[360px]"
-          >
-            {serviceDetails.map((service, index) => {
-              const isActive = activeServiceIndex === index;
-              const IconComponent = service.icon;
+          {/* Conditional Display: If a service is selected, show ONLY the Expanded Card. Otherwise show the Horizontal Carousel */}
+          {selectedServiceIndex === null ? (
+            /* DEFAULT VIEW: Horizontal Square Card Carousel with Hover Focus */
+            <div
+              onMouseLeave={() => setHoveredServiceIndex(null)}
+              className="relative w-full"
+            >
+              {/* Cards Container: Horizontal row with smooth scroll/snap on mobile/tablet and centered grid on desktop */}
+              <div className="flex flex-nowrap lg:grid lg:grid-cols-4 gap-5 lg:gap-6 overflow-x-auto no-scrollbar py-4 px-1 snap-x snap-mandatory">
+                {serviceDetails.map((service, index) => {
+                  const isHovered = hoveredServiceIndex === index;
+                  const isAnyHovered = hoveredServiceIndex !== null;
+                  const isDimmed = isAnyHovered && !isHovered;
+                  const IconComponent = service.icon;
 
-              return (
-                <div
-                  key={service.title}
-                  style={{
-                    transitionDelay: hasCoreServicesEntered ? `${index * 80}ms` : "0ms",
-                  }}
-                  className={`relative w-full lg:aspect-square flex flex-col transition-all duration-500 ease-out ${
-                    hasCoreServicesEntered
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4"
-                  }`}
-                >
-                  {/* Left Service Card: Equal Square (z-20 so description emerges from behind it) */}
-                  <div
-                    ref={(el) => (serviceCardRefs.current[index] = el)}
-                    role="button"
-                    tabIndex={0}
-                    aria-expanded={isActive}
-                    aria-label={service.title}
-                    onClick={() => setActiveServiceIndex(isActive ? null : index)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setActiveServiceIndex(isActive ? null : index);
-                      }
-                    }}
-                    className={`relative z-20 w-full aspect-square rounded-2xl p-6 sm:p-7 flex flex-col justify-between cursor-pointer select-none transition-all duration-300 border group ${
-                      isActive
-                        ? "border-[#2AB182] bg-[#161616] shadow-[0_15px_35px_rgba(0,0,0,0.9),0_0_22px_rgba(42,177,130,0.25)]"
-                        : "border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[#2AB182] hover:shadow-[0_10px_25px_rgba(0,0,0,0.8),0_0_18px_rgba(42,177,130,0.18)]"
-                    }`}
-                  >
-                    {/* Top: Service Icon */}
-                    <div className="flex items-start justify-between">
-                      <div
-                        className={`w-12 h-12 rounded-xl border flex items-center justify-center flex-shrink-0 transition-all duration-200 ${
-                          isActive
-                            ? "border-[#2AB182] bg-[#2AB182]/10 text-[#2AB182] shadow-[0_0_12px_rgba(42,177,130,0.25)]"
-                            : "border-[#2AB182]/30 bg-[var(--bg-primary)] text-[#2AB182] group-hover:border-[#2AB182]"
-                        }`}
-                      >
-                        <IconComponent size={24} />
+                  return (
+                    <div
+                      key={service.title}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`View ${service.title} details`}
+                      onMouseEnter={() => setHoveredServiceIndex(index)}
+                      onClick={() => {
+                        setSelectedServiceIndex(index);
+                        setHoveredServiceIndex(null);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setSelectedServiceIndex(index);
+                          setHoveredServiceIndex(null);
+                        }
+                      }}
+                      style={{
+                        filter: isDimmed ? "blur(7px)" : "blur(0px)",
+                      }}
+                      className={`group relative aspect-square w-[280px] sm:w-[300px] lg:w-full shrink-0 snap-center rounded-2xl sm:rounded-3xl p-6 sm:p-7 flex flex-col justify-between cursor-pointer select-none transition-all duration-300 ease-out border overflow-hidden ${
+                        isHovered
+                          ? "bg-[#161616] border-[#2AB182] shadow-[0_0_30px_rgba(42,177,130,0.25),0_20px_40px_rgba(0,0,0,0.8)] scale-[1.03] -translate-y-2 z-20 opacity-100"
+                          : isDimmed
+                          ? "bg-[#111111] border-white/[0.04] opacity-35 scale-[0.98] z-10"
+                          : "bg-[#131313] border-white/[0.08] hover:border-[#2AB182]/50 opacity-100 scale-100 z-10"
+                      }`}
+                    >
+                      {/* Top Row: Service Number and Icon */}
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-wider uppercase px-2.5 py-1 rounded-full font-semibold border bg-[#2AB182]/10 text-[#2AB182] border-[#2AB182]/30">
+                          0{index + 1}
+                        </span>
+                        <div
+                          className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-all duration-300 ${
+                            isHovered
+                              ? "border-[#2AB182] bg-[#2AB182]/15 text-[#2AB182] shadow-[0_0_15px_rgba(42,177,130,0.3)]"
+                              : "border-white/10 bg-white/[0.03] text-white/70 group-hover:text-[#2AB182] group-hover:border-[#2AB182]/40"
+                          }`}
+                        >
+                          <IconComponent size={22} />
+                        </div>
                       </div>
-                      {isActive && (
-                        <span className="w-2 h-2 rounded-full bg-[#2AB182] animate-pulse" />
-                      )}
+
+                      {/* Middle: Title & Brief Description */}
+                      <div className="my-auto py-2">
+                        <h3
+                          className={`font-display text-base sm:text-lg lg:text-xl font-bold uppercase tracking-tight leading-tight line-clamp-2 mb-2 transition-colors ${
+                            isHovered ? "text-white" : "text-[var(--text-primary)]"
+                          }`}
+                        >
+                          {service.title}
+                        </h3>
+                        <p className="font-body text-xs text-[var(--text-muted)] line-clamp-2 sm:line-clamp-3 leading-relaxed">
+                          {service.desc}
+                        </p>
+                      </div>
+
+                      {/* Bottom Row: Explore Prompt & Accent Bar */}
+                      <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                        <span className="font-mono text-[11px] uppercase tracking-wider text-[#2AB182] font-semibold flex items-center gap-1.5 group-hover:translate-x-1 transition-transform">
+                          Explore Service
+                          <ArrowRight size={13} />
+                        </span>
+                        <div
+                          className={`h-1 rounded-full transition-all duration-300 ${
+                            isHovered
+                              ? "w-12 bg-[#2AB182] shadow-[0_0_8px_#2AB182]"
+                              : "w-6 bg-[#2AB182]/30 group-hover:w-10 group-hover:bg-[#2AB182]"
+                          }`}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Mobile / Tablet Horizontal Scroll Hint */}
+              <div className="flex items-center justify-center gap-2 mt-4 lg:hidden text-white/40 text-xs font-mono">
+                <span>Swipe horizontally to view all services</span>
+              </div>
+            </div>
+          ) : (
+            /* CLICK VIEW: Standalone Expanded Service Description Card */
+            /* Strictly ONLY the selected service card is rendered. No other cards in background! */
+            <div className="w-full max-w-3xl mx-auto py-4 animate-fade-in-scale">
+              {(() => {
+                const service = serviceDetails[selectedServiceIndex];
+                const IconComponent = service.icon;
+
+                return (
+                  <div
+                    tabIndex={-1}
+                    className="relative bg-[#131313] border border-[#2AB182]/60 rounded-3xl p-6 sm:p-9 md:p-11 shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_40px_rgba(42,177,130,0.2)] overflow-hidden"
+                  >
+                    {/* Corner Ambient Glow */}
+                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#2AB182]/10 rounded-full blur-3xl pointer-events-none" />
+
+                    {/* Card Top: Number, Icon, and Close (X) Button */}
+                    <div className="flex items-start justify-between gap-4 mb-6 relative z-10">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-[#2AB182]/10 border border-[#2AB182]/40 text-[#2AB182] flex items-center justify-center shadow-[0_0_15px_rgba(42,177,130,0.2)]">
+                          <IconComponent size={24} />
+                        </div>
+                        <div>
+                          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#2AB182]/10 border border-[#2AB182]/30 text-[#2AB182] text-xs font-mono font-semibold uppercase">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] animate-pulse" />
+                            Service 0{selectedServiceIndex + 1}
+                          </div>
+                          <span className="text-white/40 text-xs font-mono block mt-0.5">
+                            0{selectedServiceIndex + 1} / 0{serviceDetails.length}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Close (X) Button */}
+                      <button
+                        type="button"
+                        onClick={() => setSelectedServiceIndex(null)}
+                        aria-label="Close service details and return to carousel"
+                        className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#2AB182] hover:bg-[#2AB182]/15 text-white/70 hover:text-white flex items-center justify-center transition-all cursor-pointer group shadow-lg"
+                      >
+                        <X size={18} className="group-hover:rotate-90 transition-transform duration-200" />
+                      </button>
                     </div>
 
-                    {/* Middle: Title & Brief Description */}
-                    <div className="my-auto py-2">
-                      <h3
-                        className={`font-display text-xl sm:text-2xl font-bold uppercase tracking-tight transition-colors leading-tight mb-2 ${
-                          isActive ? "text-white" : "text-[var(--text-primary)] group-hover:text-white"
-                        }`}
-                      >
+                    {/* Title & Full Description */}
+                    <div className="relative z-10 mb-8">
+                      <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-[var(--text-primary)] tracking-tight mb-3">
                         {service.title}
                       </h3>
-                      <p className="font-body text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed line-clamp-3">
+                      <p className="font-body text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
                         {service.desc}
                       </p>
                     </div>
 
-                    {/* Bottom: Subtle Emerald Accent Line */}
-                    <div className="pt-2 border-t border-[var(--border-subtle)]/60 flex items-center justify-between">
-                      <div
-                        className={`h-1 rounded-full transition-all duration-300 ${
-                          isActive
-                            ? "w-12 bg-[#2AB182]"
-                            : "w-8 bg-[#2AB182]/40 group-hover:bg-[#2AB182] group-hover:w-12"
-                        }`}
-                      />
-                    </div>
-                  </div>
+                    {/* Divider */}
+                    <div className="w-full h-px bg-white/10 mb-7 relative z-10" />
 
-                  {/* Right Description Panel: Equal Square, Positioned Immediately Beside (Desktop) or Directly Below (Mobile/Tablet) */}
-                  {isActive && (
-                    <div
-                      key={`desc-${service.title}`}
-                      className="relative z-10 mt-4 lg:mt-0 lg:absolute lg:left-[calc(100%+20px)] lg:top-0 w-full lg:h-full aspect-square animate-panel-slide"
-                    >
-                      <div className="w-full h-full aspect-square rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_25px_rgba(42,177,130,0.18)] flex flex-col justify-between overflow-hidden">
-                        {/* Top: Service Title and small close icon */}
-                        <div className="shrink-0">
-                          <div className="flex items-start justify-between gap-3 mb-2">
-                            <div className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182]" />
-                              <h4 className="font-display text-lg sm:text-xl font-bold uppercase tracking-tight text-white leading-tight">
-                                {service.title}
-                              </h4>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveServiceIndex(null);
-                              }}
-                              aria-label="Close"
-                              className="w-7 h-7 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-muted)] hover:text-white hover:border-[#2AB182] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
-                            >
-                              <X size={14} />
-                            </button>
+                    {/* Key Capabilities / Features */}
+                    <div className="relative z-10 mb-8">
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-[#2AB182] font-semibold mb-3.5 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182]" />
+                        Key Capabilities & Deliverables
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {service.features.map((feature, fIdx) => (
+                          <div
+                            key={fIdx}
+                            className="flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[#2AB182]/30 transition-colors"
+                          >
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0" />
+                            <span className="font-body text-xs sm:text-sm text-[var(--text-primary)] font-normal">
+                              {feature}
+                            </span>
                           </div>
-                          {/* Description */}
-                          <p className="font-body text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                            {service.desc}
-                          </p>
-                        </div>
-
-                        {/* Middle: Features list */}
-                        <div className="my-auto py-2 overflow-y-auto custom-scrollbar">
-                          <ul className="space-y-1.5">
-                            {service.features.map((feat) => (
-                              <li
-                                key={feat}
-                                className="flex items-center gap-2 text-xs text-[var(--text-primary)] font-body"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2AB182] shrink-0" />
-                                <span className="leading-tight">{feat}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Bottom: Outcome / Benefit */}
-                        {service.outcome && (
-                          <div className="pt-2.5 border-t border-[var(--border-subtle)]/70 shrink-0">
-                            <p className="font-body text-xs text-[var(--text-muted)] leading-tight">
-                              <span className="text-[#2AB182] font-mono uppercase font-semibold text-[10px] tracking-wider block mb-0.5">
-                                Outcome
-                              </span>
-                              {service.outcome}
-                            </p>
-                          </div>
-                        )}
+                        ))}
                       </div>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+
+                    {/* Outcome & Direct Action CTA */}
+                    {service.outcome && (
+                      <div className="relative z-10 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#2AB182]/10 via-[#2AB182]/5 to-transparent border border-[#2AB182]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                          <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider text-[#2AB182] font-bold block mb-1">
+                            Measurable Business Outcome
+                          </span>
+                          <p className="font-body text-xs sm:text-sm text-white/90">
+                            {service.outcome}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedServiceIndex(null)}
+                            className="text-xs font-mono text-white/50 hover:text-white transition-colors cursor-pointer"
+                          >
+                            Back to Grid
+                          </button>
+                          <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#2AB182] text-black font-display font-bold uppercase text-xs tracking-wider hover:bg-[#35c795] transition-colors"
+                          >
+                            Partner With Us
+                            <ArrowRight size={14} />
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+          )}
         </div>
       </section>
 
@@ -510,10 +500,6 @@ const ServicesPage = ({ onContactClick }) => {
                       }
                     `}
                   >
-                    {/* Watermark Number */}
-                    <div className="absolute bottom-3 right-5 text-[100px] md:text-[120px] font-display font-black text-white/[0.04] leading-none pointer-events-none select-none">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
 
                     {/* Card Header with Sequential Number Tag */}
                     <div className="flex items-center justify-between relative z-10 mb-4">
