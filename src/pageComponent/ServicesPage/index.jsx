@@ -154,7 +154,7 @@ const ServicesPage = ({ onContactClick }) => {
           What We Do
         </p>
 
-        <h1 className="font-display font-bold text-[9vw] md:text-[7vw] leading-[0.9] tracking-tight uppercase mb-8">
+        <h1 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-5xl leading-tight tracking-tight uppercase mb-6">
           <span
             className={`block text-[var(--text-primary)] transition-all duration-700 delay-100 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:transform-none ${
               heroAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -172,7 +172,7 @@ const ServicesPage = ({ onContactClick }) => {
         </h1>
 
         <p
-          className={`font-body text-lg md:text-xl text-[var(--text-muted)] max-w-2xl transition-all duration-700 delay-500 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:transform-none ${
+          className={`font-body text-sm md:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed mb-10 transition-all duration-700 delay-500 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:transform-none ${
             heroAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >

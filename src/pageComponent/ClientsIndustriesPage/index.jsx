@@ -139,6 +139,45 @@ const ClientsIndustriesPage = () => {
         });
     };
 
+    // Auto-scroll to selected industry if arrived via ?industry= query or hash
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const handleInitialIndustry = () => {
+            const params = new URLSearchParams(window.location.search);
+            const indSlug = params.get('industry');
+            const slugMap = {
+                'healthcare': 0,
+                'healthcare-medical': 0,
+                'edtech': 1,
+                'education': 1,
+                'education-edtech': 1,
+                'ecommerce': 2,
+                'e-commerce': 2,
+                'e-commerce-d2c': 2,
+                'd2c': 2,
+                'real-estate': 3,
+                'real-estate-construction': 3,
+                'b2b': 4,
+                'b2b-consulting': 4,
+            };
+
+            if (indSlug && slugMap[indSlug.toLowerCase()] !== undefined) {
+                const targetIdx = slugMap[indSlug.toLowerCase()];
+                if (window.innerWidth >= 768) {
+                    scrollToIndustry(targetIdx);
+                } else {
+                    const mobileCard = document.getElementById(`industry-card-${targetIdx}`);
+                    if (mobileCard) {
+                        mobileCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }
+        };
+
+        const timer = setTimeout(handleInitialIndustry, 300);
+        return () => clearTimeout(timer);
+    }, [isLoaded]);
+
     // Transition Progress Calculations (4 segments between the 5 industries)
     const totalSegments = clientIndustries.length - 1; // 4
     const progressVal = scrollProgress * totalSegments;
@@ -438,6 +477,7 @@ const ClientsIndustriesPage = () => {
                     {clientIndustries.map((industry, index) => (
                         <div
                             key={index}
+                            id={`industry-card-${index}`}
                             className="w-full bg-[#121212]/95 backdrop-blur-xl border border-[var(--border-subtle)] hover:border-[#2AB182]/50 rounded-2xl p-6 sm:p-8 shadow-[0_15px_35px_rgba(0,0,0,0.6)] relative overflow-hidden transition-colors duration-300"
                         >
                             {renderCardBody(industry, index)}
